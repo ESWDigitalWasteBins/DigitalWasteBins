@@ -9,7 +9,7 @@ Created on Apr 15, 2017
 
 import pygame
 from scale import scaleReading
-from motionSensor import motionReading
+from motion_sensor import motionReading
 from font_manager import FontManager
 from display import Title, Content, Display
 
