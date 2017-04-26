@@ -1,7 +1,7 @@
 """
 display.py
 
-Description: [DESCRIPTION]
+Description: Display for each screen.
 
 Created on Apr 25, 2017
 """

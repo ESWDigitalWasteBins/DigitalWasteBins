@@ -1,7 +1,7 @@
 """
 __main__.py
 
-Description:
+Description: Run this for digital waste bins.
 
 Created on Apr 15, 2017
 """
