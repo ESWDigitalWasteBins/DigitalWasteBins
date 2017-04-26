@@ -41,4 +41,5 @@ Active:
 
 Interactive:
 
-- Display Co2 equivalent emissions: Thanks for throwing out __ oz of __.
+- Display Co2 equivalent emissions: Thanks for throwing out \__ oz of \__.
+- IDEAL: scan what is being thrown in and if it's correct
