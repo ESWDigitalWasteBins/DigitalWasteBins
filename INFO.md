@@ -24,7 +24,10 @@ dwb/
     dwb/
         __init__.py
         __main__.py
-        font.py
+        display.py
+        font_manager.py
+        motion_sensor.py
+        scale.py
     INFO.md
     README.md
 ```
