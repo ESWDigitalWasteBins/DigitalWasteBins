@@ -12,6 +12,7 @@ from pygame import font
 
 
 class Title:
+    """[SUMMARY]"""
     def __init__(self, text: font.Font, bg: (int)=(0, 0, 0), pady: int=0):
         """
         Title banner for top of Display().
@@ -40,13 +41,26 @@ class Title:
 
 # TODO: fill in with animations, etc.
 class Content:
+    """[SUMMARY]"""
     def __init__(self, display_bg_color: (int)=(255, 255, 255)) -> None:
+        """
+        Content animations below Title() banner in Display().
+
+        Args:
+            title: Title() banner at top of screen
+            content: Content() for screen
+
+        Attributes:
+            [ATTR1]: [DESCRIPTION]
+            [ATTR2]: [DESCRIPTION]
+        """
         self._display_bg_color = display_bg_color
 
     def __str__(self) -> str:
         return 'Content Class'.format()
 
     def draw(self, screen: pygame.display) -> None:
+        """Blit content animations to screen.""""
         screen.fill(self._display_bg_color)
 
 
@@ -64,9 +78,11 @@ class Display:
             [ATTR1]: [DESCRIPTION]
             [ATTR2]: [DESCRIPTION]
         """
-        assert type(title) is Title, 'argument title got {}, expected Title()'.format(repr(type(title)))
+        assert type(title) is Title, 'argument title got {}, ' \
+            'expected Title()'.format(repr(type(title)))
         self._title = title
-        assert type(content) is Content, 'argument title got {}, expected Content()'.format(repr(type(title)))
+        assert type(content) is Content, 'argument title got {}, ' \
+            'expected Content()'.format(repr(type(title)))
         self._content = content
 
     def draw(self, screen, title_weight: int=1, content_weight: int=1) -> None:
@@ -75,6 +91,7 @@ class Display:
         self._title.draw(screen)
 
 
+# Testing
 if __name__ == '__main__':
     from font_manager import FontManager
 
