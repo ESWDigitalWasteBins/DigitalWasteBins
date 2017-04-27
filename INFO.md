@@ -11,10 +11,9 @@
 ### 2. Data/Sensor Reading
 * Motion Sensor
 * Weight Sensor
-    * UW used RS-232 serial connection
 
 ### 3. Connect display with sending readings
-* main event loop checking for readings and updating screen
+* Main event loop checking for readings and updating screen
 
 ---
 
