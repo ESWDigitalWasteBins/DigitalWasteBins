@@ -24,7 +24,7 @@ python3 -m dwb
 
 Press the Escape key to exit.
 
-##Requirements
+## Requirements
 
 A Python project that links each bin to a screen showing:
 
