@@ -12,10 +12,15 @@ from pygame import font
 
 
 class Title:
-    def __init__(self,
-                 text: font.Font,
-                 bg: (int)=(0, 0, 0),
-                 pady: int=0):
+    def __init__(self, text: font.Font, bg: (int)=(0, 0, 0), pady: int=0):
+        """
+        Title banner for top of Display().
+
+        Args:
+            text: title of display
+            bg(=(0, 0, 0)): background color for title banner
+            pady(=0): padding above and below title text
+        """
         self._text = text
         self._bg = bg
         self._pady = pady
@@ -24,11 +29,12 @@ class Title:
         return 'Title Class: {}'.format(self._text)
 
     def draw(self, screen: pygame.display) -> None:
+        """Blit the title banner to the screen."""
         text_rect = self._text.get_rect()
         width, height = screen.get_size()
-        title_height = text_rect.height
+        text_height = text_rect.height
         text_rect.midtop = (width/2, self._pady)
-        pygame.draw.rect(screen, self._bg, (0, 0, width, title_height + 2*self._pady))
+        pygame.draw.rect(screen, self._bg, (0, 0, width, text_height + 2*self._pady))
         screen.blit(self._text, text_rect)
 
 
@@ -40,29 +46,19 @@ class Content:
     def __str__(self) -> str:
         return 'Content Class'.format()
 
-    def draw(self, screen: pygame.display):
+    def draw(self, screen: pygame.display) -> None:
         screen.fill(self._display_bg_color)
 
 
 class Display:
     """[SUMMARY]"""
-    def __init__(self,
-                 title: Title,
-                 content: Content):
+    def __init__(self, title: Title, content: Content):
         """
         Display for a single screen.
 
         Args:
-            screen: pygame display for blitting/drawing objects
-            title_text(='TEST'): title of display
-            title_fm(=FontManager()): FontManager used to render title
-                text
-            title_color(=(255, 255, 255)): color for title
-            title_bg_color(=(255, 255, 255)): background color for title
-                banner
-            title_pady(=0): padding above and below title text banner
-            display_bg_color(=(255, 255, 255)): background color for
-                display
+            title: Title() banner at top of screen
+            content: Content() for screen
 
         Attributes:
             [ATTR1]: [DESCRIPTION]
@@ -73,7 +69,8 @@ class Display:
         assert type(content) is Content, 'argument title got {}, expected Content()'.format(repr(type(title)))
         self._content = content
 
-    def draw(self, screen) -> None:
+    def draw(self, screen, title_weight: int=1, content_weight: int=1) -> None:
+        """Draw title and content to screen."""
         self._content.draw(screen)
         self._title.draw(screen)
 
@@ -87,8 +84,7 @@ if __name__ == '__main__':
 
     screen = pygame.display.set_mode((300, 300))
     pygame.display.set_caption('Display Test')
-    text = FontManager().create_text('TEST', 50)
-    title = Title(text, bg=BLUE, pady=20)
+    title = Title(FontManager().create_text('TEST', 50), bg=BLUE, pady=20)
     content = Content()
     Display(title, content).draw(screen)
 
