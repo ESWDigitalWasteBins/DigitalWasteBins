@@ -18,8 +18,9 @@ def main():
     y_0 = y = -(theight + iheight)
 
     speed_0_y = speed_y = 0  # initial speed and current speed
-    accel_y = 1.0  # acceleration of falling images
+    accel_y = 0.3  # acceleration of falling images
     stop_y = 100  # stop y position for images
+    wait_time = 5  # seconds
 
     clock = pygame.time.Clock()
 
@@ -53,7 +54,7 @@ def main():
         if not waited and y >= stop_y:
             print(y)
             waited = True
-            pygame.time.wait(1000)
+            pygame.time.wait(wait_time * 1000)
             speed_y = speed_0_y  # reset speed to initial speed
         # 60 FPS
         clock.tick(60)
