@@ -32,4 +32,4 @@ dwb/
 ## Updates
 ### 04/25/2017
 Side-by-side displays for each bin stitched together. No content yet.
-![preview20170425](https://github.uci.edu/katakemo/ESWDigitalWasteBins/blob/display-sensor-update/dwb/images/preview20170425.png?raw=true)
+![preview20170425](https://github.com/ESWDigitalWasteBins/DigitalWasteBins/blob/master/info-images/preview20170425.png)
