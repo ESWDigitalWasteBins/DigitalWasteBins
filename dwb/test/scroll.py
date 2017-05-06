@@ -91,7 +91,7 @@ def main():
         if not waiting:
             if y >= height:
                 print('NEXT @', y)
-                # FIXME: Remve
+                # FIXME: Remove this possibly?
                 y = y_0  # move image back to top
                 waited = False  # after pausing for specified time
                 # cycle through image indexes
