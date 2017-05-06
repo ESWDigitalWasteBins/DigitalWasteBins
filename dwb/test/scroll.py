@@ -26,7 +26,7 @@ def main():
     speed_0_y = speed_y = 0  # initial speed and current speed
     accel_y = 0.3            # acceleration of falling images
     stop_y = 100             # stop y position for images
-    wait_time = 1            # in seconds
+    wait_time = 1000            # in milliseconds
 
     # framerate clock
     clock = pygame.time.Clock()
@@ -34,6 +34,9 @@ def main():
     # track cycling of frames
     running = True  # True if frames are cycling
     waited = False  # True if the frame has waited for wait_time seconds
+    waiting = False
+    time_start = None  # start waiting
+    time_now = pygame.time.get_ticks()
 
     # image selection and location settings
     image_paths = list(Path('images/').glob('**/*.png'))  # get all PNG images from directory
@@ -74,26 +77,30 @@ def main():
         screen.fill((255, 255, 255))
         screen.blit(text, (0, y))
         screen.blit(image, (0, y+theight))
-        # Update y position
-        if y >= height:
-            print('NEXT @', y)
-            y = y_0  # move image back to top
-            screen.fill((255, 255, 255))  # white background
-            waited = False  # after pausing for specified time
-            # cycle through image indexes
-            last_index, curr_index = curr_index, (curr_index + 1) % len(image_paths)
-        else:
-            speed_y += accel_y  # accelerate image
-            y += speed_y  # change image position by speed amount
+        # check if image has waited specified amount of time
+        if not waited and not waiting and y >= stop_y:
+            print('STOP @', y)
+            time_start = pygame.time.get_ticks()
+            waiting = True
+        time_now = pygame.time.get_ticks()
+        if waiting and time_start and time_now - time_start >= wait_time:
+            waited = True
+            waiting = False
+            speed_y = speed_0_y  # reset speed to initial speed
+        # Update y position only if not waiting
+        if not waiting:
+            if y >= height:
+                print('NEXT @', y)
+                # FIXME: Remve
+                y = y_0  # move image back to top
+                waited = False  # after pausing for specified time
+                # cycle through image indexes
+                last_index, curr_index = curr_index, (curr_index + 1) % len(image_paths)
+            else:
+                speed_y += accel_y  # accelerate image
+                y += speed_y  # change image position by speed amount
         # Update screen
         pygame.display.flip()
-        # Pause once per cycle
-        if not waited and y >= stop_y:
-            print('STOP @', y)
-            waited = True
-            # FIXME: make y position static instead of pausing execution
-            pygame.time.wait(wait_time * 1000)  # pause execution
-            speed_y = speed_0_y  # reset speed to initial speed
         # 60 FPS
         clock.tick(60)
 
