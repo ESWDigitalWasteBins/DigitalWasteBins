@@ -15,7 +15,7 @@ def main():
     pygame.init()
 
     # screen to draw on
-    screen = pygame.display.set_mode((900, 300))
+    screen = pygame.display.set_mode((400, 900))
     width, height = screen.get_size()
 
     # test text
@@ -25,7 +25,6 @@ def main():
     # physics
     speed_0_y = speed_y = 0  # initial speed and current speed
     accel_y = 0.3            # acceleration of falling images
-    stop_y = 100             # stop y position for images
     wait_time = 1000            # in milliseconds
 
     # framerate clock
@@ -45,15 +44,16 @@ def main():
 
     # FIXME: first image, remove duplicate code
     image = pygame.image.load(str(image_paths[curr_index])).convert()
-    iwidth, iheight = image.get_size()  # image dimensions
-    scale_y = (height-theight)/iheight #scale by height
-    scale_x= (width)/iwidth            # scale by width
-    scale= min(scale_x,scale_y)
-    if scale>1:
-        scale=1
+    iwidth, iheight = image.get_size()    # image dimensions
+    scale_y = (height-theight) / iheight  # scale by height
+    scale_x = width / iwidth              # scale by width
+    scale = min(scale_x, scale_y)
+    if scale > 1:
+        scale = 1
     image = pygame.transform.scale(image, (int(scale*iwidth), int(scale*iheight)))
     iwidth, iheight = image.get_size()  # image dimensions after scaling
     y_0 = y = -(theight + iheight)
+    stop_y = (height - (theight + iheight)) // 2  # stop at center of screen
 
     while running:
         # Check for events
@@ -72,15 +72,17 @@ def main():
             print('UPDATE @', y, 'last:', last_index, 'curr:', curr_index)
             last_index = curr_index  # update last index
             image = pygame.image.load(str(image_paths[curr_index])).convert()
-            iwidth, iheight = image.get_size()  # image dimensions
-            scale_y = (height-theight)/iheight #scale by height
-            scale_x= (width)/iwidth            # scale by width
-            scale= min(scale_x,scale_y)
-            if scale>1:
-                scale=1
+            iwidth, iheight = image.get_size()    # image dimensions
+            scale_y = (height-theight) / iheight  # scale by height
+            scale_x = width / iwidth              # scale by width
+            scale = min(scale_x, scale_y)
+            if scale > 1:
+                scale = 1
             image = pygame.transform.scale(image, (int(scale*iwidth), int(scale*iheight)))
             iwidth, iheight = image.get_size()  # image dimensions after scaling
             y_0 = y = -(theight + iheight)
+            stop_y = (height - (theight + iheight)) // 2
+            print(stop_y)
         # Draw onto screen at y position
         screen.fill((255, 255, 255))
         screen.blit(text, (0, y))
