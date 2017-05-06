@@ -46,7 +46,11 @@ def main():
     # FIXME: first image, remove duplicate code
     image = pygame.image.load(str(image_paths[curr_index])).convert()
     iwidth, iheight = image.get_size()  # image dimensions
-    scale = width/iwidth  # scale factor by width (for now, will change)
+    scale_y = (height-theight)/iheight #scale by height
+    scale_x= (width)/iwidth            # scale by width
+    scale= min(scale_x,scale_y)
+    if scale>1:
+        scale=1
     image = pygame.transform.scale(image, (int(scale*iwidth), int(scale*iheight)))
     iwidth, iheight = image.get_size()  # image dimensions after scaling
     y_0 = y = -(theight + iheight)
