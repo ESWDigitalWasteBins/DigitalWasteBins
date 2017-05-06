@@ -60,7 +60,7 @@ class Content:
         return 'Content Class'.format()
 
     def draw(self, screen: pygame.display) -> None:
-        """Blit content animations to screen.""""
+        """Blit content animations to screen."""
         screen.fill(self._display_bg_color)
 
 
