@@ -15,7 +15,7 @@ def main():
     pygame.init()
 
     # screen to draw on
-    screen = pygame.display.set_mode((506, 900))
+    screen = pygame.display.set_mode((900, 300))
     width, height = screen.get_size()
 
     # test text
@@ -73,7 +73,11 @@ def main():
             last_index = curr_index  # update last index
             image = pygame.image.load(str(image_paths[curr_index])).convert()
             iwidth, iheight = image.get_size()  # image dimensions
-            scale = width/iwidth  # scale by width
+            scale_y = (height-theight)/iheight #scale by height
+            scale_x= (width)/iwidth            # scale by width
+            scale= min(scale_x,scale_y)
+            if scale>1:
+                scale=1
             image = pygame.transform.scale(image, (int(scale*iwidth), int(scale*iheight)))
             iwidth, iheight = image.get_size()  # image dimensions after scaling
             y_0 = y = -(theight + iheight)
