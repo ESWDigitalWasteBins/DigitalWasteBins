@@ -111,7 +111,8 @@ class Content:
         self.wait_time = 1000  # in milliseconds
         # physics
         self.speed_0_y = self.speed_y = 0  # initial speed and current speed
-        self.accel_y = 0.3/1080*self.height  # acceleration of falling images
+        self.accel_y = 0.7*self.height/1080  # acceleration of falling images
+        print(self.accel_y)
 
     def __str__(self) -> str:
         return 'Content Class'.format()
