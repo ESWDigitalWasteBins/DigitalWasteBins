@@ -9,6 +9,7 @@ Created on Apr 25, 2017
 
 import pygame
 from pygame import font
+from pathlib import Path
 
 
 class Title:
@@ -39,30 +40,50 @@ class Title:
         screen.blit(self.text, text_rect)
 
 
+def scaled_image(screen, image, theight):
+    width, height = screen.get_size()
+    iwidth, iheight = image.get_size()    # image dimensions
+    scale_y = (height-theight) / iheight  # scale by height
+    scale_x = width / iwidth              # scale by width
+    scale = min(scale_x, scale_y)
+    if scale > 1:
+        scale = 1
+    return pygame.transform.scale(image, (int(scale*iwidth), int(scale*iheight)))
+
+
 class Frame:
-    def __init__(self):
-        self.surfaces = {}
+    def __init__(self, screen, image, bg_color: (int)=(255, 255, 255)):
+        self.screen = screen
         self.y = 0
-        self.bg_color = (255, 255, 255)
+        self.bg_color = bg_color
+        self.text = pygame.font.Font(None, 100).render('Test', True, (0, 0, 0))
+        self.image = image
+        self.surfaces = [self.text, self.image]
 
     def set_position(self, y: int) -> None:
         self.y = y
 
-    def draw(self, screen) -> None:
+    def draw(self) -> None:
+        width, height = self.screen.get_size()
         screen.fill(self.bg_color)
-        text = pygame.font.Font(None, 100).render('Test', True, (0, 0, 0))
-        self.surfaces['text'] = text
-        screen.blit(text, (0, self.y))
+        twidth, theight = self.text.get_size()
+        screen.blit(self.text, (0, self.y))
+        screen.blit(scaled_image(self.screen, self.image, theight), (0, self.y + theight))
 
     def get_height(self) -> int:
-        assert all(type(surface) == pygame.Surface for surface in self.surfaces.values())
-        return sum(surface.get_height() for surface in self.surfaces.values())
+        height = scaled_image(self.screen, self.image, self.text.get_height()).get_height() + self.text.get_height()
+        return height
+
+
+def make_frames(screen) -> [Frame]:
+    image_paths = list(Path('test/images/').glob('**/*.png'))
+    return [Frame(screen, pygame.image.load(str(image_path)).convert()) for image_path in image_paths]
 
 
 # TODO: fill in with animations, etc.
 class Content:
     """[SUMMARY]"""
-    def __init__(self) -> None:
+    def __init__(self, screen) -> None:
         """
         Content animations below Title() banner in Display().
 
@@ -74,8 +95,10 @@ class Content:
             [ATTR1]: [DESCRIPTION]
             [ATTR2]: [DESCRIPTION]
         """
+        self.screen = screen
+        self.width, self.height = screen.get_size()
         # frames to display
-        self.frames = [Frame(), Frame(), Frame()]
+        self.frames = make_frames(self.screen)
         self.last_index = None
         self.curr_index = 0
         # settings for frame position and rotation
@@ -95,12 +118,11 @@ class Content:
 
     def draw(self, screen) -> None:
         """Blit content animations to screen."""
-        width, height = screen.get_size()
-        if not self.stop_y or self.last_index is not None and self.last_index != self.curr_index:
+        if self.stop_y is None or (self.last_index is not None and self.last_index != self.curr_index):
             print('UPDATE @', self.y, 'last:', self.last_index, 'curr:', self.curr_index)
             self.last_index = self.curr_index  # update last index
             self.y_0 = self.y = -self.frames[self.curr_index].get_height()
-            self.stop_y = (height - self.frames[self.curr_index].get_height()) // 2
+            self.stop_y = (self.height - self.frames[self.curr_index].get_height()) // 2
         self.draw_frame(screen)
         # check if image has waited specified amount of time
         if not self.waited and not self.waiting and self.y >= self.stop_y:
@@ -119,7 +141,7 @@ class Content:
     def draw_frame(self, screen):
         """Draw Frame onto screen at y position."""
         self.frames[self.curr_index].set_position(self.y)
-        self.frames[self.curr_index].draw(screen)
+        self.frames[self.curr_index].draw()
 
     def update_y_position(self, screen):
         width, height = screen.get_size()
@@ -169,11 +191,12 @@ if __name__ == '__main__':
     BLUE = (0, 57, 166)
 
     pygame.init()
-    screen = pygame.display.set_mode((350, 700))
+    # screen = pygame.display.set_mode((350, 700))
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     pygame.display.set_caption('Display Test')
 
     title = Title(FontManager().create_text('TEST', 50), bg=BLUE, pady=20)
-    content = Content()
+    content = Content(screen)
     display = Display(title, content)
 
     clock = pygame.time.Clock()
