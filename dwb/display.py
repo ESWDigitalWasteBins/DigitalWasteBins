@@ -77,7 +77,7 @@ class Frame:
 
 def make_frames(screen) -> [Frame]:
     image_paths = list(Path('test/images/').glob('**/*.png'))
-    return [Frame(screen, pygame.image.load(str(image_path)).convert()) for image_path in image_paths]
+    return [Frame(screen, pygame.image.load(str(image_paths[0])).convert())]
 
 
 # TODO: fill in with animations, etc.
