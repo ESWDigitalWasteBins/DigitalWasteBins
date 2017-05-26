@@ -52,7 +52,7 @@ class Scale:
         digit6 = (raw[4] & 0b11110000) >> 4
         # Put it all together
         result = digit1 + (digit2 * 10) + (digit3 * 100) + (digit4 * 1000) + (digit5 * 10000) + (digit6 * 100000)
-        result /= 10 ** decimal_point
+        result /= 10 ** (decimal_point - 1)
         # Handle sixth byte
         unit = raw[5] & 0b1
         return Reading(current_mode, stable, overflow, result, unit)
