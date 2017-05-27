@@ -31,16 +31,17 @@ class BaseFrame:
         return self._size
 
 
-class Frame:
+class Frame(BaseFrame):
     def __init__(self, screen: pygame.display, master: BaseFrame or 'Frame',
                  padx: int=0, pady: int=0,
                  bg_color: (int, int, int)=(0, 0, 0)):
+        x, y = master.get_x() + padx, master.get_y() + pady
+        width, height = master.get_width() - 2*padx, master.get_height() - 2*pady
+        BaseFrame.__init__(self, screen, x, y, width, height)
         self._screen = screen
         self._master = master
         self._padx = padx
         self._pady = pady
-        self._position = self._x, self._y = self._master.get_x() + self._padx, self._master.get_y() + self._pady
-        self._size = self._width, self._height = self._master.get_width() - 2*self._padx, self._master.get_height() - 2*self._pady
         self._bg_color = bg_color
 
     def draw(self) -> None:
@@ -49,24 +50,6 @@ class Frame:
 
     def update_position(self, x: int=0, y: int=0) -> None:
         self._position = self._x, self._y = (self._master.get_x() + self._padx, self._master.get_y() + self._pady)
-
-    def get_x(self) -> int:
-        return self._x
-
-    def get_y(self) -> int:
-        return self._y
-
-    def get_position(self) -> (int, int):
-        return self._position
-
-    def get_width(self) -> int:
-        return self._width
-
-    def get_height(self) -> int:
-        return self._height
-
-    def get_size(self) -> (int, int):
-        return self._size
 
 
 # Test Frame
