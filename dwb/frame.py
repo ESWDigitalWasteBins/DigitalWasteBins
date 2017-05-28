@@ -65,13 +65,14 @@ class Frame(BaseFrame):
 
         Args:
             screen: screen to draw on
-            master: parent frame of this Frame, either another Frame or BaseFrame
+            master: parent frame of this Frame, either Frame or BaseFrame
             padx(=0): horizontal padding
             pady(=0): vertical padding
             bg_color(=(0, 0, 0)): background color of Frame, a 3-tuple of ints
         """
         x, y = master.get_x() + padx, master.get_y() + pady
-        width, height = master.get_width() - 2*padx, master.get_height() - 2*pady
+        width = master.get_width() - 2*padx
+        height = master.get_height() - 2*pady
         BaseFrame.__init__(self, screen, x, y, width, height)
         self._screen = screen
         self._master = master
