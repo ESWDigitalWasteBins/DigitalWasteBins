@@ -1,11 +1,13 @@
 import pygame
 
 
-class BaseFrame(pygame.Surface):
+class Frame(pygame.Surface):
     """BaseFrame class for layout with position and size."""
-    def __init__(self, screen: pygame.display,
-                 x: int, y: int,
-                 width: int, height: int):
+    def __init__(self, screen: pygame.display, master: 'Frame'=None,
+                 x: int=None, y: int=None,
+                 width: int=None, height: int=None,
+                 padx: int=0, pady: int=0,
+                 bg_color: (int, int, int)=(0, 0, 0)):
         """
         Initialize BaseFrame as subclass of pygame.Surface. Must have
         position and size.
@@ -17,9 +19,31 @@ class BaseFrame(pygame.Surface):
             width: width of frame
             height: height of frame
         """
+        if master is None:
+            assert all(type(x) is int for x in (x, y, width, height, padx, pady))
+            self._master = self
+        else:
+            assert isinstance(master, Frame), 'master is not Frame()'
+            x, y = master.get_x() + padx, master.get_y() + pady
+            width = master.get_width() - 2*padx
+            height = master.get_height() - 2*pady
+            self._master = master
         pygame.Surface.__init__(self, (width, height))
         self._screen = screen
         self._position = self._x, self._y = (x, y)
+        self._padx = padx
+        self._pady = pady
+        self._bg_color = bg_color
+
+    def draw(self) -> None:
+        """Draw a rectangle representing this Frame's covering."""
+        self._update_position()
+        pygame.draw.rect(self._screen, self._bg_color, (self._x, self._y, self.get_width(), self.get_height()))
+
+    def _update_position(self) -> None:
+        """Update position of Frame based on master, used when drawing."""
+        self._position = self._x, self._y = (self._master.get_x() + self._padx,
+                                             self._master.get_y() + self._pady)
 
     def set_position(self, x: int=None, y: int=None) -> None:
         """
@@ -54,41 +78,41 @@ class BaseFrame(pygame.Surface):
         return (self.get_x() + self.get_width()//2, self.get_y() + self.get_height()//2)
 
 
-class Frame(BaseFrame):
-    """Frame class for layout with master and padding."""
-    def __init__(self, screen: pygame.display, master: BaseFrame or 'Frame',
-                 padx: int=0, pady: int=0,
-                 bg_color: (int, int, int)=(0, 0, 0)):
-        """
-        Initialize Frame as subclass of BaseFrame. Must have screen
-        to draw on and master for positioning and sizing.
-
-        Args:
-            screen: screen to draw on
-            master: parent frame of this Frame, either Frame or BaseFrame
-            padx(=0): horizontal padding
-            pady(=0): vertical padding
-            bg_color(=(0, 0, 0)): background color of Frame, a 3-tuple of ints
-        """
-        x, y = master.get_x() + padx, master.get_y() + pady
-        width = master.get_width() - 2*padx
-        height = master.get_height() - 2*pady
-        BaseFrame.__init__(self, screen, x, y, width, height)
-        self._screen = screen
-        self._master = master
-        self._padx = padx
-        self._pady = pady
-        self._bg_color = bg_color
-
-    def draw(self) -> None:
-        """Draw a rectangle representing this Frame's covering."""
-        self._update_position()
-        pygame.draw.rect(self._screen, self._bg_color, (self._x, self._y, self.get_width(), self.get_height()))
-
-    def _update_position(self) -> None:
-        """Update position of Frame based on master, used when drawing."""
-        self._position = self._x, self._y = (self._master.get_x() + self._padx,
-                                             self._master.get_y() + self._pady)
+# class Frame(BaseFrame):
+#     """Frame class for layout with master and padding."""
+#     def __init__(self, screen: pygame.display, master: BaseFrame or 'Frame',
+#                  padx: int=0, pady: int=0,
+#                  bg_color: (int, int, int)=(0, 0, 0)):
+#         """
+#         Initialize Frame as subclass of BaseFrame. Must have screen
+#         to draw on and master for positioning and sizing.
+#
+#         Args:
+#             screen: screen to draw on
+#             master: parent frame of this Frame, either Frame or BaseFrame
+#             padx(=0): horizontal padding
+#             pady(=0): vertical padding
+#             bg_color(=(0, 0, 0)): background color of Frame, a 3-tuple of ints
+#         """
+#         x, y = master.get_x() + padx, master.get_y() + pady
+#         width = master.get_width() - 2*padx
+#         height = master.get_height() - 2*pady
+#         BaseFrame.__init__(self, screen, x, y, width, height)
+#         self._screen = screen
+#         self._master = master
+#         self._padx = padx
+#         self._pady = pady
+#         self._bg_color = bg_color
+#
+#     def draw(self) -> None:
+#         """Draw a rectangle representing this Frame's covering."""
+#         self._update_position()
+#         pygame.draw.rect(self._screen, self._bg_color, (self._x, self._y, self.get_width(), self.get_height()))
+#
+#     def _update_position(self) -> None:
+#         """Update position of Frame based on master, used when drawing."""
+#         self._position = self._x, self._y = (self._master.get_x() + self._padx,
+#                                              self._master.get_y() + self._pady)
 
 
 # Test Frame
@@ -104,10 +128,10 @@ if __name__ == '__main__':
     running = True
     clock = pygame.time.Clock()
 
-    topbase = BaseFrame(screen, 0, 0,
+    topbase = Frame(screen, None, 0, 0,
                         width=screen.get_width(),
                         height=screen.get_height()//2)
-    botbase = BaseFrame(screen, 0, topbase.get_height(),
+    botbase = Frame(screen, None, 0, topbase.get_height(),
                         width=screen.get_width(),
                         height=screen.get_height()//2)
     topframe = Frame(screen, topbase,
