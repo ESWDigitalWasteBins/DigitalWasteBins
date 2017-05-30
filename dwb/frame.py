@@ -9,8 +9,8 @@ class Frame(pygame.Surface):
                  padx: int=0, pady: int=0,
                  bg_color: (int, int, int)=(0, 0, 0)):
         """
-        Initialize BaseFrame as subclass of pygame.Surface. Must have
-        position and size.
+        Initialize Frame as subclass of pygame.Surface. Must have a
+        master or position and size based on screen.
 
         Args:
             screen: screen to draw on
@@ -18,6 +18,9 @@ class Frame(pygame.Surface):
             y: y-coordinate of top-left corner
             width: width of frame
             height: height of frame
+            padx(=0): horizontal padding
+            pady(=0): vertical padding
+            bg_color(=(0, 0, 0)): background color of Frame, a 3-tuple of ints
         """
         if master is None:
             assert all(type(x) is int for x in (x, y, width, height, padx, pady))
@@ -34,6 +37,9 @@ class Frame(pygame.Surface):
         self._padx = padx
         self._pady = pady
         self._bg_color = bg_color
+
+    def __str__(self) -> str:
+        return 'Frame(master={}, x={}, y={}, width={}, height={}, padx={}, pady={})'.format('self' if self._master is self else self._master, self.get_x(), self.get_y(), self.get_width(), self.get_height(), self._padx, self._pady)
 
     def draw(self) -> None:
         """Draw a rectangle representing this Frame's covering."""
@@ -75,6 +81,10 @@ class Frame(pygame.Surface):
         return self._position
 
     def get_center(self) -> (int, int):
+        """
+        Return 2-tuple of ints representing center (x, y)
+        coordinate.
+        """
         return (self.get_x() + self.get_width()//2, self.get_y() + self.get_height()//2)
 
 
