@@ -1,13 +1,20 @@
 import pygame
 import images
 from frame import Frame
-from collections import namedtuple
+
+
+_DEBUG = True
+
+
+def _debug_print(*args, **kwargs) -> None:
+    if _DEBUG:
+        print(*args, **kwargs)
 
 
 class TextFrame(Frame):
-    def __init__(self, screen: pygame.display, master: Frame,
+    def __init__(self, screen: pygame.display, parent: Frame,
                  text: str, padx: int=0, pady: int=0) -> None:
-        Frame.__init__(self, screen, master, padx, pady)
+        Frame.__init__(self, screen, parent, padx, pady)
         self._text = text
 
     def draw(self) -> None:
@@ -30,12 +37,10 @@ class Header(Frame):
         pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
         self._text_frame.draw()
 
-# CaptionedImage = namedtuple('CaptionedImage', 'image_path text')
-
 
 class CaptionedImage(Frame):
     """[SUMMARY]"""
-    def __init__(self, screen: pygame.display, master: Frame,
+    def __init__(self, screen: pygame.display, parent: Frame,
                  image_path: str, text: str,
                  padx: int=0, pady: int=0,
                  bg_color: (int, int, int)=(0, 0, 0)) -> None:
@@ -50,7 +55,7 @@ class CaptionedImage(Frame):
             [ATTR1]: [DESCRIPTION]
             [ATTR2]: [DESCRIPTION]
         """
-        Frame.__init__(self, screen, master, padx=padx, pady=pady, bg_color=bg_color)
+        Frame.__init__(self, screen, parent, padx=padx, pady=pady, bg_color=bg_color)
         iscale = 0.8
         tscale = 1 - iscale
         isize = (iscale*self.get_width(), iscale*self.get_height())
@@ -61,15 +66,16 @@ class CaptionedImage(Frame):
 
     def draw(self):
         self._update_position()
+        self._image_rect.midtop = (self.get_center()[0], self.get_y())
+        self._text_rect.midbottom = (self.get_center()[0], self.get_y()+self.get_height())
         self._screen.blit(self._image, self._image_rect)
         self._screen.blit(self._text, self._text_rect)
 
 
 class Content(Frame):
     """Creates a single CaptionedImage."""
-    def __init__(self, screen: pygame.display, image_path: str, text: str,
-                 x: int, y: int,
-                 width: int, height: int,
+    def __init__(self, screen: pygame.display, parent: Frame,
+                 image_path: str, text: str,
                  content_padx: int=0, content_pady: int=0,
                  bg_color: (int, int, int)=(0, 0, 0)) -> None:
         """
@@ -83,31 +89,27 @@ class Content(Frame):
             [ATTR1]: [DESCRIPTION]
             [ATTR2]: [DESCRIPTION]
         """
-        Frame.__init__(self, screen, None, x, y, width, height)
+        Frame.__init__(self, screen, parent)
         self._captioned_image = CaptionedImage(screen, self, image_path, text, padx=content_padx, pady=content_pady)
         self._bg_color = bg_color
 
     def draw(self) -> None:
-        print(self.get_y())
-        pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
+        self._update_position()
+        # pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
         self._captioned_image.draw()
 
 
 class Body(Frame):
-    """Holds a bunch of CONTENT()."""
-    def __init__(self, screen: pygame.display, contents: [Content],
+    """Holds a bunch of Content()."""
+    def __init__(self, screen: pygame.display,
+                 image_path: str, text: str,
                  x: int, y: int,
                  width: int, height: int) -> None:
         Frame.__init__(self, screen, None, x, y, width, height)
-        self._contents = contents
+        self._content = Content(screen, self, image_path, text, content_padx=20, content_pady=50)
 
     def draw(self):
-        for content in self._contents:
-            content.draw()
-
-    def set_position(self, x: int=None, y: int=None):
-        for content in self._contents:
-            content.set_position(x, y)
+        self._content.draw()
 
 
 class Display(Frame):
@@ -119,8 +121,10 @@ class Display(Frame):
         self._last_index = None
         self._curr_index = 0
         # settings for frame position and rotation
-        self.y_0 = self._y = -self._bodies[self._curr_index].get_height()
-        self._stop_y = 0  # stop y position for images
+        curr_body = self._bodies[self._curr_index]
+        body_height = sum(body.get_height() for body in curr_body)
+        self.y_0 = self._y = -body_height
+        self._stop_y = self._header.get_height()  # stop y position for images
         self._waited = False
         self._waiting = False
         self._time_start = None
@@ -132,17 +136,18 @@ class Display(Frame):
 
     def draw(self):
         """Blit animations to screen."""
-        self._header.draw()
+        self._screen.fill((0, 0, 0))
         curr_body = self._bodies[self._curr_index]
+        body_height = sum(body.get_height() for body in curr_body)
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
-            print('UPDATE @', self._y, 'last:', self._last_index, 'curr:', self._curr_index)
+            _debug_print('UPDATE @', self._y, 'last:', self._last_index, 'curr:', self._curr_index)
             self._last_index = self._curr_index  # update last index
-            self.y_0 = self._y = -curr_body.get_height()
-            self._stop_y = (curr_body.get_height() - self.get_height()) // 2
+            self.y_0 = self._y = -body_height
+            # self._stop_y = (body_height - self.get_height()) // 2
         self._draw_body()
         # check if image has waited specified amount of time
         if not self._waited and not self._waiting and self._y >= self._stop_y:
-            print('STOP @', self._y)
+            _debug_print('STOP @', self._y)
             self._time_start = pygame.time.get_ticks()
             self._waiting = True
         self._time_now = pygame.time.get_ticks()
@@ -153,16 +158,21 @@ class Display(Frame):
         # Update y position only if not waiting
         if not self._waiting:
             self._update_y_position()
+        self._header.draw()
 
     def _draw_body(self):
         """Draw Body onto screen at y position."""
-        print('DRAW @', self._y)
-        self._bodies[self._curr_index].set_position(0, self._y)
-        self._bodies[self._curr_index].draw()
+        # _debug_print('DRAW @', self._y)
+        curr_body = self._bodies[self._curr_index]
+        curr_y = self.get_y()
+        for i in range(len(curr_body)):
+            curr_body[i].set_position(0, curr_y)
+            curr_y += curr_body[i].get_height()
+            curr_body[i].draw()
 
     def _update_y_position(self):
         if self._y >= self.get_height():
-            print('NEXT @', self._y)
+            _debug_print('NEXT @', self._y)
             self._y = self.y_0  # move image back to top
             self._waited = False  # after pausing for specified time
             # cycle through image indexes
@@ -170,6 +180,8 @@ class Display(Frame):
         else:
             self.speed_y += self._accel_y  # accelerate image
             self._y += self.speed_y  # change image position by speed amount
+            if self._y > self._stop_y and not self._waited:  # set position to stop position if it hasn't waited
+                self._y = self._stop_y                       # so it doesn't end up lower that it should when at high speed
 
 
 if __name__ == '__main__':
@@ -190,17 +202,19 @@ if __name__ == '__main__':
                     screen.get_width(), header_height,
                     'RECYCLE', BLUE)
 
-    body_count = 3
-    content_per_body = 1
+    frame_count = 5
+    content_per_frame = 2
 
     all_content_height = int(CONTENT_RATIO*screen.get_height())
-    content_height = all_content_height // content_per_body
-    content = Content(screen, 'images\\items\\1.png', 'Testing 123',
-                      0, header.get_height(),
-                      screen.get_width(), content_height,
-                      content_padx=10, content_pady=20)
+    body_height = all_content_height // content_per_frame
 
-    body_list = [Body(screen, [content], 0, header.get_height(), screen.get_width(), all_content_height)]
+    body_list = []
+    for i in range(frame_count):
+        sub_list = []
+        for j in range(content_per_frame):
+            print(header.get_height() + j*body_height)
+            sub_list.append(Body(screen, 'images\\items\\{}.png'.format(i+j+1), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
+        body_list.append(sub_list)
 
     display = Display(header, body_list)
 

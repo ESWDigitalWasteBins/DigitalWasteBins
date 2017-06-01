@@ -3,7 +3,7 @@ import pygame
 
 class Frame(pygame.Surface):
     """BaseFrame class for layout with position and size."""
-    def __init__(self, screen: pygame.display, master: 'Frame'=None,
+    def __init__(self, screen: pygame.display, parent: 'Frame'=None,
                  x: int=None, y: int=None,
                  width: int=None, height: int=None,
                  padx: int=0, pady: int=0,
@@ -14,32 +14,33 @@ class Frame(pygame.Surface):
 
         Args:
             screen: screen to draw on
-            x: x-coordinate of top-left corner
-            y: y-coordinate of top-left corner
-            width: width of frame
-            height: height of frame
+            master(=None): master Frame that determines this Frame's positioning or None to take screen size
+            x(=0): x-coordinate of top-left corner
+            y(=0): y-coordinate of top-left corner
+            width(=None): width of frame
+            height(=None): height of frame
             padx(=0): horizontal padding
             pady(=0): vertical padding
             bg_color(=(0, 0, 0)): background color of Frame, a 3-tuple of ints
         """
-        if master is None:
+        if parent is None:
             assert all(type(x) is int for x in (x, y, width, height, padx, pady))
-            self._master = self
+            self._parent = self
         else:
-            assert isinstance(master, Frame), 'master is not Frame()'
-            x, y = master.get_x() + padx, master.get_y() + pady
-            width = master.get_width() - 2*padx
-            height = master.get_height() - 2*pady
-            self._master = master
+            assert isinstance(parent, Frame), 'master is not Frame()'
+            x, y = parent.get_x() + padx, parent.get_y() + pady
+            width = parent.get_width() - 2*padx
+            height = parent.get_height() - 2*pady
+            self._parent = parent
         pygame.Surface.__init__(self, (width, height))
         self._screen = screen
-        self._position = self._x, self._y = (x, y)
+        self.set_position(x, y)
         self._padx = padx
         self._pady = pady
         self._bg_color = bg_color
 
     def __str__(self) -> str:
-        return 'Frame(master={}, x={}, y={}, width={}, height={}, padx={}, pady={})'.format('self' if self._master is self else self._master, self.get_x(), self.get_y(), self.get_width(), self.get_height(), self._padx, self._pady)
+        return '{}(parent={}, x={}, y={}, width={}, height={}, padx={}, pady={})'.format(self.__class__.__name__, 'self' if self._parent is self else self._parent, self.get_x(), self.get_y(), self.get_width(), self.get_height(), self._padx, self._pady)
 
     def draw(self) -> None:
         """Draw a rectangle representing this Frame's covering."""
@@ -48,21 +49,34 @@ class Frame(pygame.Surface):
 
     def _update_position(self) -> None:
         """Update position of Frame based on master, used when drawing."""
-        self._position = self._x, self._y = (self._master.get_x() + self._padx,
-                                             self._master.get_y() + self._pady)
+        self.set_position(self._parent.get_x() + self._padx, self._parent.get_y() + self._pady)
 
     def set_position(self, x: int=None, y: int=None) -> None:
         """
         Set frame's top-left coordinate, unchanged if not specified.
 
         Args:
-            x(=0): update frame's top-left x coordinate
-            y(=0): update frame's top-left x coordinate
+            x(=None): set frame's top-left x coordinate
+            y(=None): set frame's top-left y coordinate
         """
         if x is not None:
             self._x = x
         if y is not None:
             self._y = y
+        self._position = (self._x, self._y)
+
+    def change_position(self, dx: int=None, dy: int=None) -> None:
+        """
+        Change frame's top-left coordinate, unchanged if not specified.
+
+        Args:
+            dx(=None): change frame's top-left x coordinate
+            dy(=None): change frame's top-left y coordinate
+        """
+        if dx is not None:
+            self._x += dx
+        if dy is not None:
+            self._y += dy
         self._position = (self._x, self._y)
 
     def get_x(self) -> int:
