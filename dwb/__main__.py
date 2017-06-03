@@ -11,7 +11,7 @@ import pygame
 from scale import scaleReading
 from motion_sensor import motionReading
 from font_manager import FontManager
-from display import Title, Content, Display
+from display import TitleFrame, Content, Display
 
 
 WHITE = (255, 255, 255)
@@ -41,21 +41,21 @@ def main() -> None:
     if mode == 'L':
         title_fm = FontManager(['impact'])
         text = title_fm.create_text('LANDFILL', 100, color=WHITE)
-        title = Title(text=text, bg=BLACK, pady=100)
+        title = TitleFrame(text=text, bg=BLACK, pady=100)
         content = Content(display_bg_color=WHITE)
         Display(title, content).draw(screen)
     # Compost
     elif mode == 'C':
         title_fm = FontManager(['impact'])
         text = title_fm.create_text('COMPOST', 100, color=WHITE)
-        title = Title(text=text, bg=GREEN, pady=100)
+        title = TitleFrame(text=text, bg=GREEN, pady=100)
         content = Content(display_bg_color=WHITE)
         Display(title, content).draw(screen)
     # Recycle
     elif mode == 'R':
         title_fm = FontManager(['impact'])
         text = title_fm.create_text('RECYCLE', 100, color=WHITE)
-        title = Title(text=text, bg=BLUE, pady=100)
+        title = TitleFrame(text=text, bg=BLUE, pady=100)
         content = Content(display_bg_color=WHITE)
         Display(title, content).draw(screen)
     else:
