@@ -212,9 +212,9 @@ if __name__ == '__main__':
     body_list = []
     for i in range(frame_count):
         sub_list = []
-        for j in range(content_per_frame):
-            print(header.get_height() + j*body_height)
-            sub_list.append(Body(screen, 'images\\items\\{}.png'.format(i+j+1), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
+        # for j in range(content_per_frame):
+        #     print(header.get_height() + j*body_height)
+        #     sub_list.append(Body(screen, 'images\\items\\{}.png'.format(i+j+1), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
         body_list.append(sub_list)
 
     # display = Display(header, [])
