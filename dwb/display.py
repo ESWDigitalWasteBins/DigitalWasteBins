@@ -220,6 +220,7 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     running = True
 
+    y = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -232,8 +233,8 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))
 
-        pygame.draw.rect(screen, BLUE, (0, 0, screen.get_width(), screen.get_height()))
-
+        pygame.draw.rect(screen, BLUE, (0, y, screen.get_width(), screen.get_height()))
+        y += 1
         clock.tick(60)
         pygame.time.wait(3000)
 
