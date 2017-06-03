@@ -136,7 +136,6 @@ class Display(Frame):
 
     def draw(self):
         """Blit animations to screen."""
-        self._screen.fill((0, 0, 0))
         curr_body = self._bodies[self._curr_index]
         body_height = sum(body.get_height() for body in curr_body)
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
@@ -193,9 +192,8 @@ if __name__ == '__main__':
     BLUE = (0, 57, 166)
 
     pygame.init()
-    # flags = pygame.FULLSCREEN | pygame.DOUBLEBUF
-    # screen = pygame.display.set_mode((0, 0), flags)
-    screen = pygame.display.set_mode((500, 500))
+    flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE
+    screen = pygame.display.set_mode((0, 0), flags)
     pygame.display.set_caption('Display Test')
 
     header_height = int(TEXT_RATIO*screen.get_height())
@@ -233,6 +231,7 @@ if __name__ == '__main__':
                     break
 
         screen.fill((0, 0, 0))
+
         display.draw()
 
         clock.tick(60)
