@@ -1,7 +1,8 @@
 import pygame
+from pathlib import Path
 
 
-def load_image(image_path: str, colorkey=None):
+def load_image(image_path: Path, colorkey=None):
     """
     Load an image from the image_path with optional colorkey.
     Uses convert_alpha() to increase alpha performance.
@@ -12,7 +13,7 @@ def load_image(image_path: str, colorkey=None):
                   want transparent instead of the image's actual color
     """
     try:
-        image = pygame.image.load(image_path).convert_alpha()
+        image = pygame.image.load(str(image_path)).convert_alpha()
     except pygame.error:
         print('Cannot load image:', image_path)
         raise SystemExit(str(pygame.compat.geterror()))

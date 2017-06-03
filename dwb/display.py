@@ -1,5 +1,6 @@
 import pygame
 import images
+from pathlib import Path
 from frame import Frame
 
 
@@ -41,7 +42,7 @@ class Header(Frame):
 class CaptionedImage(Frame):
     """[SUMMARY]"""
     def __init__(self, screen: pygame.display, parent: Frame,
-                 image_path: str, text: str,
+                 image_path: Path, text: str,
                  padx: int=0, pady: int=0,
                  bg_color: (int, int, int)=(0, 0, 0)) -> None:
         """
@@ -209,8 +210,8 @@ if __name__ == '__main__':
     all_content_height = int(CONTENT_RATIO*screen.get_height())
     body_height = all_content_height // content_per_frame
 
-    image = pygame.image.load(str(Path('images/items/1.png')))
-    # body_list = [[Body(screen, 'images\\items\\{}.png'.format(1), 'Testing {}'.format(1), 0, header.get_height() + body_height, screen.get_width(), body_height)]]
+    # image = pygame.image.load(str(Path('images/items/1.png')))
+    body_list = [[Body(screen, Path('images/items/1.png'), 'Testing {}'.format(1), 0, header.get_height() + body_height, screen.get_width(), body_height)]]
     # for i in range(frame_count):
     #     sub_list = []
     #     for j in range(content_per_frame):
