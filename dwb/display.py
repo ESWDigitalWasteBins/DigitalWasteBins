@@ -217,7 +217,7 @@ if __name__ == '__main__':
             sub_list.append(Body(screen, 'images\\items\\{}.png'.format(i+j+1), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
         body_list.append(sub_list)
 
-    display = Display(header, body_list)
+    # display = Display(header, [])
 
     clock = pygame.time.Clock()
     running = True
@@ -234,7 +234,7 @@ if __name__ == '__main__':
 
         # screen.fill((0, 0, 0))
 
-        display.draw()
+        # display.draw()
 
         clock.tick(30)
 
