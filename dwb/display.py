@@ -237,7 +237,7 @@ if __name__ == '__main__':
 
         pygame.draw.rect(screen, (255*random(), 255*random(), 255*random()), (0, y, screen.get_width(), screen.get_height()))
         y += 10
-        clock.tick(5)
+        clock.tick(30)
 
         pygame.display.flip()
 
