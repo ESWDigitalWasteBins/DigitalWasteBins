@@ -1,10 +1,13 @@
 import pygame
 
+FULLSCREEN = False
 
 pygame.init()
 
-# screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
-screen = pygame.display.set_mode()
+if FULLSCREEN:
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
+else:
+    screen = pygame.display.set_mode()
 
 clock = pygame.time.Clock()
 running = True
