@@ -232,7 +232,7 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))
 
-        header.draw()
+        pygame.draw.rect(screen, BLUE, (0, 0, screen.get_width(), screen.get_height()))
 
         clock.tick(1)
 
