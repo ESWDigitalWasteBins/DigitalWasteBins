@@ -185,37 +185,43 @@ class Display(Frame):
 
 
 if __name__ == '__main__':
-    from pathlib import Path
+    # GUI setup
+    FULLSCREEN = False
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
     CONTENT_RATIO = 1 - TEXT_RATIO
+    data_dir = Path('images/items')
 
     BLUE = (0, 57, 166)
 
     pygame.init()
-    # flags = pygame.FULLSCREEN | pygame.DOUBLEBUF
-    # screen = pygame.display.set_mode((0, 0), flags)
-    screen = pygame.display.set_mode()
+    screen = None
+    if FULLSCREEN:
+        flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE
+        screen = pygame.display.set_mode((0, 0), flags)
+    else:
+        screen = pygame.display.set_mode()
     pygame.display.set_caption('Display Test')
+    pygame.mouse.set_visible(0)
 
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
                     'RECYCLE', BLUE)
 
-    frame_count = 11
+    frame_count = 6
     content_per_frame = 2
 
     all_content_height = int(CONTENT_RATIO*screen.get_height())
     body_height = all_content_height // content_per_frame
 
-    # image = pygame.image.load(str(Path('images/items/1.png')))
+    image_paths = list(data_dir.glob('**/*.png'))
     body_list = []
     for i in range(frame_count):
         sub_list = []
         for j in range(content_per_frame):
-            sub_list.append(Body(screen, Path('images/items/{}.png'.format(i+j+1)), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
+            sub_list.append(Body(screen, image_paths.pop(0), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
         body_list.append(sub_list)
 
     display = Display(header, body_list)
