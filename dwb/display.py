@@ -243,8 +243,8 @@ if __name__ == '__main__':
 
         display.draw()
 
-        clock.tick(60)
+        clock.tick(30)
 
-        pygame.display.update()
+        pygame.display.flip()
 
     pygame.quit()
