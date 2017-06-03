@@ -23,13 +23,15 @@ D4: 0000 D3: 0000
 D6: 0000 D5: 0000
 """
 
+
 import serial
 import collections
 
+
 Reading = collections.namedtuple('Reading', ['mode', 'stable', 'overflow', 'weight', 'units'])
 
-class Scale:
 
+class Scale:
     @staticmethod
     def decode(raw: bytes) -> Reading:
         # Handle first byte
@@ -57,13 +59,13 @@ class Scale:
         unit = raw[5] & 0b1
         return Reading(current_mode, stable, overflow, result, unit)
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.ser = serial.Serial('/dev/ttyUSB0')
 
-    def read(self):
+    def read(self) -> Reading:
         return Scale.decode(self.ser.read(6))
 
-    def close(self):
+    def close(self) -> None:
         self.ser.close()
 
 
