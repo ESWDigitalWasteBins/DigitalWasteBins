@@ -136,27 +136,27 @@ class Display(Frame):
 
     def draw(self):
         """Blit animations to screen."""
-        curr_body = self._bodies[self._curr_index]
-        body_height = sum(body.get_height() for body in curr_body)
-        if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
-            _debug_print('UPDATE @', self._y, 'last:', self._last_index, 'curr:', self._curr_index)
-            self._last_index = self._curr_index  # update last index
-            self.y_0 = self._y = -body_height
-            # self._stop_y = (body_height - self.get_height()) // 2
-        self._draw_body()
-        # check if image has waited specified amount of time
-        if not self._waited and not self._waiting and self._y >= self._stop_y:
-            _debug_print('STOP @', self._y)
-            self._time_start = pygame.time.get_ticks()
-            self._waiting = True
-        self._time_now = pygame.time.get_ticks()
-        if self._waiting and self._time_start and (self._time_now - self._time_start) >= self._wait_time:
-            self._waited = True
-            self._waiting = False
-            self.speed_y = self.speed_0_y  # reset speed to initial speed
-        # Update y position only if not waiting
-        if not self._waiting:
-            self._update_y_position()
+        # curr_body = self._bodies[self._curr_index]
+        # body_height = sum(body.get_height() for body in curr_body)
+        # if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
+        #     _debug_print('UPDATE @', self._y, 'last:', self._last_index, 'curr:', self._curr_index)
+        #     self._last_index = self._curr_index  # update last index
+        #     self.y_0 = self._y = -body_height
+        #     # self._stop_y = (body_height - self.get_height()) // 2
+        # self._draw_body()
+        # # check if image has waited specified amount of time
+        # if not self._waited and not self._waiting and self._y >= self._stop_y:
+        #     _debug_print('STOP @', self._y)
+        #     self._time_start = pygame.time.get_ticks()
+        #     self._waiting = True
+        # self._time_now = pygame.time.get_ticks()
+        # if self._waiting and self._time_start and (self._time_now - self._time_start) >= self._wait_time:
+        #     self._waited = True
+        #     self._waiting = False
+        #     self.speed_y = self.speed_0_y  # reset speed to initial speed
+        # # Update y position only if not waiting
+        # if not self._waiting:
+        #     self._update_y_position()
         self._header.draw()
 
     def _draw_body(self):
