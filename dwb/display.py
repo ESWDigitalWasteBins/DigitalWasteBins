@@ -35,7 +35,7 @@ class Header(Frame):
 
     def draw(self) -> None:
         pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
-        self._text_frame.draw()
+        # self._text_frame.draw()
 
 
 class CaptionedImage(Frame):
