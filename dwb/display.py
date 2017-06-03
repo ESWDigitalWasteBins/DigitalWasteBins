@@ -209,7 +209,7 @@ if __name__ == '__main__':
     all_content_height = int(CONTENT_RATIO*screen.get_height())
     body_height = all_content_height // content_per_frame
 
-    image = images.load_image('images\\items\\1.png')
+    image = pygame.image.load('iamges\\items\\1.png')
     # body_list = [[Body(screen, 'images\\items\\{}.png'.format(1), 'Testing {}'.format(1), 0, header.get_height() + body_height, screen.get_width(), body_height)]]
     # for i in range(frame_count):
     #     sub_list = []
