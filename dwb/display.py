@@ -186,7 +186,7 @@ class Display(Frame):
 
 if __name__ == '__main__':
     # GUI setup
-    FULLSCREEN = True
+    FULLSCREEN = False
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
@@ -202,6 +202,7 @@ if __name__ == '__main__':
         screen = pygame.display.set_mode((0, 0), flags)
     else:
         screen = pygame.display.set_mode()
+        screen = pygame.display.set_mode((screen.get_width()-10, screen.get_height()-10))
     pygame.display.set_caption('Display Test')
     pygame.mouse.set_visible(0)
 
