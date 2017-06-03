@@ -184,6 +184,7 @@ class Display(Frame):
 
 
 if __name__ == '__main__':
+    from random import random
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
@@ -231,12 +232,11 @@ if __name__ == '__main__':
                     running = False
                     break
 
-        screen.fill((0, 0, 0))
+        # screen.fill((0, 0, 0))
 
-        pygame.draw.rect(screen, BLUE, (0, y, screen.get_width(), screen.get_height()))
-        y += 1
-        clock.tick(60)
-        pygame.time.wait(3000)
+        pygame.draw.rect(screen, (255*random(), 255*random(), 255*random()), (0, y, screen.get_width(), screen.get_height()))
+        y += 10
+        clock.tick(5)
 
         pygame.display.flip()
 
