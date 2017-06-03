@@ -234,7 +234,7 @@ if __name__ == '__main__':
 
         header.draw()
 
-        clock.tick(30)
+        clock.tick(1)
 
         pygame.display.flip()
 
