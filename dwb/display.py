@@ -193,8 +193,9 @@ if __name__ == '__main__':
     BLUE = (0, 57, 166)
 
     pygame.init()
-    flags = pygame.FULLSCREEN | pygame.DOUBLEBUF
-    screen = pygame.display.set_mode((0, 0), flags)
+    # flags = pygame.FULLSCREEN | pygame.DOUBLEBUF
+    # screen = pygame.display.set_mode((0, 0), flags)
+    screen = pygame.display.set_mode((1600, 900))
     pygame.display.set_caption('Display Test')
 
     # header_height = int(TEXT_RATIO*screen.get_height())
