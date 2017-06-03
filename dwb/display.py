@@ -186,7 +186,7 @@ class Display(Frame):
 
 if __name__ == '__main__':
     # GUI setup
-    FULLSCREEN = False
+    FULLSCREEN = True
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
