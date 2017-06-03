@@ -198,10 +198,10 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode()
     pygame.display.set_caption('Display Test')
 
-    # header_height = int(TEXT_RATIO*screen.get_height())
-    # header = Header(screen, 0, 0,
-    #                 screen.get_width(), header_height,
-    #                 'RECYCLE', BLUE)
+    header_height = int(TEXT_RATIO*screen.get_height())
+    header = Header(screen, 0, 0,
+                    screen.get_width(), header_height,
+                    'RECYCLE', BLUE)
     #
     # frame_count = 1
     # content_per_frame = 1
@@ -222,7 +222,6 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     running = True
 
-    y = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -235,8 +234,8 @@ if __name__ == '__main__':
 
         # screen.fill((0, 0, 0))
 
-        pygame.draw.rect(screen, (255*random(), 255*random(), 255*random()), (0, y, screen.get_width(), screen.get_height()))
-        y += 10
+        header.draw()
+
         clock.tick(30)
 
         pygame.display.flip()
