@@ -204,7 +204,7 @@ if __name__ == '__main__':
                     'RECYCLE', BLUE)
 
     frame_count = 1
-    content_per_frame = 2
+    content_per_frame = 1
 
     all_content_height = int(CONTENT_RATIO*screen.get_height())
     body_height = all_content_height // content_per_frame
