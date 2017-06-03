@@ -203,7 +203,7 @@ if __name__ == '__main__':
                     screen.get_width(), header_height,
                     'RECYCLE', BLUE)
 
-    frame_count = 5
+    frame_count = 1
     content_per_frame = 2
 
     all_content_height = int(CONTENT_RATIO*screen.get_height())
