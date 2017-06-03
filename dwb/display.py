@@ -192,7 +192,7 @@ if __name__ == '__main__':
     BLUE = (0, 57, 166)
 
     pygame.init()
-    flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE
+    flags = pygame.FULLSCREEN | pygame.DOUBLEBUF
     screen = pygame.display.set_mode((0, 0), flags)
     pygame.display.set_caption('Display Test')
 
