@@ -196,26 +196,26 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((0, 0), flags)
     pygame.display.set_caption('Display Test')
 
-    header_height = int(TEXT_RATIO*screen.get_height())
-    header = Header(screen, 0, 0,
-                    screen.get_width(), header_height,
-                    'RECYCLE', BLUE)
+    # header_height = int(TEXT_RATIO*screen.get_height())
+    # header = Header(screen, 0, 0,
+    #                 screen.get_width(), header_height,
+    #                 'RECYCLE', BLUE)
+    #
+    # frame_count = 1
+    # content_per_frame = 1
+    #
+    # all_content_height = int(CONTENT_RATIO*screen.get_height())
+    # body_height = all_content_height // content_per_frame
+    #
+    # body_list = []
+    # for i in range(frame_count):
+    #     sub_list = []
+    #     for j in range(content_per_frame):
+    #         print(header.get_height() + j*body_height)
+    #         sub_list.append(Body(screen, 'images\\items\\{}.png'.format(i+j+1), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
+    #     body_list.append(sub_list)
 
-    frame_count = 1
-    content_per_frame = 1
-
-    all_content_height = int(CONTENT_RATIO*screen.get_height())
-    body_height = all_content_height // content_per_frame
-
-    body_list = []
-    for i in range(frame_count):
-        sub_list = []
-        for j in range(content_per_frame):
-            print(header.get_height() + j*body_height)
-            sub_list.append(Body(screen, 'images\\items\\{}.png'.format(i+j+1), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
-        body_list.append(sub_list)
-
-    display = Display(header, body_list)
+    # display = Display(header, body_list)
 
     clock = pygame.time.Clock()
     running = True
@@ -232,7 +232,7 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))
 
-        display.draw()
+        # display.draw()
 
         clock.tick(60)
 
