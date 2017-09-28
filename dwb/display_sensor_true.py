@@ -81,7 +81,7 @@ def scale_text_bubble(width, iwidth, height, iheight)->'scale':
 def draw_text_bubble(screen,width,height)-> []:
     # draws a text bubble with sufficient x and y padding. This function returns a list containing the surface, x_pad val and y_pad val.
 
-    text_bubble = pygame.image.load ('/home/pi/DigitalWasteBins/dwb/images/text_bubbles_transparent/box_white.png')
+    text_bubble = pygame.image.load ('/home/pi/DigitalWasteBins/dwb/images/text_bubbles_transparent/white_crop_bubble.png')
     iwidth,iheight= text_bubble.get_size()
 
     scale = scale_text_bubble(width, iwidth, height, iheight)
