@@ -2,9 +2,9 @@ import pygame
 from pathlib import Path
 
 
-def load_image(image_path: Path, colorkey=None):
-    """
-    Load an image from the image_path with optional colorkey.
+def load_image(image_path: Path, colorkey=None) -> pygame.image:
+    """Load an image from the image_path with optional colorkey.
+
     Uses convert_alpha() to increase alpha performance.
 
     Args:
@@ -22,12 +22,12 @@ def load_image(image_path: Path, colorkey=None):
         if colorkey is -1:
             colorkey = image.get_at((0, 0))
         image.set_colorkey(colorkey, pygame.RLEACCEL)
-    return image  # , image.get_rect()
+    return image
 
 
-def scale_image(image: pygame.image, size: (int, int), limit: bool=False) -> pygame.image:
-    """
-    Return a scaled image to the smaller scaled size.
+def scale_image(image: pygame.image, size: (int, int),
+                limit: bool=False) -> pygame.image:
+    """Return a scaled image to the smaller scaled size.
 
     Args:
         image: a pygame surface (image)
@@ -55,84 +55,21 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     running = True
 
-    image_path = 'images\\items\\1.png'
+    image_path = Path('images\\compost\\1.png')
     image = load_image(image_path)
     scaled = scale_image(image, (screen.get_width(), screen.get_height()))
 
-    class CaptionedImage(Frame):
-        """[SUMMARY]"""
-        def __init__(self, screen: pygame.display, parent: Frame,
-                     image_path: str, text: str,
-                     padx: int=0, pady: int=0,
-                     bg_color: (int, int, int)=(0, 0, 0)) -> None:
-            """
-            [SUMMARY]
 
-            Args:
-                [PARAM1]: [DESCRIPTION]
-                [PARAM2]: [DESCRIPTION]
-
-            Attributes:
-                [ATTR1]: [DESCRIPTION]
-                [ATTR2]: [DESCRIPTION]
-            """
-            Frame.__init__(self, screen, parent, padx=padx, pady=pady, bg_color=bg_color)
-            iscale = 0.8
-            tscale = 1 - iscale
-            isize = (iscale*self.get_width(), iscale*self.get_height())
-            self._image = scale_image(load_image(image_path), isize)
-            self._image_rect = self._image.get_rect(midtop=(self.get_center()[0], self.get_y()))
-            self._text = pygame.font.Font(None, 100).render(text, True, (255, 255, 255))
-            self._text_rect = self._text.get_rect(midbottom=(self.get_center()[0], self.get_y()+self.get_height()))
+    class ImageTest(Frame):
+        """"""
+        def __init__(self):
+            """"""
+            super().__init__()
 
         def draw(self):
-            self._update_position()
-            self._image_rect.midtop = (self.get_center()[0], self.get_y())
-            self._text_rect.midbottom = (self.get_center()[0], self.get_y()+self.get_height())
-            self._screen.blit(self._image, self._image_rect)
-            self._screen.blit(self._text, self._text_rect)
+            pass
 
-
-    class Content(Frame):
-        """Creates a single CaptionedImage."""
-        def __init__(self, screen: pygame.display, parent: Frame,
-                     image_path: str, text: str,
-                     content_padx: int=0, content_pady: int=0,
-                     bg_color: (int, int, int)=(0, 0, 0)) -> None:
-            """
-            [SUMMARY]
-
-            Args:
-                [PARAM1]: [DESCRIPTION]
-                [PARAM2]: [DESCRIPTION]
-
-            Attributes:
-                [ATTR1]: [DESCRIPTION]
-                [ATTR2]: [DESCRIPTION]
-            """
-            Frame.__init__(self, screen, parent)
-            self._captioned_image = CaptionedImage(screen, self, image_path, text, padx=content_padx, pady=content_pady)
-            self._bg_color = bg_color
-
-        def draw(self) -> None:
-            self._update_position()
-            # pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
-            self._captioned_image.draw()
-
-
-    class Body(Frame):
-        """Holds a bunch of Content()."""
-        def __init__(self, screen: pygame.display,
-                     image_path: str, text: str,
-                     x: int, y: int,
-                     width: int, height: int) -> None:
-            Frame.__init__(self, screen, None, x, y, width, height)
-            self._content = Content(screen, self, image_path, text)
-
-        def draw(self):
-            self._content.draw()
-
-    body = Body(screen, 'images\\items\\4.png', 'testing 123', 0, 0, screen.get_width(), screen.get_height())
+    image_test = ImageTest()
 
     while running:
         for event in pygame.event.get():
@@ -144,10 +81,83 @@ if __name__ == '__main__':
                     running = False
                     break
 
-        body.draw()
+        frame.draw()
 
         clock.tick(60)
 
         pygame.display.flip()
 
     pygame.quit()
+
+    # class CaptionedImage(Frame):
+    #     """[SUMMARY]"""
+    #     def __init__(self, screen: pygame.display, parent: Frame,
+    #                  image_path: str, text: str,
+    #                  padx: int=0, pady: int=0,
+    #                  bg_color: (int, int, int)=(0, 0, 0)) -> None:
+    #         """
+    #         [SUMMARY]
+    #
+    #         Args:
+    #             [PARAM1]: [DESCRIPTION]
+    #             [PARAM2]: [DESCRIPTION]
+    #
+    #         Attributes:
+    #             [ATTR1]: [DESCRIPTION]
+    #             [ATTR2]: [DESCRIPTION]
+    #         """
+    #         Frame.__init__(self, screen, parent, padx=padx, pady=pady, bg_color=bg_color)
+    #         iscale = 0.8
+    #         tscale = 1 - iscale
+    #         isize = (iscale*self.get_width(), iscale*self.get_height())
+    #         self._image = scale_image(load_image(image_path), isize)
+    #         self._image_rect = self._image.get_rect(midtop=(self.get_center()[0], self.get_y()))
+    #         self._text = pygame.font.Font(None, 100).render(text, True, (255, 255, 255))
+    #         self._text_rect = self._text.get_rect(midbottom=(self.get_center()[0], self.get_y()+self.get_height()))
+    #
+    #     def draw(self):
+    #         self._update_position()
+    #         self._image_rect.midtop = (self.get_center()[0], self.get_y())
+    #         self._text_rect.midbottom = (self.get_center()[0], self.get_y()+self.get_height())
+    #         self._screen.blit(self._image, self._image_rect)
+    #         self._screen.blit(self._text, self._text_rect)
+    #
+    #
+    # class Content(Frame):
+    #     """Creates a single CaptionedImage."""
+    #     def __init__(self, screen: pygame.display, parent: Frame,
+    #                  image_path: str, text: str,
+    #                  content_padx: int=0, content_pady: int=0,
+    #                  bg_color: (int, int, int)=(0, 0, 0)) -> None:
+    #         """
+    #         [SUMMARY]
+    #
+    #         Args:
+    #             [PARAM1]: [DESCRIPTION]
+    #             [PARAM2]: [DESCRIPTION]
+    #
+    #         Attributes:
+    #             [ATTR1]: [DESCRIPTION]
+    #             [ATTR2]: [DESCRIPTION]
+    #         """
+    #         Frame.__init__(self, screen, parent)
+    #         self._captioned_image = CaptionedImage(screen, self, image_path, text, padx=content_padx, pady=content_pady)
+    #         self._bg_color = bg_color
+    #
+    #     def draw(self) -> None:
+    #         self._update_position()
+    #         # pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
+    #         self._captioned_image.draw()
+    #
+    #
+    # class Body(Frame):
+    #     """Holds a bunch of Content()."""
+    #     def __init__(self, screen: pygame.display,
+    #                  image_path: str, text: str,
+    #                  x: int, y: int,
+    #                  width: int, height: int) -> None:
+    #         Frame.__init__(self, screen, None, x, y, width, height)
+    #         self._content = Content(screen, self, image_path, text)
+    #
+    #     def draw(self):
+    #         self._content.draw()

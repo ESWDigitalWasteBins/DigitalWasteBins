@@ -2,42 +2,15 @@ import pygame
 import images
 from pathlib import Path
 from frame import Frame
+from header_frame import Header
 
 
-_DEBUG = True
+_DEBUG = False
 
 
 def _debug_print(*args, **kwargs) -> None:
     if _DEBUG:
         print(*args, **kwargs)
-
-
-class TextFrame(Frame):
-    def __init__(self, screen: pygame.display, parent: Frame,
-                 text: str, padx: int=0, pady: int=0) -> None:
-        Frame.__init__(self, screen, parent, padx, pady)
-        self._text = text
-
-    def draw(self) -> None:
-        self._update_position()
-        font = pygame.font.Font(None, self.get_height())
-        text = font.render(self._text, True, (255, 255, 255))
-        text_rect = text.get_rect(center=self.get_center())
-        self._screen.blit(text, text_rect)
-
-
-class Header(Frame):
-    def __init__(self, screen: pygame.display,
-                 x: int, y: int, width: int, height: int,
-                 text: str, bg_color: (int, int, int)=(0, 0, 0)) -> None:
-        Frame.__init__(self, screen, None, x, y, width, height)
-        self._bg_color = bg_color
-        self._text_frame = TextFrame(screen, self, text)
-
-    def draw(self) -> None:
-        pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
-        self._text_frame.draw()
-
 
 class CaptionedImage(Frame):
     """[SUMMARY]"""
@@ -57,7 +30,7 @@ class CaptionedImage(Frame):
             [ATTR2]: [DESCRIPTION]
         """
         Frame.__init__(self, screen, parent, padx=padx, pady=pady, bg_color=bg_color)
-        iscale = 0.8
+        iscale = 0.7
         tscale = 1 - iscale
         isize = (iscale*self.get_width(), iscale*self.get_height())
         self._image = images.scale_image(images.load_image(image_path), isize)
@@ -185,18 +158,42 @@ class Display(Frame):
 
 
 if __name__ == '__main__':
-    # GUI setup
-    FULLSCREEN = False
+    import math
+    from collections import namedtuple
+
+    # Display setup values
+    FULLSCREEN = True
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
     CONTENT_RATIO = 1 - TEXT_RATIO
-    data_dir = Path('images/items')
 
-    BLUE = (0, 57, 166)
+    # Display modes for each bin
+    Mode = namedtuple('Mode', 'display_str image_path text_color bg_color')
+    Landfill = Mode(display_str='LANDFILL', image_path=Path('images/landfill'), text_color=(0, 0, 0), bg_color=(255, 255, 255))
+    Recycle = Mode(display_str='RECYCLE', image_path=Path('images/recycle'), text_color=(255, 255, 255), bg_color=(0, 57, 166))
+    Compost = Mode(display_str='COMPOST', image_path=Path('images/compost'), text_color=(255, 255, 255), bg_color=(21, 161, 25))
 
+    # Determine which mode to use
+    while True:
+        m = input('L, R, C: ').upper()
+        if m == 'L':
+            mode = Landfill
+            break
+        elif m == 'R':
+            mode = Recycle
+            break
+        elif m == 'C':
+            mode = Compost
+            break
+
+    # Make list of image paths
+    image_paths = list(mode.image_path.glob('**/*.png'))
+
+    # Initialize pygame graphical interface
     pygame.init()
-    screen = None
+
+    # Display setup
     if FULLSCREEN:
         flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE
         screen = pygame.display.set_mode((0, 0), flags)
@@ -208,19 +205,20 @@ if __name__ == '__main__':
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
-                    'RECYCLE', BLUE)
+                    text_padx=200,
+                    text=mode.display_str, text_color=mode.text_color,
+                    bg_color=mode.bg_color)
 
-    frame_count = 6
     content_per_frame = 2
+    frame_count = math.ceil(len(image_paths) / content_per_frame)
 
     all_content_height = int(CONTENT_RATIO*screen.get_height())
     body_height = all_content_height // content_per_frame
 
-    image_paths = list(data_dir.glob('**/*.png'))
     body_list = []
     for i in range(frame_count):
         sub_list = []
-        for j in range(content_per_frame):
+        for j in range(min(content_per_frame, len(image_paths))):
             sub_list.append(Body(screen, image_paths.pop(0), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
         body_list.append(sub_list)
 
