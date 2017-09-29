@@ -30,7 +30,7 @@ class CaptionedImage(Frame):
             [ATTR2]: [DESCRIPTION]
         """
         Frame.__init__(self, screen, parent, padx=padx, pady=pady, bg_color=bg_color)
-        iscale = 0.8
+        iscale = 0.7
         tscale = 1 - iscale
         isize = (iscale*self.get_width(), iscale*self.get_height())
         self._image = images.scale_image(images.load_image(image_path), isize)
@@ -205,7 +205,7 @@ if __name__ == '__main__':
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
-                    text_padx=100,
+                    text_padx=200,
                     text=mode.display_str, text_color=mode.text_color,
                     bg_color=mode.bg_color)
 
