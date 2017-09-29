@@ -2,15 +2,16 @@ import pygame
 
 
 class Frame(pygame.Surface):
-    """BaseFrame class for layout with position and size."""
+    """Frame class for layout with position and size."""
+
     def __init__(self, screen: pygame.display, parent: 'Frame'=None,
-                 x: int=None, y: int=None,
-                 width: int=None, height: int=None,
+                 x: int=0, y: int=0,
+                 width: int=0, height: int=0,
                  padx: int=0, pady: int=0,
                  bg_color: (int, int, int)=(0, 0, 0)):
-        """
-        Initialize Frame as subclass of pygame.Surface. Must have a
-        master or position and size based on screen.
+        """Initialize Frame as subclass of pygame.Surface.
+
+        Must have a master or position and size based on screen.
 
         Args:
             screen: screen to draw on
@@ -25,6 +26,8 @@ class Frame(pygame.Surface):
         """
         if parent is None:
             assert all(type(x) is int for x in (x, y, width, height, padx, pady))
+            width -= 2*padx
+            height -= 2*pady
             self._parent = self
         else:
             assert isinstance(parent, Frame), 'master is not Frame()'
@@ -106,9 +109,7 @@ class Frame(pygame.Surface):
 if __name__ == '__main__':
     pygame.init()
 
-    # screen = pygame.display.set_mode((500, 500))
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    s = pygame.Surface((1920, 1080))
     pygame.display.set_caption('Frame Test')
     pygame.mouse.set_visible(0)
 
