@@ -1,6 +1,6 @@
 '''
 display_sensor_true.py
-Additional changes in the main need to done 
+Additional changes in the main need to done
 
 '''
 
@@ -14,25 +14,25 @@ import random
 def _content (weight: float)-> list:
     '''input: scale reading (weight)
     returns a list of text that is written in the text bubble'''
-    
+
     CO2_val = weight * 0.3968316
     display_list =  [
     [' ',' ',' ','Thank you for composting!','You just composted '+ str(weight) +  ' ounces!'],
     [' ',' ',' ','Thank you for composting!','You just helped avoid '+ str(CO2_val) + ' ounces of carbon-equivalent emissions! '],
     [' ',' ',' ','Thank you for composting!',' Food waste is the single largest part of waste.',' Keeping it out of landfills is important!']]
-    index= random.choice ([0,1,2]) 
+    index= random.choice ([0,1,2])
     return display_list[index]
 
 
-def drawText(surface, text_list:list, color, rect, font_height:int, aa=False, bkg=None): 
-    # Wraps text and draws it inside the rect. 
+def drawText(surface, text_list:list, color, rect, font_height:int, aa=False, bkg=None):
+    # Wraps text and draws it inside the rect.
     y = rect.top
 
     #padding ratios have been calculated based on border and image dimensions.
     pad_x= (0.1* rect.width)
     pad_y= (0.1* rect.height)
     pad_y_bottom= (0.24* rect.height)
-    
+
     font= pygame.font.Font(None, font_height)
 
     for text in text_list:
@@ -64,7 +64,7 @@ def drawText(surface, text_list:list, color, rect, font_height:int, aa=False, bk
             # remove the text we just blitted
             text = text[i:]
 
-            
+
 
 def scale_text_bubble(width, iwidth, height, iheight)->'scale':
     #Scales the image to best fit. Assumed 1/5 of the screen as pad_x and pad_y
@@ -103,12 +103,12 @@ if __name__ == '__main__':
     pygame.init()
 
     '''hardcoded values:
-    weight (for now) is set to 10.55 
+    weight (for now) is set to 10.55
     font_height will be adjusted to best fit the text in the bubble
     '''
     font_height=30
-    weight= 10.55  
-    
+    weight= 10.55
+
     screen= pygame.display.set_mode((0,0),pygame.FULLSCREEN)
     width,height= screen.get_size()
     ret_list= draw_text_bubble(screen,width,height)
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     y= ret_list[2]
     rect= text_bubble.get_rect().move(x,y)
 
-    text_list= _content (weight) 
+    text_list= _content (weight)
 
     drawText(screen, text_list, (128, 128, 128), rect, font_height, aa=False, bkg=None)
     pygame.display.update()

@@ -1,8 +1,8 @@
 import pygame
-import images
 from pathlib import Path
 from frame import Frame
-from header_frame import Header
+from frame_header import Header
+from frame_body import Body
 
 
 _DEBUG = False
@@ -11,79 +11,6 @@ _DEBUG = False
 def _debug_print(*args, **kwargs) -> None:
     if _DEBUG:
         print(*args, **kwargs)
-
-class CaptionedImage(Frame):
-    """[SUMMARY]"""
-    def __init__(self, screen: pygame.display, parent: Frame,
-                 image_path: Path, text: str,
-                 padx: int=0, pady: int=0,
-                 bg_color: (int, int, int)=(0, 0, 0)) -> None:
-        """
-        [SUMMARY]
-
-        Args:
-            [PARAM1]: [DESCRIPTION]
-            [PARAM2]: [DESCRIPTION]
-
-        Attributes:
-            [ATTR1]: [DESCRIPTION]
-            [ATTR2]: [DESCRIPTION]
-        """
-        Frame.__init__(self, screen, parent, padx=padx, pady=pady, bg_color=bg_color)
-        iscale = 0.7
-        tscale = 1 - iscale
-        isize = (iscale*self.get_width(), iscale*self.get_height())
-        self._image = images.scale_image(images.load_image(image_path), isize)
-        self._image_rect = self._image.get_rect(midtop=(self.get_center()[0], self.get_y()))
-        self._text = pygame.font.Font(None, 100).render(text, True, (255, 255, 255))
-        self._text_rect = self._text.get_rect(midbottom=(self.get_center()[0], self.get_y()+self.get_height()))
-
-    def draw(self):
-        self._update_position()
-        self._image_rect.midtop = (self.get_center()[0], self.get_y())
-        self._text_rect.midbottom = (self.get_center()[0], self.get_y()+self.get_height())
-        self._screen.blit(self._image, self._image_rect)
-        self._screen.blit(self._text, self._text_rect)
-
-
-class Content(Frame):
-    """Creates a single CaptionedImage."""
-    def __init__(self, screen: pygame.display, parent: Frame,
-                 image_path: str, text: str,
-                 content_padx: int=0, content_pady: int=0,
-                 bg_color: (int, int, int)=(0, 0, 0)) -> None:
-        """
-        [SUMMARY]
-
-        Args:
-            [PARAM1]: [DESCRIPTION]
-            [PARAM2]: [DESCRIPTION]
-
-        Attributes:
-            [ATTR1]: [DESCRIPTION]
-            [ATTR2]: [DESCRIPTION]
-        """
-        Frame.__init__(self, screen, parent)
-        self._captioned_image = CaptionedImage(screen, self, image_path, text, padx=content_padx, pady=content_pady)
-        self._bg_color = bg_color
-
-    def draw(self) -> None:
-        self._update_position()
-        # pygame.draw.rect(self._screen, self._bg_color, (self.get_x(), self.get_y(), self.get_width(), self.get_height()))
-        self._captioned_image.draw()
-
-
-class Body(Frame):
-    """Holds a bunch of Content()."""
-    def __init__(self, screen: pygame.display,
-                 image_path: str, text: str,
-                 x: int, y: int,
-                 width: int, height: int) -> None:
-        Frame.__init__(self, screen, None, x, y, width, height)
-        self._content = Content(screen, self, image_path, text, content_padx=20, content_pady=50)
-
-    def draw(self):
-        self._content.draw()
 
 
 class Display(Frame):
@@ -159,7 +86,7 @@ class Display(Frame):
 
 if __name__ == '__main__':
     import math
-    from collections import namedtuple
+    from mode import Mode
 
     # Display setup values
     FULLSCREEN = True
@@ -169,10 +96,9 @@ if __name__ == '__main__':
     CONTENT_RATIO = 1 - TEXT_RATIO
 
     # Display modes for each bin
-    Mode = namedtuple('Mode', 'display_str image_path text_color bg_color')
-    Landfill = Mode(display_str='LANDFILL', image_path=Path('images/landfill'), text_color=(0, 0, 0), bg_color=(255, 255, 255))
-    Recycle = Mode(display_str='RECYCLE', image_path=Path('images/recycle'), text_color=(255, 255, 255), bg_color=(0, 57, 166))
-    Compost = Mode(display_str='COMPOST', image_path=Path('images/compost'), text_color=(255, 255, 255), bg_color=(21, 161, 25))
+    Landfill = Mode('LANDFILL', Path('images/landfill'), (0, 0, 0), (255, 255, 255))
+    Recycle = Mode('RECYCLE', Path('images/recycle'), (255, 255, 255), (0, 57, 166))
+    Compost = Mode('COMPOST', Path('images/compost'), (255, 255, 255), (21, 161, 25))
 
     # Determine which mode to use
     while True:
@@ -202,6 +128,7 @@ if __name__ == '__main__':
     pygame.display.set_caption('Display Test')
     pygame.mouse.set_visible(0)
 
+    # Header
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
@@ -209,6 +136,7 @@ if __name__ == '__main__':
                     text=mode.display_str, text_color=mode.text_color,
                     bg_color=mode.bg_color)
 
+    # Body
     content_per_frame = 2
     frame_count = math.ceil(len(image_paths) / content_per_frame)
 
@@ -222,11 +150,14 @@ if __name__ == '__main__':
             sub_list.append(Body(screen, image_paths.pop(0), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
         body_list.append(sub_list)
 
+    # Display
     display = Display(header, body_list)
 
+    # FPS
     clock = pygame.time.Clock()
     running = True
 
+    # Animation loop
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

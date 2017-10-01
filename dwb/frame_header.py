@@ -1,6 +1,6 @@
 import pygame
 from frame import Frame
-from text_frame import TextFrame
+from frame_text import TextFrame
 
 
 class Header(Frame):
