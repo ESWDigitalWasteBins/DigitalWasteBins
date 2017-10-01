@@ -6,12 +6,13 @@ class TextFrame(Frame):
     """Frame for holding text."""
 
     def __init__(self, screen: pygame.display, parent: Frame,
+                 font_file: str or None,
                  text: str, text_color: (int, int, int)=(0, 0, 0),
                  padx: int=0, pady: int=0) -> None:
         Frame.__init__(self, screen, parent=parent, padx=padx, pady=pady)
         print(self.get_width())
         font_size = self.get_height()
-        font = pygame.font.Font(None, font_size)
+        font = pygame.font.Font(font_file, font_size)
         while True:
             self._text = font.render(text, True, text_color)
             if self._text.get_width() > self.get_width():
@@ -26,6 +27,7 @@ class TextFrame(Frame):
         self._screen.blit(self._text, self._text_rect)
 
 
+# Testing
 if __name__ == '__main__':
     pygame.init()
 

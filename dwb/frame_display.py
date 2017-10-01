@@ -1,5 +1,4 @@
 import pygame
-from pathlib import Path
 from frame import Frame
 from frame_header import Header
 from frame_body import Body
@@ -87,6 +86,7 @@ class Display(Frame):
 if __name__ == '__main__':
     import math
     from mode import Mode
+    from pathlib import Path
 
     # Display setup values
     FULLSCREEN = True
@@ -96,9 +96,9 @@ if __name__ == '__main__':
     CONTENT_RATIO = 1 - TEXT_RATIO
 
     # Display modes for each bin
-    Landfill = Mode('LANDFILL', Path('images/landfill'), (0, 0, 0), (255, 255, 255))
-    Recycle = Mode('RECYCLE', Path('images/recycle'), (255, 255, 255), (0, 57, 166))
-    Compost = Mode('COMPOST', Path('images/compost'), (255, 255, 255), (21, 161, 25))
+    Landfill = Mode('LANDFILL', Path('assets/img/landfill'), (0, 0, 0), (255, 255, 255))
+    Recycle = Mode('RECYCLE', Path('assets/img/recycle'), (255, 255, 255), (0, 57, 166))
+    Compost = Mode('COMPOST', Path('assets/img/compost'), (255, 255, 255), (21, 161, 25))
 
     # Determine which mode to use
     while True:
@@ -132,8 +132,9 @@ if __name__ == '__main__':
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
-                    text_padx=200,
+                    font_file=str(Path('assets/fnt/arial.ttf')),
                     text=mode.display_str, text_color=mode.text_color,
+                    text_padx=200,
                     bg_color=mode.bg_color)
 
     # Body
