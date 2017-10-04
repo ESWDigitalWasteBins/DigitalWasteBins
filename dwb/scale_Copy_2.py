@@ -93,6 +93,7 @@ class Scale:
             '''
             # difference  # the difference of last and current value
         # self.last_value = a dont keep value if it's not stable
+            self.last_value = a
         return 0  # value stays the same or decreases
 
     def close(self) -> None:
