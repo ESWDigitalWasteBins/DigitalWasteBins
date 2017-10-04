@@ -70,9 +70,6 @@ class Scale:
 
     def check(self):
         a = Scale.decode(self, self.ser.read(6))
-        print("stable value is ")
-        print(self.stable)
-        print(a)
         if self.stable == 1:
             # min 0.005 increments, unit is lbs
             if (self.last_value + 0.01) < a:
@@ -93,6 +90,7 @@ class Scale:
             '''
             # difference  # the difference of last and current value
         # self.last_value = a dont keep value if it's not stable
+            print("the weight stays the same or decreased")
             self.last_value = a
         return 0  # value stays the same or decreases
 
