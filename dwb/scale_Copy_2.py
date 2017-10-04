@@ -68,11 +68,11 @@ class Scale:
 
     def check(self):
         a = Scale.decode(self, self.ser.read(6))
-        if self.last_value < (a + 0.05):  # min 0.005 increments, unit is lbs
-            if self.stable == 1:
+        if self.stable == 1:
+            if self.last_value < (a + 0.05):  # min 0.005 increments, unit is lbs
                 difference = a - self.last_value
                 self.last_value = a
-                return difference  # the difference of last and current value
+                return a  # difference  # the difference of last and current value
         # self.last_value = a dont keep value if it's not stable
         return 0  # value stays the same or decreases
 
