@@ -74,14 +74,14 @@ class Scale:
         print(self.stable)
         if self.stable == 1:
             # min 0.005 increments, unit is lbs
-            if self.last_value == a & & self.still_increasing == 1:
+            if self.last_value == a and self.still_increasing == 1:
                 self.still_increasing = 0
                 difference = a - self.originnal_value
                 return difference  # weight finished rising
-            if self.last_value + 0.05 < a & & self.still_increasing == 0:
+            if self.last_value + 0.05 < a and self.still_increasing == 0:
                 self.still_increasing = 1
                 self.originnal_value = a  # weight start rising here
-            if self.last_value + 0.05 < a & & self.still_increasing == 1:
+            if self.last_value + 0.05 < a and self.still_increasing == 1:
                 self.still_increasing = 1  # weight is still rising
             self.last_value = a
             # difference  # the difference of last and current value
