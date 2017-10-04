@@ -75,6 +75,11 @@ class Scale:
         print(a)
         if self.stable == 1:
             # min 0.005 increments, unit is lbs
+            if self.last_value < a:
+                print("The weight increased")
+                return a - self.last_value
+            self.last_value = a
+            ***
             if self.last_value == a and self.still_increasing == 1:
                 self.still_increasing = 0
                 difference = a - self.originnal_value
@@ -85,6 +90,7 @@ class Scale:
             if self.last_value + 0.05 < a and self.still_increasing == 1:
                 self.still_increasing = 1  # weight is still rising
             self.last_value = a
+            ***
             # difference  # the difference of last and current value
         # self.last_value = a dont keep value if it's not stable
         return 0  # value stays the same or decreases
