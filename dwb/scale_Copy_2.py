@@ -72,6 +72,7 @@ class Scale:
         a = Scale.decode(self, self.ser.read(6))
         print("stable value is ")
         print(self.stable)
+        print(a)
         if self.stable == 1:
             # min 0.005 increments, unit is lbs
             if self.last_value == a and self.still_increasing == 1:
