@@ -68,6 +68,8 @@ class Scale:
 
     def check(self):
         a = Scale.decode(self, self.ser.read(6))
+        print("stable value is ")
+        print(self.stable)
         if self.stable == 1:
             if self.last_value < (a + 0.05):  # min 0.005 increments, unit is lbs
                 difference = a - self.last_value
