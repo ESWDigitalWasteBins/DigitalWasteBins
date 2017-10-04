@@ -77,8 +77,8 @@ class Scale:
             # min 0.005 increments, unit is lbs
             if (self.last_value + 0.01) < a:
                 print("The weight increased")
+                self.last_value = a
                 return a - self.last_value
-            self.last_value = a
             '''
             if self.last_value == a and self.still_increasing == 1:
                 self.still_increasing = 0
