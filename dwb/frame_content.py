@@ -1,4 +1,5 @@
 import pygame
+from pathlib import Path
 from frame import Frame
 from frame_captionedimage import CaptionedImage
 
@@ -21,7 +22,7 @@ class Content(Frame):
             [ATTR2]: [DESCRIPTION]
         """
         Frame.__init__(self, screen, parent)
-        self._captioned_image = CaptionedImage(screen, self, image_path, text, padx=content_padx, pady=content_pady)
+        self._captioned_image = CaptionedImage(screen, self, image_path, text=text, font_file=str(Path('assets/fnt/arial.ttf')), text_color=(255, 255, 255), padx=content_padx, pady=content_pady)
         self._bg_color = bg_color
 
     def draw(self) -> None:
