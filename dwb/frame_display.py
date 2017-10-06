@@ -94,23 +94,24 @@ if __name__ == '__main__':
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
     CONTENT_RATIO = 1 - TEXT_RATIO
+    CONTENT_PER_FRAME = 2
 
     # Display modes for each bin
-    Landfill = Mode('LANDFILL', Path('assets/img/landfill'), (0, 0, 0), (255, 255, 255))
-    Recycle = Mode('RECYCLE', Path('assets/img/recycle'), (255, 255, 255), (0, 57, 166))
-    Compost = Mode('COMPOST', Path('assets/img/compost'), (255, 255, 255), (21, 161, 25))
+    landfill = Mode('LANDFILL', Path('assets/img/landfill'), (0, 0, 0), (255, 255, 255))
+    recycle = Mode('RECYCLE', Path('assets/img/recycle'), (255, 255, 255), (0, 57, 166))
+    compost = Mode('COMPOST', Path('assets/img/compost'), (255, 255, 255), (21, 161, 25))
 
     # Determine which mode to use
     while True:
         m = input('L, R, C: ').upper()
         if m == 'L':
-            mode = Landfill
+            mode = landfill
             break
         elif m == 'R':
-            mode = Recycle
+            mode = recycle
             break
         elif m == 'C':
-            mode = Compost
+            mode = compost
             break
 
     # Make list of image paths
@@ -132,23 +133,23 @@ if __name__ == '__main__':
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
-                    font_file=str(Path('assets/fnt/arial.ttf')),
+                    font_file=str(Path('assets/fnt/arial-bold.ttf')),
                     text=mode.display_str, text_color=mode.text_color,
-                    text_padx=200,
+                    text_padx=200, text_pady=25,
                     bg_color=mode.bg_color)
 
     # Body
-    content_per_frame = 2
-    frame_count = math.ceil(len(image_paths) / content_per_frame)
+    frame_count = math.ceil(len(image_paths) / CONTENT_PER_FRAME)
 
     all_content_height = int(CONTENT_RATIO*screen.get_height())
-    body_height = all_content_height // content_per_frame
 
     body_list = []
     for i in range(frame_count):
         sub_list = []
-        for j in range(min(content_per_frame, len(image_paths))):
-            sub_list.append(Body(screen, image_paths.pop(0), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*body_height, screen.get_width(), body_height))
+        content_count = min(CONTENT_PER_FRAME, len(image_paths))  # calculate number of content on screen using minimum of desired and remaining images
+        for j in range(content_count):
+            content_height = all_content_height // content_count  # dynamically adjust content height
+            sub_list.append(Body(screen, image_paths.pop(0), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*content_height, screen.get_width(), content_height))
         body_list.append(sub_list)
 
     # Display
