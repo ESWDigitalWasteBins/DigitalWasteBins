@@ -8,9 +8,10 @@ Additional changes in the main need to done
 import pygame
 from pygame import font
 import random
+from pathlib import Path
 
 
-def _content(weight: float)-> list:
+def _content(weight: float) -> list:
     '''input: scale reading (weight)
     returns a list of text that is written in the text bubble'''
 
@@ -79,9 +80,7 @@ def scale_text_bubble(width, iwidth, height, iheight)->'scale':
 
 def draw_text_bubble(screen, width, height)-> []:
     # draws a text bubble with sufficient x and y padding. This function returns a list containing the surface, x_pad val and y_pad val.
-
-    text_bubble = pygame.image.load(
-        'DigitalWasteBins\\dwb\\images\\text_bubbles_transparent\\white_crop_bubble.png')
+    text_bubble = pygame.image.load(str(Path('assets/img/text_bubbles_transparent/white_crop_bubble.png')))
     iwidth, iheight = text_bubble.get_size()
 
     scale = scale_text_bubble(width, iwidth, height, iheight)
@@ -98,7 +97,6 @@ def draw_text_bubble(screen, width, height)-> []:
 
 
 if __name__ == '__main__':
-
     # To be added: if sensor_boolean= True:
 
     pygame.init()
@@ -107,6 +105,7 @@ if __name__ == '__main__':
     weight (for now) is set to 10.55
     font_height will be adjusted to best fit the text in the bubble
     '''
+
     font_height = 30
     weight = 10.55
 

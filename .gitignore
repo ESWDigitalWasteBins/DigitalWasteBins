@@ -95,3 +95,10 @@ ENV/
 
 # mkdocs documentation
 /site
+
+# Visual Studio
+/.vs
+/.vs/DigitalWasteBins/v15
+/.vs/DigitalWasteBins/v15/.suo
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
