@@ -4,7 +4,7 @@ import pygame
 class Frame(pygame.Surface):
     """Frame class for layout with position and size."""
 
-    def __init__(self, screen: pygame.display, parent: 'Frame'=None,
+    def __init__(self, screen: pygame.display, parent: 'Frame' or None=None,
                  x: int=0, y: int=0,
                  width: int=0, height: int=0,
                  padx: int=0, pady: int=0,
@@ -38,7 +38,10 @@ class Frame(pygame.Surface):
             width = parent.get_width() - 2*padx
             height = parent.get_height() - 2*pady
             self._parent = parent
-        print(width, height)
+        if width < 0:
+            raise ValueError('{}: padx={} too large'.format(self.__class__.__name__, padx))
+        if height < 0:
+            raise ValueError('{}: pady={} too large'.format(self.__class__.__name__, pady))
         pygame.Surface.__init__(self, (width, height))
         self._screen = screen
         self.set_position(x, y)
