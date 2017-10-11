@@ -133,7 +133,7 @@ if __name__ == '__main__':
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
-                    font_file=str(Path('assets/fnt/arial-bold.ttf')),
+                    font_file=None,
                     text=mode.display_str, text_color=mode.text_color,
                     text_padx=200, text_pady=25,
                     bg_color=mode.bg_color)
