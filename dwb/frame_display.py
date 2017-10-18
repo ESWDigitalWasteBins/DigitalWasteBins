@@ -97,9 +97,9 @@ if __name__ == '__main__':
     CONTENT_PER_FRAME = 2
 
     # Display modes for each bin
-    landfill = Mode('LANDFILL', Path('assets/img/landfill'), (0, 0, 0), (255, 255, 255))
-    recycle = Mode('RECYCLE', Path('assets/img/recycle'), (255, 255, 255), (0, 57, 166))
-    compost = Mode('COMPOST', Path('assets/img/compost'), (255, 255, 255), (21, 161, 25))
+    landfill = Mode('LANDFILL', Path('./assets/img/landfill'), (0, 0, 0), (255, 255, 255))
+    recycle = Mode('RECYCLE', Path('./assets/img/recycle'), (255, 255, 255), (0, 57, 166))
+    compost = Mode('COMPOST', Path('./assets/img/compost'), (255, 255, 255), (21, 161, 25))
 
     # Determine which mode to use
     while True:
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     header_height = int(TEXT_RATIO*screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
-                    font_file=str(Path('assets/fnt/arial-bold.ttf')),
+                    font_file=str(Path('./assets/fnt/arial-bold.ttf')),
                     text=mode.display_str, text_color=mode.text_color,
                     text_padx=200, text_pady=25,
                     bg_color=mode.bg_color)

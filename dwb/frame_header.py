@@ -31,7 +31,7 @@ if __name__ == '__main__':
     running = True
     clock = pygame.time.Clock()
 
-    header = Header(screen, 0, 0, screen.get_width(), screen.get_height(), font_file=str(Path('assets/fnt/arial.ttf')))
+    header = Header(screen, 0, 0, screen.get_width(), screen.get_height(), font_file=str(Path('./assets/fnt/arial.ttf')))
 
     while running:
         for event in pygame.event.get():

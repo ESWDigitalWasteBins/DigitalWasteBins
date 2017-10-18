@@ -58,7 +58,7 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     f = Frame(screen, None, 0, 0, screen.get_width(), screen.get_height())
-    ci = CaptionedImage(screen, f, str(Path('assets/img/compost/napkin.png')))
+    ci = CaptionedImage(screen, f, str(Path('./assets/img/compost/napkin.png')))
 
     while running:
         for event in pygame.event.get():

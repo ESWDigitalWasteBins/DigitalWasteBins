@@ -41,7 +41,7 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     f = Frame(screen, None, 0, 0, screen.get_width(), screen.get_height())
-    tf = TextFrame(screen, f, font_file=str(Path('assets/fnt/arial.ttf')), padx=100, pady=100)
+    tf = TextFrame(screen, f, font_file=str(Path('./assets/fnt/arial.ttf')), padx=100, pady=100)
 
     while running:
         for event in pygame.event.get():
