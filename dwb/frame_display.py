@@ -90,6 +90,7 @@ if __name__ == '__main__':
 
     # Display setup values
     FULLSCREEN = True
+    FPS = 60
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
@@ -97,9 +98,9 @@ if __name__ == '__main__':
     CONTENT_PER_FRAME = 2
 
     # Display modes for each bin
-    landfill = Mode('LANDFILL', Path('./assets/img/landfill'), (0, 0, 0), (255, 255, 255))
-    recycle = Mode('RECYCLE', Path('./assets/img/recycle'), (255, 255, 255), (0, 57, 166))
-    compost = Mode('COMPOST', Path('./assets/img/compost'), (255, 255, 255), (21, 161, 25))
+    landfill = Mode('LANDFILL', Path('./assets/img/_reduc/_landfill'), (0, 0, 0), (255, 255, 255))
+    recycle = Mode('RECYCLE', Path('./assets/img/_reduc/_recycle'), (255, 255, 255), (0, 57, 166))
+    compost = Mode('COMPOST', Path('./assets/img/_reduc/_compost'), (255, 255, 255), (21, 161, 25))
 
     # Determine which mode to use
     while True:
@@ -122,7 +123,7 @@ if __name__ == '__main__':
 
     # Display setup
     if FULLSCREEN:
-        flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE
+        flags = pygame.FULLSCREEN # | pygame.DOUBLEBUF | pygame.HWSURFACE
         screen = pygame.display.set_mode((0, 0), flags)
     else:
         screen = pygame.display.set_mode()
@@ -174,7 +175,7 @@ if __name__ == '__main__':
 
         display.draw()
 
-        clock.tick(60)
+        clock.tick(FPS)
 
         pygame.display.flip()
 
