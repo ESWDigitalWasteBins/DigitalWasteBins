@@ -10,15 +10,20 @@ class TextFrame(Frame):
                  text_color: (int, int, int)=(0, 0, 0),
                  padx: int=0, pady: int=0) -> None:
         Frame.__init__(self, screen, parent=parent, padx=padx, pady=pady)
-        font_size = self.get_height()
-        font = pygame.font.Font(font_file, font_size)
+        self.font_size = self.get_height()
+        self.font = pygame.font.Font(font_file, self.font_size)
+        self.text_color = text_color
         while True:
-            self._text = font.render(text, True, text_color)
+            self._text = self.font.render(text, True, text_color)
             if self._text.get_width() > self.get_width():
-                font_size -= 10
-                font = pygame.font.Font(font_file, font_size)
+                self.font_size -= 10
+                self.font = pygame.font.Font(font_file, self.font_size)
             else:
                 break
+        self._text_rect = self._text.get_rect(center=self.get_center())
+
+    def set_text(self, text: str):
+        self._text = self.font.render(text, True, self.text_color)
         self._text_rect = self._text.get_rect(center=self.get_center())
 
     def draw(self) -> None:
@@ -41,7 +46,8 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     f = Frame(screen, None, 0, 0, screen.get_width(), screen.get_height())
-    tf = TextFrame(screen, f, font_file=str(Path('./assets/fnt/arial.ttf')), padx=100, pady=100)
+    tf = TextFrame(screen, f, font_file=str(
+        Path('./assets/fnt/arial.ttf')), padx=100, pady=100)
 
     while running:
         for event in pygame.event.get():
