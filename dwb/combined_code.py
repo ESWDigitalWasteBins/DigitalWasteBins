@@ -248,8 +248,9 @@ if __name__ == '__main__':
 
     # Scale Reading Test
     s = Scale()
+    prev_reading = s.check()
     scale_reading = TextFrame(
-        screen, display, text=str(s.check()), text_color=(255, 255, 0))
+        screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
     # FPS
     clock = pygame.time.Clock()
@@ -271,7 +272,9 @@ if __name__ == '__main__':
 
         display.draw()
 
-        scale_reading.set_text(str(s.check()))
+        curr_reading = s.check()
+        if (prev_reading != curr_reading):
+            scale_reading.set_text(str(curr_reading))
         scale_reading.draw()
 
         clock.tick(FPS)
