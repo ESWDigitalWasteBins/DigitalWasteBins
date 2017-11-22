@@ -10,9 +10,7 @@ class Frame(pygame.Surface):
                  padx: int=0, pady: int=0,
                  bg_color: (int, int, int)=(255, 255, 255)):
         """Initialize Frame as subclass of pygame.Surface.
-
         Must have a master or position and size based on screen.
-
         Args:
             screen: screen to draw on
             master(=None): master Frame that determines this Frame's positioning or None to take screen size
@@ -25,23 +23,27 @@ class Frame(pygame.Surface):
             bg_color(=(0, 0, 0)): background color of Frame, a 3-tuple of ints
         """
         if parent is None:
-            assert all(type(x) is int for x in (x, y, width, height, padx, pady))
+            assert all(type(x) is int for x in (
+                x, y, width, height, padx, pady))
             x += padx
             y += pady
-            width -= 2*padx
-            height -= 2*pady
+            width -= 2 * padx
+            height -= 2 * pady
             self._parent = self
         else:
-            assert isinstance(parent, Frame), 'master is not Frame()'
+            assert isinstance(
+                parent, Frame), 'parent {} is not Frame()'.format(repr(parent))
             x = parent.get_x() + padx
             y = parent.get_y() + pady
-            width = parent.get_width() - 2*padx
-            height = parent.get_height() - 2*pady
+            width = parent.get_width() - 2 * padx
+            height = parent.get_height() - 2 * pady
             self._parent = parent
         if width < 0:
-            raise ValueError('{}: padx={} too large'.format(self.__class__.__name__, padx))
+            raise ValueError('{}: padx={} too large'.format(
+                self.__class__.__name__, padx))
         if height < 0:
-            raise ValueError('{}: pady={} too large'.format(self.__class__.__name__, pady))
+            raise ValueError('{}: pady={} too large'.format(
+                self.__class__.__name__, pady))
         pygame.Surface.__init__(self, (width, height))
         self._screen = screen
         self.set_position(x, y)
@@ -61,7 +63,8 @@ class Frame(pygame.Surface):
     def draw(self) -> None:
         """Draw a rectangle representing this Frame's covering."""
         self._update_position()
-        pygame.draw.rect(self._screen, self._bg_color, (self._x, self._y, self.get_width(), self.get_height()))
+        pygame.draw.rect(self._screen, self._bg_color,
+                         (self._x, self._y, self.get_width(), self.get_height()))
 
     def _update_position(self) -> None:
         """Update position of Frame based on master, used when drawing."""
@@ -70,7 +73,6 @@ class Frame(pygame.Surface):
 
     def set_position(self, x: int=None, y: int=None) -> None:
         """Set frame's top-left coordinate, unchanged if not specified.
-
         Args:
             x(=None): set frame's top-left x coordinate
             y(=None): set frame's top-left y coordinate
@@ -83,7 +85,6 @@ class Frame(pygame.Surface):
 
     def change_position(self, dx: int=None, dy: int=None) -> None:
         """Change frame's top-left coordinate, unchanged if not specified.
-
         Args:
             dx(=None): change frame's top-left x coordinate
             dy(=None): change frame's top-left y coordinate
@@ -108,8 +109,9 @@ class Frame(pygame.Surface):
 
     def get_center(self) -> (int, int):
         """Return 2-tuple of ints representing center (x, y) coordinate."""
-        return (self.get_x() + self.get_width()//2,
-                self.get_y() + self.get_height()//2)
+        return (self.get_x() + self.get_width() // 2,
+                self.get_y() + self.get_height() // 2)
+
 
 
 # Test Frame
@@ -124,12 +126,12 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     topbase = Frame(screen, None, 0, 0,
-                        width=screen.get_width(),
-                        height=screen.get_height()//2,
-                        padx=100, pady=100)
+                    width=screen.get_width(),
+                    height=screen.get_height() // 2,
+                    padx=100, pady=100)
     botbase = Frame(screen, None, 0, topbase.get_height(),
-                        width=screen.get_width(),
-                        height=screen.get_height()//2)
+                    width=screen.get_width(),
+                    height=screen.get_height() // 2)
     topframe = Frame(screen, topbase,
                      padx=100, pady=100,
                      bg_color=(255, 0, 0))
