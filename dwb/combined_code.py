@@ -276,7 +276,7 @@ if __name__ == '__main__':
         display.draw()
 
         curr_reading = s.read_scale()
-        if (prev_reading != curr_reading):
+        if (abs(curr_reading - prev_reading) > 0.05):
             scale_reading.set_text(str(curr_reading))
         scale_reading.draw()
 
