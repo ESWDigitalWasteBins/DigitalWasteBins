@@ -49,6 +49,9 @@ class Scale:
         self.still_increasing = 0
         self.originnal_value = 0
 
+    def read_scale(self) -> float:
+        return Scale.decode(self, self.ser.read(6))
+
     def check(self) -> float:
         """
         Returns a floating point number if scale is measuring something.
@@ -69,7 +72,7 @@ class Scale:
                 return difference  # weight finished rising
             if self.last_value + 0.05 < a and self.still_increasing == 0:
                 self.still_increasing = 1
-                self.originnal_value = a  # weight start rising here
+                self.original_value = a  # weight start rising here
             if self.last_value + 0.05 < a and self.still_increasing == 1:
                 self.still_increasing = 1  # weight is still rising
             self.last_value = a
@@ -248,7 +251,7 @@ if __name__ == '__main__':
 
     # Scale Reading Test
     s = Scale()
-    prev_reading = s.check()
+    prev_reading = s.read_scale()
     scale_reading = TextFrame(
         screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
@@ -272,7 +275,7 @@ if __name__ == '__main__':
 
         display.draw()
 
-        curr_reading = s.check()
+        curr_reading = s.read_scale()
         if (prev_reading != curr_reading):
             scale_reading.set_text(str(curr_reading))
         scale_reading.draw()
