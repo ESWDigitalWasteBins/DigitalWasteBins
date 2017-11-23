@@ -96,6 +96,7 @@ class Display(Frame):
     def __init__(self, header: Header, bodies: [Body], scale):
         Frame.__init__(self, screen, None, 0, 0,
                        screen.get_width(), screen.get_height())
+        self.screen = screen
         self._header = header
         self._bodies = bodies
         # Content() to display
