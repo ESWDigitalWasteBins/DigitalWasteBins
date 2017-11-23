@@ -249,10 +249,10 @@ if __name__ == '__main__':
     display = Display(header, body_list)
 
     # Scale Reading Test
-    scale = Scale()
-    prev_reading = scale.check()
-    scale_reading = TextFrame(
-        screen, display, text=str(prev_reading), text_color=(255, 255, 0))
+    # scale = Scale()
+    # prev_reading = scale.check()
+    # scale_reading = TextFrame(
+    #     screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
     # FPS
     clock = pygame.time.Clock()
@@ -274,25 +274,22 @@ if __name__ == '__main__':
 
         display.draw()
 
-        a = Scale.decode(scale, scale.ser.read(6))
-        if scale.stable == 1:
-            # min 0.005 increments, unit is lbs
-            if (scale.last_value + 0.01) < a:
-                print("The weight increased")
-                difference = a - scale.last_value
-                scale.last_value = a
-                scale_reading.set_text(str(difference))
-            
-            scale.last_value = a
-        else: 
-            scale_reading.set_text(str(0))
+        # a = Scale.decode(scale, scale.ser.read(6))
+        # if scale.stable == 1:
+        #     # min 0.005 increments, unit is lbs
+        #     if (scale.last_value + 0.01) < a:
+        #         print("The weight increased")
+        #         difference = a - scale.last_value
+        #         scale.last_value = a
+        #         scale_reading.set_text(str(difference))
 
-
-
+        #     scale.last_value = a
+        # else:
+        #     scale_reading.set_text(str(0))
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
-        scale_reading.draw()
+        # scale_reading.draw()
 
         clock.tick(FPS)
 
