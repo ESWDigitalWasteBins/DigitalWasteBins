@@ -257,6 +257,11 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     running = True
 
+    # Scale
+    SCALEREADEVENT = pygame.USEREVENT + 1
+    SCALEREADTIME = 1000  # milliseconds
+    pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
+
     # Animation loop
     while running:
 
@@ -268,27 +273,34 @@ if __name__ == '__main__':
                 if event.key == pygame.K_ESCAPE:
                     running = False
                     break
+            elif event.type == SCALEREADEVENT:
+                weight = scale.check()
+                # if weight != 0:
+                #     display.is_using_scale = True
+                #     scale_read_frame.set_text(str(weight))
+                # elif display.frame_type == 1:
+                #     display.is_using_scale = False
 
         screen.fill((0, 0, 0))
 
         display.draw()
 
-        a = Scale.decode(scale, scale.ser.read(6))
-        if scale.stable == 1:
-            # min 0.005 increments, unit is lbs
-            if (scale.last_value + 0.01) < a:
-                print("The weight increased")
-                difference = a - scale.last_value
-                scale.last_value = a
-                scale_reading.set_text(str(difference))
-            print("the weight stays the same or decreased")
-            scale.last_value = a
-        else:
-            scale_reading.set_text(str(0))
+        # a = Scale.decode(scale, scale.ser.read(6))
+        # if scale.stable == 1:
+        #     # min 0.005 increments, unit is lbs
+        #     if (scale.last_value + 0.01) < a:
+        #         print("The weight increased")
+        #         difference = a - scale.last_value
+        #         scale.last_value = a
+        #         scale_reading.set_text(str(difference))
+        #     print("the weight stays the same or decreased")
+        #     scale.last_value = a
+        # else:
+        #     scale_reading.set_text(str(0))
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
-        scale_reading.draw()
+        # scale_reading.draw()
 
         clock.tick(FPS)
 
