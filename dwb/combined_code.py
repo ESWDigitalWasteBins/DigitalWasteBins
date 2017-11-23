@@ -47,7 +47,7 @@ class Scale:
         self.stable = 0
         self.original_weight = 0
         self.still_increasing = 0
-        self.originnal_value = 0
+        self.original_value = 0
 
     def read_scale(self) -> float:
         return Scale.decode(self, self.ser.read(6))
@@ -104,8 +104,8 @@ class Display(Frame):
         self._curr_index = 0
         # settings for frame position and rotation
         curr_body = self._bodies[self._curr_index]
-        body_height = sum(body.get_height() for body in curr_body)
-        self.y_0 = self._y = -body_height
+        self.body_height = sum(body.get_height() for body in curr_body)
+        self.y_0 = self._y = -self.body_height
         self._stop_y = self._header.get_height()  # stop y position for images
         self._waited = False
         self._waiting = False
@@ -119,12 +119,13 @@ class Display(Frame):
     def draw(self):
         """Blit animations to screen."""
         curr_body = self._bodies[self._curr_index]
-        body_height = sum(body.get_height() for body in curr_body)
+
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
             _debug_print('UPDATE @', self._y, 'last:',
                          self._last_index, 'curr:', self._curr_index)
             self._last_index = self._curr_index  # update last index
-            self.y_0 = self._y = -body_height
+            self.body_height = sum(body.get_height() for body in curr_body)
+            self.y_0 = self._y = -self.body_height
             # self._stop_y = (body_height - self.get_height()) // 2
         self._draw_body()
         # check if image has waited specified amount of time
