@@ -2,7 +2,6 @@ import pygame
 from frame import Frame
 from header import Header
 from body import Body
-from text import TextFrame
 
 
 import serial
@@ -63,7 +62,6 @@ class Scale:
                 difference = a - self.last_value
                 self.last_value = a
                 return difference
-
             '''
             if self.last_value == a and self.still_increasing == 1:
                 self.still_increasing = 0
@@ -93,14 +91,12 @@ def _debug_print(*args, **kwargs) -> None:
 
 
 class Display(Frame):
-    def __init__(self, header: Header, bodies: [Body], scale):
+    def __init__(self, header: Header, bodies: [Body]):
         Frame.__init__(self, screen, None, 0, 0,
                        screen.get_width(), screen.get_height())
-        self.screen = screen
         self._header = header
         self._bodies = bodies
         # Content() to display
-        self.is_using_scale = False
         self._last_index = None
         self._curr_index = 0
         # settings for frame position and rotation
@@ -119,11 +115,7 @@ class Display(Frame):
 
     def draw(self):
         """Blit animations to screen."""
-        if self.is_using_scale:
-            curr_body = self._bodies[self._curr_index]
-        else:
-            curr_body = TextFrame(self.screen, self, str(
-                weight), text_color=(255, 255, 255))
+        curr_body = self._bodies[self._curr_index]
 
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
             _debug_print('UPDATE @', self._y, 'last:',
@@ -252,24 +244,18 @@ if __name__ == '__main__':
                 i + j + 1), 0, header.get_height() + j * content_height, screen.get_width(), content_height))
         body_list.append(sub_list)
 
+    # Display
+    display = Display(header, body_list)
+
     # Scale Reading Test
     scale = Scale()
-
-    # prev_reading = scale.check()
-    scale_read_frame = TextFrame(
-        screen, None, text=str(scale.check()), text_color=(255, 255, 0))
-
-    # Display
-    display = Display(header, body_list, scale_read_frame)
+    prev_reading = scale.check()
+    scale_reading = TextFrame(
+        screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
     # FPS
     clock = pygame.time.Clock()
     running = True
-
-    # Scale
-    SCALEREADEVENT = pygame.USEREVENT + 1
-    SCALEREADTIME = 500  # milliseconds
-    pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
     # Animation loop
     while running:
@@ -282,17 +268,27 @@ if __name__ == '__main__':
                 if event.key == pygame.K_ESCAPE:
                     running = False
                     break
-            elif event.type == SCALEREADEVENT:
-                weight = scale.check()
-                if weight != 0:
-                    display.is_using_scale = True
-                    scale_read_frame.set_text(str(weight))
-                elif display.frame_type == 1:
-                    display.is_using_scale = False
 
         screen.fill((0, 0, 0))
 
         display.draw()
+
+        a = Scale.decode(scale, scale.ser.read(6))
+        if scale.stable == 1:
+            # min 0.005 increments, unit is lbs
+            if (scale.last_value + 0.01) < a:
+                print("The weight increased")
+                difference = a - scale.last_value
+                scale.last_value = a
+                scale_reading.set_text(str(difference))
+            print("the weight stays the same or decreased")
+            scale.last_value = a
+        else:
+            scale_reading.set_text(str(0))
+
+        # curr_reading = scale.check()
+        # scale_reading.set_text(str(curr_reading))
+        scale_reading.draw()
 
         clock.tick(FPS)
 
