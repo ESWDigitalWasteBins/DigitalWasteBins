@@ -118,12 +118,12 @@ class Display(Frame):
 
     def draw(self):
         """Blit animations to screen."""
-        weight = scale.check()
-        if weight == 0:
-            curr_body = TextFrame(self.screen, self, str(
-                weight), text_color=(255, 255, 255))
-        else:
-            curr_body = self._bodies[self._curr_index]
+        # weight = scale.check()
+        # if weight == 0:
+        #     curr_body = TextFrame(self.screen, self, str(
+        #         weight), text_color=(255, 255, 255))
+        # else:
+        curr_body = self._bodies[self._curr_index]
 
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
             _debug_print('UPDATE @', self._y, 'last:',
