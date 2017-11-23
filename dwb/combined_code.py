@@ -287,7 +287,7 @@ if __name__ == '__main__':
                 if weight != 0:
                     display.is_using_scale = True
                     scale_read_frame.set_text(str(weight))
-                else if display.frame_type == 1:
+                elif display.frame_type == 1:
                     display.is_using_scale = False
 
         screen.fill((0, 0, 0))
