@@ -274,8 +274,7 @@ if __name__ == '__main__':
         display.draw()
 
         curr_reading = scale.check()
-        if (abs(curr_reading - prev_reading) > 0.05):
-            scale_reading.set_text(str(curr_reading))
+        scale_reading.set_text(str(curr_reading))
         scale_reading.draw()
 
         clock.tick(FPS)
