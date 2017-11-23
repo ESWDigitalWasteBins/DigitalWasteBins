@@ -251,14 +251,14 @@ if __name__ == '__main__':
                 i + j + 1), 0, header.get_height() + j * content_height, screen.get_width(), content_height))
         body_list.append(sub_list)
 
-    # Display
-    display = Display(header, body_list, scale_reading)
-
     # Scale Reading Test
     scale = Scale()
     prev_reading = scale.check()
     scale_reading = TextFrame(
         screen, display, text=str(prev_reading), text_color=(255, 255, 0))
+
+    # Display
+    display = Display(header, body_list, scale)
 
     # FPS
     clock = pygame.time.Clock()
@@ -290,7 +290,6 @@ if __name__ == '__main__':
                 scale_reading.set_text(str(difference))
             else:
                 scale_reading.set_text(str(0))
-
             scale.last_value = current_reading
         else:
             scale_reading.set_text(str(0))
