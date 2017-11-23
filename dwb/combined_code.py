@@ -100,6 +100,7 @@ class Display(Frame):
         self._header = header
         self._bodies = bodies
         # Content() to display
+        self.is_using_scale = False
         self._last_index = None
         self._curr_index = 0
         # settings for frame position and rotation
@@ -118,12 +119,11 @@ class Display(Frame):
 
     def draw(self):
         """Blit animations to screen."""
-        # weight = scale.check()
-        # if weight == 0:
-        #     curr_body = TextFrame(self.screen, self, str(
-        #         weight), text_color=(255, 255, 255))
-        # else:
-        curr_body = self._bodies[self._curr_index]
+        if self.is_using_scale:
+            curr_body = self._bodies[self._curr_index]
+        else:
+            curr_body = TextFrame(self.screen, self, str(
+                weight), text_color=(255, 255, 255))
 
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
             _debug_print('UPDATE @', self._y, 'last:',
@@ -255,16 +255,21 @@ if __name__ == '__main__':
     # Scale Reading Test
     scale = Scale()
 
-    # Display
-    display = Display(header, body_list, scale)
-
     # prev_reading = scale.check()
-    # scale_reading = TextFrame(
-    # screen, display, text=str(prev_reading), text_color=(255, 255, 0))
+    scale_read_frame = TextFrame(
+        screen, screen, text=str(scale.check()), text_color=(255, 255, 0))
+
+    # Display
+    display = Display(header, body_list, scale_read_frame)
 
     # FPS
     clock = pygame.time.Clock()
     running = True
+
+    # Scale
+    SCALEREADEVENT = pygame.USEREVENT + 1
+    SCALEREADTIME = 500  # milliseconds
+    pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
     # Animation loop
     while running:
@@ -277,28 +282,17 @@ if __name__ == '__main__':
                 if event.key == pygame.K_ESCAPE:
                     running = False
                     break
+            elif event.type == SCALEREADEVENT:
+                weight = scale.check()
+                if weight != 0:
+                    display.is_using_scale = True
+                    scale_read_frame.set_text(str(weight))
+                else if display.frame_type == 1:
+                    display.is_using_scale = False
 
         screen.fill((0, 0, 0))
 
         display.draw()
-
-        # current_reading = Scale.decode(scale, scale.ser.read(6))
-        # if scale.stable == 1:
-        #     # min 0.005 increments, unit is lbs
-        #     if (scale.last_value + 0.01) < current_reading:
-        #         print("The weight increased")
-        #         difference = current_reading - scale.last_value
-        #         scale.last_value = current_reading
-        #         scale_reading.set_text(str(difference))
-        #     else:
-        #         scale_reading.set_text(str(0))
-        #     scale.last_value = current_reading
-        # else:
-        #     scale_reading.set_text(str(0))
-
-        # curr_reading = scale.check()
-        # scale_reading.set_text(str(curr_reading))
-        # scale_reading.draw()
 
         clock.tick(FPS)
 
