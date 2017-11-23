@@ -274,16 +274,18 @@ if __name__ == '__main__':
 
         display.draw()
 
-        a = Scale.decode(scale, scale.ser.read(6))
+        current_reading = Scale.decode(scale, scale.ser.read(6))
         if scale.stable == 1:
             # min 0.005 increments, unit is lbs
-            if (scale.last_value + 0.01) < a:
+            if (scale.last_value + 0.01) < current_reading:
                 print("The weight increased")
-                difference = a - scale.last_value
-                scale.last_value = a
+                difference = current_reading - scale.last_value
+                scale.last_value = current_reading
                 scale_reading.set_text(str(difference))
-            
-            scale.last_value = a
+            else:
+                scale_reading.set_text(str(0))
+
+            scale.last_value = current_reading
         else: 
             scale_reading.set_text(str(0))
 
