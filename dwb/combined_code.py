@@ -259,7 +259,7 @@ if __name__ == '__main__':
 
     # Scale
     SCALEREADEVENT = pygame.USEREVENT + 1
-    SCALEREADTIME = 500  # milliseconds
+    SCALEREADTIME = 100  # milliseconds
     pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
     # Animation loop
