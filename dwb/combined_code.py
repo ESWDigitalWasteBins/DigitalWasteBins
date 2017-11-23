@@ -253,12 +253,13 @@ if __name__ == '__main__':
 
     # Scale Reading Test
     scale = Scale()
-    prev_reading = scale.check()
-    scale_reading = TextFrame(
-        screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
     # Display
     display = Display(header, body_list, scale)
+
+    prev_reading = scale.check()
+    scale_reading = TextFrame(
+        screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
     # FPS
     clock = pygame.time.Clock()
