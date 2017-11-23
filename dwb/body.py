@@ -10,8 +10,7 @@ class Body(Frame):
                  image_path: str, text: str,
                  x: int, y: int,
                  width: int, height: int) -> None:
-        self._content = Content(screen, self, image_path,
-                                text, content_padx=20, content_pady=50)
+        Frame.__init__(self, screen, None, x, y, width, height)
         self._content = Content(screen, self, image_path,
                                 text, content_padx=20, content_pady=50)
 
