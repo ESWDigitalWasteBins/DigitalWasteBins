@@ -119,7 +119,7 @@ class Display(Frame):
     def draw(self):
         """Blit animations to screen."""
         weight = scale.check()
-        if weight != 0:
+        if weight == 0:
             curr_body = TextFrame(self.screen, self, str(
                 weight), text_color=(255, 255, 255))
         else:
