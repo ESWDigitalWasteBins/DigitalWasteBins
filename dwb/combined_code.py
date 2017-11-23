@@ -295,10 +295,6 @@ if __name__ == '__main__':
         else:
             scale_reading.set_text(str(0))
 
-            scale.last_value = a
-        else:
-            scale_reading.set_text(str(0))
-
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
         # scale_reading.draw()
