@@ -281,22 +281,11 @@ if __name__ == '__main__':
                 difference = a - scale.last_value
                 scale.last_value = a
                 scale_reading.set_text(str(difference))
-            '''
-            if scale.last_value == a and scale.still_increasing == 1:
-                scale.still_increasing = 0
-                difference = a - scale.originnal_value
-                return difference  # weight finished rising
-            if scale.last_value + 0.05 < a and scale.still_increasing == 0:
-                scale.still_increasing = 1
-                scale.original_value = a  # weight start rising here
-            if scale.last_value + 0.05 < a and scale.still_increasing == 1:
-                scale.still_increasing = 1  # weight is still rising
-            scale.last_value = a
-            '''
+            
             print("the weight stays the same or decreased")
             scale.last_value = a
         else:
-            scale_reading.set_text(str(0))
+                scale_reading.set_text("string")
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
