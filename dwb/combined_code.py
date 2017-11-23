@@ -1,7 +1,7 @@
 import pygame
 from frame import Frame
-from frame_header import Header
-from frame_body import Body
+from header import Header
+from body import Body
 
 
 import serial
@@ -48,9 +48,6 @@ class Scale:
         self.original_weight = 0
         self.still_increasing = 0
         self.original_value = 0
-
-    def read_scale(self) -> float:
-        return Scale.decode(self, self.ser.read(6))
 
     def check(self) -> float:
         """
@@ -174,7 +171,7 @@ if __name__ == '__main__':
     from mode import Mode
     from pathlib import Path
 
-    from frame_text import TextFrame
+    from text import TextFrame
 
     # Display setup values
     FULLSCREEN = True
@@ -251,8 +248,8 @@ if __name__ == '__main__':
     display = Display(header, body_list)
 
     # Scale Reading Test
-    s = Scale()
-    prev_reading = s.read_scale()
+    scale = Scale()
+    prev_reading = scale.check()
     scale_reading = TextFrame(
         screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
@@ -276,7 +273,7 @@ if __name__ == '__main__':
 
         display.draw()
 
-        curr_reading = s.read_scale()
+        curr_reading = scale.check()
         if (abs(curr_reading - prev_reading) > 0.05):
             scale_reading.set_text(str(curr_reading))
         scale_reading.draw()

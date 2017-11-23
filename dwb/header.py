@@ -1,6 +1,6 @@
 import pygame
 from frame import Frame
-from frame_text import TextFrame
+from text import TextFrame
 
 
 class Header(Frame):
@@ -12,7 +12,8 @@ class Header(Frame):
                  bg_color: (int, int, int)=(255, 255, 255)) -> None:
         Frame.__init__(self, screen, None, x, y, width, height)
         self._bg_color = bg_color
-        self._text_frame = TextFrame(screen, self, text, font_file, text_color, text_padx, text_pady)
+        self._text_frame = TextFrame(
+            screen, self, text, font_file, text_color, text_padx, text_pady)
 
     def draw(self) -> None:
         Frame.draw(self)
@@ -31,7 +32,8 @@ if __name__ == '__main__':
     running = True
     clock = pygame.time.Clock()
 
-    header = Header(screen, 0, 0, screen.get_width(), screen.get_height(), font_file=str(Path('./assets/fnt/arial.ttf')))
+    header = Header(screen, 0, 0, screen.get_width(), screen.get_height(
+    ), font_file=str(Path('./assets/fnt/arial.ttf')))
 
     while running:
         for event in pygame.event.get():

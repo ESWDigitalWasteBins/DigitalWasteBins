@@ -1,7 +1,7 @@
 import pygame
 from frame import Frame
-from frame_header import Header
-from frame_body import Body
+from header import Header
+from body import Body
 
 
 _DEBUG = False
@@ -14,7 +14,8 @@ def _debug_print(*args, **kwargs) -> None:
 
 class Display(Frame):
     def __init__(self, header: Header, bodies: [Body]):
-        Frame.__init__(self, screen, None, 0, 0, screen.get_width(), screen.get_height())
+        Frame.__init__(self, screen, None, 0, 0,
+                       screen.get_width(), screen.get_height())
         self._header = header
         self._bodies = bodies
         # Content() to display
@@ -39,7 +40,8 @@ class Display(Frame):
         curr_body = self._bodies[self._curr_index]
         body_height = sum(body.get_height() for body in curr_body)
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
-            _debug_print('UPDATE @', self._y, 'last:', self._last_index, 'curr:', self._curr_index)
+            _debug_print('UPDATE @', self._y, 'last:',
+                         self._last_index, 'curr:', self._curr_index)
             self._last_index = self._curr_index  # update last index
             self.y_0 = self._y = -body_height
             # self._stop_y = (body_height - self.get_height()) // 2
@@ -75,12 +77,14 @@ class Display(Frame):
             self._y = self.y_0  # move image back to top
             self._waited = False  # after pausing for specified time
             # cycle through image indexes
-            self.last_index, self._curr_index = self._curr_index, (self._curr_index + 1) % len(self._bodies)
+            self.last_index, self._curr_index = self._curr_index, (
+                self._curr_index + 1) % len(self._bodies)
         else:
             self.speed_y += self._accel_y  # accelerate image
             self._y += self.speed_y  # change image position by speed amount
             if self._y > self._stop_y and not self._waited:  # set position to stop position if it hasn't waited
-                self._y = self._stop_y                       # so it doesn't end up lower that it should when at high speed
+                # so it doesn't end up lower that it should when at high speed
+                self._y = self._stop_y
 
 
 if __name__ == '__main__':
@@ -98,9 +102,12 @@ if __name__ == '__main__':
     CONTENT_PER_FRAME = 2
 
     # Display modes for each bin
-    landfill = Mode('LANDFILL', Path('./assets/img/_reduc/_landfill'), (0, 0, 0), (255, 255, 255))
-    recycle = Mode('RECYCLE', Path('./assets/img/_reduc/_recycle'), (255, 255, 255), (0, 57, 166))
-    compost = Mode('COMPOST', Path('./assets/img/_reduc/_compost'), (255, 255, 255), (21, 161, 25))
+    landfill = Mode('LANDFILL', Path(
+        './assets/img/_reduc/_landfill'), (0, 0, 0), (255, 255, 255))
+    recycle = Mode('RECYCLE', Path('./assets/img/_reduc/_recycle'),
+                   (255, 255, 255), (0, 57, 166))
+    compost = Mode('COMPOST', Path('./assets/img/_reduc/_compost'),
+                   (255, 255, 255), (21, 161, 25))
 
     # Determine which mode to use
     while True:
@@ -123,7 +130,7 @@ if __name__ == '__main__':
 
     # Display setup
     if FULLSCREEN:
-        flags = pygame.FULLSCREEN # | pygame.DOUBLEBUF | pygame.HWSURFACE
+        flags = pygame.FULLSCREEN  # | pygame.DOUBLEBUF | pygame.HWSURFACE
         screen = pygame.display.set_mode((0, 0), flags)
     else:
         screen = pygame.display.set_mode()
@@ -131,7 +138,7 @@ if __name__ == '__main__':
     pygame.mouse.set_visible(0)
 
     # Header
-    header_height = int(TEXT_RATIO*screen.get_height())
+    header_height = int(TEXT_RATIO * screen.get_height())
     header = Header(screen, 0, 0,
                     screen.get_width(), header_height,
                     font_file=str(Path('./assets/fnt/arial-bold.ttf')),
@@ -142,15 +149,18 @@ if __name__ == '__main__':
     # Body
     frame_count = math.ceil(len(image_paths) / CONTENT_PER_FRAME)
 
-    all_content_height = int(CONTENT_RATIO*screen.get_height())
+    all_content_height = int(CONTENT_RATIO * screen.get_height())
 
     body_list = []
     for i in range(frame_count):
         sub_list = []
-        content_count = min(CONTENT_PER_FRAME, len(image_paths))  # calculate number of content on screen using minimum of desired and remaining images
+        # calculate number of content on screen using minimum of desired and remaining images
+        content_count = min(CONTENT_PER_FRAME, len(image_paths))
         for j in range(content_count):
-            content_height = all_content_height // content_count  # dynamically adjust content height
-            sub_list.append(Body(screen, image_paths.pop(0), 'Testing {}'.format(i+j+1), 0, header.get_height() + j*content_height, screen.get_width(), content_height))
+            # dynamically adjust content height
+            content_height = all_content_height // content_count
+            sub_list.append(Body(screen, image_paths.pop(0), 'Testing {}'.format(
+                i + j + 1), 0, header.get_height() + j * content_height, screen.get_width(), content_height))
         body_list.append(sub_list)
 
     # Display
