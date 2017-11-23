@@ -2,6 +2,7 @@ import pygame
 from frame import Frame
 from header import Header
 from body import Body
+from text import TextFrame
 
 
 import serial
@@ -92,7 +93,7 @@ def _debug_print(*args, **kwargs) -> None:
 
 
 class Display(Frame):
-    def __init__(self, header: Header, bodies: [Body]):
+    def __init__(self, header: Header, bodies: [Body], scale):
         Frame.__init__(self, screen, None, 0, 0,
                        screen.get_width(), screen.get_height())
         self._header = header
@@ -116,7 +117,12 @@ class Display(Frame):
 
     def draw(self):
         """Blit animations to screen."""
-        curr_body = self._bodies[self._curr_index]
+        weight = scale.check()
+        if weight != 0:
+            curr_body = TextFrame(self.screen, self, str(
+                weight), text_color=(255, 255, 255))
+        else:
+            curr_body = self._bodies[self._curr_index]
 
         if self._stop_y is None or (self._last_index is not None and self._last_index != self._curr_index):
             _debug_print('UPDATE @', self._y, 'last:',
@@ -246,13 +252,13 @@ if __name__ == '__main__':
         body_list.append(sub_list)
 
     # Display
-    display = Display(header, body_list)
+    display = Display(header, body_list, scale_reading)
 
     # Scale Reading Test
-    # scale = Scale()
-    # prev_reading = scale.check()
-    # scale_reading = TextFrame(
-    #     screen, display, text=str(prev_reading), text_color=(255, 255, 0))
+    scale = Scale()
+    prev_reading = scale.check()
+    scale_reading = TextFrame(
+        screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
     # FPS
     clock = pygame.time.Clock()
@@ -274,24 +280,24 @@ if __name__ == '__main__':
 
         display.draw()
 
-        # current_reading = Scale.decode(scale, scale.ser.read(6))
-        # if scale.stable == 1:
-        #     # min 0.005 increments, unit is lbs
-        #     if (scale.last_value + 0.01) < current_reading:
-        #         print("The weight increased")
-        #         difference = current_reading - scale.last_value
-        #         scale.last_value = current_reading
-        #         scale_reading.set_text(str(difference))
-        #     else:
-        #         scale_reading.set_text(str(0))
+        current_reading = Scale.decode(scale, scale.ser.read(6))
+        if scale.stable == 1:
+            # min 0.005 increments, unit is lbs
+            if (scale.last_value + 0.01) < current_reading:
+                print("The weight increased")
+                difference = current_reading - scale.last_value
+                scale.last_value = current_reading
+                scale_reading.set_text(str(difference))
+            else:
+                scale_reading.set_text(str(0))
 
-        #     scale.last_value = current_reading
-        # else:
-        #     scale_reading.set_text(str(0))
+            scale.last_value = current_reading
+        else:
+            scale_reading.set_text(str(0))
 
-        #     scale.last_value = a
-        # else:
-        #     scale_reading.set_text(str(0))
+            scale.last_value = a
+        else:
+            scale_reading.set_text(str(0))
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
