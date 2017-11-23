@@ -257,7 +257,7 @@ if __name__ == '__main__':
 
     # prev_reading = scale.check()
     scale_read_frame = TextFrame(
-        screen, screen, text=str(scale.check()), text_color=(255, 255, 0))
+        screen, None, text=str(scale.check()), text_color=(255, 255, 0))
 
     # Display
     display = Display(header, body_list, scale_read_frame)
