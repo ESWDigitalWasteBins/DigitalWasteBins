@@ -62,6 +62,7 @@ class Scale:
                 difference = a - self.last_value
                 self.last_value = a
                 return difference
+
             '''
             if self.last_value == a and self.still_increasing == 1:
                 self.still_increasing = 0
@@ -282,10 +283,12 @@ if __name__ == '__main__':
                 scale.last_value = a
                 scale_reading.set_text(str(difference))
             
-            print("the weight stays the same or decreased")
             scale.last_value = a
-        else:
-                scale_reading.set_text("string")
+        else: 
+            scale_reading.set_text(str(0))
+
+
+
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
