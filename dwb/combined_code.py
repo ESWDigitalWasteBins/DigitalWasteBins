@@ -175,7 +175,7 @@ if __name__ == '__main__':
 
     # Display setup values
     FULLSCREEN = True
-    FPS = 60
+    FPS = 30
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
@@ -259,7 +259,7 @@ if __name__ == '__main__':
 
     # Scale
     SCALEREADEVENT = pygame.USEREVENT + 1
-    SCALEREADTIME = 200  # milliseconds
+    SCALEREADTIME = 300  # milliseconds
     pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
     # Animation loop
@@ -275,28 +275,15 @@ if __name__ == '__main__':
                     break
             elif event.type == SCALEREADEVENT:
                 weight = scale.check()
-                # if weight != 0:
-                #     display.is_using_scale = True
-                #     scale_read_frame.set_text(str(weight))
-                # elif display.frame_type == 1:
-                #     display.is_using_scale = False
+                #if weight != 0:
+                #    display.is_using_scale = True
+                #    scale_read_frame.set_text(str(weight))
+                #elif display.frame_type == 1:
+                #    display.is_using_scale = False
 
         screen.fill((0, 0, 0))
 
         display.draw()
-
-        # a = Scale.decode(scale, scale.ser.read(6))
-        # if scale.stable == 1:
-        #     # min 0.005 increments, unit is lbs
-        #     if (scale.last_value + 0.01) < a:
-        #         print("The weight increased")
-        #         difference = a - scale.last_value
-        #         scale.last_value = a
-        #         scale_reading.set_text(str(difference))
-        #     print("the weight stays the same or decreased")
-        #     scale.last_value = a
-        # else:
-        #     scale_reading.set_text(str(0))
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
