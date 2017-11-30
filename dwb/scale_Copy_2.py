@@ -25,6 +25,9 @@ D6: 0000 D5: 0000
 
 import serial
 import collections
+from stopwatch import Stopwatch
+
+sw = Stopwatch()
 
 Reading = collections.namedtuple(
     'Reading', ['mode', 'stable', 'overflow', 'weight', 'units'])
@@ -33,6 +36,8 @@ Reading = collections.namedtuple(
 class Scale:
     @staticmethod
     def decode(self, raw: bytes) -> Reading:
+        sw.reset()
+        sw.start()
         # Handle first byte
         if len(raw) != 6 or raw[0] != 0xff:
             return -1
@@ -58,6 +63,8 @@ class Scale:
         result /= 10 ** (decimal_point - 1)
         # Handle sixth byte
         unit = raw[5] & 0b1
+        sw.stop()
+        print("TIME (decode): ", sw.read())
         return result
 
     def __init__(self) -> None:
@@ -69,7 +76,13 @@ class Scale:
         self.originnal_value = 0
 
     def check(self):
-        a = Scale.decode(self, self.ser.read(6))
+        sw.reset()
+        sw.start()
+        reading = self.ser.read(6)
+        sw.stop()
+        print("TIME (scale reading): ", sw.read())
+        sw.start()
+        a = Scale.decode(self, reading)
         if self.stable == 1:
             # min 0.005 increments, unit is lbs
             if (self.last_value + 0.01) < a:
@@ -91,6 +104,8 @@ class Scale:
             '''
             print("the weight stays the same or decreased")
             self.last_value = a
+        sw.stop()
+        print("TIME (check): ", sw.read())
         return 0  # value stays the same or decreases
 
     def close(self) -> None:
