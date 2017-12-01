@@ -204,7 +204,9 @@ if __name__ == '__main__':
 
     # Animation loop
     while running:
-
+        sw.reset()
+        sw.start()
+        _sw_log(log, "begin while", sw)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -214,10 +216,7 @@ if __name__ == '__main__':
                     running = False
                     break
             elif event.type == SCALEREADEVENT:
-                sw.reset()
-                sw.start()
                 weight = my_scale.check()
-                sw.stop()
                 _sw_log(log, "scale", sw)
                 # if weight != 0:
                 #    display.is_using_scale = True
@@ -225,16 +224,10 @@ if __name__ == '__main__':
                 # elif display.frame_type == 1:
                 #    display.is_using_scale = False
 
-        sw.reset()
-        sw.start()
         screen.fill((0, 0, 0))
-        sw.stop()
         _sw_log(log, "fill", sw)
 
-        sw.reset()
-        sw.start()
         display.draw()
-        sw.stop()
         _sw_log(log, "draw", sw)
 
         # curr_reading = scale.check()
@@ -242,8 +235,10 @@ if __name__ == '__main__':
         # scale_reading.draw()
 
         clock.tick(FPS)
+        _sw_log(log, "clock tick", sw)
 
         pygame.display.flip()
+        _sw_log(log, "end while", sw)
 
     log.close()
 
