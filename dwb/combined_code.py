@@ -214,7 +214,11 @@ if __name__ == '__main__':
                     running = False
                     break
             elif event.type == SCALEREADEVENT:
+                sw.reset()
+                sw.start()
                 weight = my_scale.check()
+                sw.stop()
+                _sw_log(log, "scale", sw)
                 # if weight != 0:
                 #    display.is_using_scale = True
                 #    scale_read_frame.set_text(str(weight))
