@@ -39,6 +39,8 @@ class Scale:
         sw.start()
         # Handle first byte
         if len(raw) != 6 or raw[0] != 0xff:
+            sw.stop()
+            print("TIME (decode fail): ", sw.read())
             return -1
             # raise ValueError('Not a Global 240878 message')
         # Handle second byte
@@ -88,6 +90,8 @@ class Scale:
                 print("The weight increased")
                 difference = a - self.last_value
                 self.last_value = a
+                sw.stop()
+                print("TIME (check stable): ", sw.read())
                 return difference
             '''
             if self.last_value == a and self.still_increasing == 1:
