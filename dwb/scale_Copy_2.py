@@ -25,7 +25,6 @@ D6: 0000 D5: 0000
 
 import serial
 import collections
-import pygame
 from stopwatch import Stopwatch
 
 sw = Stopwatch()
@@ -71,6 +70,9 @@ class Scale:
 
     def __init__(self) -> None:
         self.ser = serial.Serial('/dev/ttyUSB0', 9600)
+        if (self.ser.isOpen()):
+            self.close()
+        self.open()
         self.last_value = 0
         self.stable = 0
         self.original_weight = 0
@@ -100,6 +102,9 @@ class Scale:
         print("TIME (check): ", sw.read())
         return 0  # value stays the same or decreases
 
+    def open(self) -> None:
+        self.ser.open()
+
     def close(self) -> None:
         self.ser.close()
 
@@ -116,20 +121,7 @@ if __name__ == '__main__':
 
     s = Scale()
 
-    running = True
-
-    while(running):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                break
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                    break
-
+    while(True):
         print(s.check())  # 0:unusable, -1:error, others: difference in mass
 
     s.close()
-
-    pygame.quit()
