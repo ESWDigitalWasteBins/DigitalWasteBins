@@ -23,7 +23,7 @@ def _debug_print(*args, **kwargs) -> None:
         print(*args, **kwargs)
 
 
-def _sw_log(log: "file", time_type, sw: Stopwatch, *args, **kwargs) -> None:
+def _sw_log(log: "file", time_type, sw: Stopwatch) -> None:
     log.write("TIME (" + time_type + "): " + sw.read() + "\n")
 
 
@@ -230,7 +230,7 @@ if __name__ == '__main__':
         sw.start()
         display.draw()
         sw.stop()
-        _sw_log("draw", sw)
+        _sw_log(log, "draw", sw)
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
