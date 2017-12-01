@@ -15,7 +15,7 @@ Data Format: Every message includes 6 bytes;
     c. No. 3: D0-D7 = BCD1 (LSB)
     d. No. 4: D0-D7 = BCD2 (MSB)
     e. No. 5: D0-D7 = BCD3 (HSB)
-    f. No. 6: D0-D7 = Unit for weight: 1 – Lb; 0 - kg
+
 
 Bytes 3-5 to Digits
 D2: 0001 D1: 0000
@@ -23,25 +23,31 @@ D4: 0000 D3: 0000
 D6: 0000 D5: 0000
 """
 
-
 import serial
 import collections
+from stopwatch import Stopwatch
 
+sw = Stopwatch()
 
-Reading = collections.namedtuple('Reading', ['mode', 'stable', 'overflow', 'weight', 'units'])
+Reading = collections.namedtuple(
+    'Reading', ['mode', 'stable', 'overflow', 'weight', 'units'])
 
 
 class Scale:
-    @staticmethod
-    def decode(raw: bytes) -> Reading:
+    def decode(self, raw: bytes) -> Reading:
+        sw.reset()
+        sw.start()
         # Handle first byte
         if len(raw) != 6 or raw[0] != 0xff:
-            raise ValueError('Not a Global 240878 message')
+            sw.stop()
+            print("TIME (decode fail): ", sw.read())
+            return -1
+            # raise ValueError('Not a Global 240878 message')
         # Handle second byte
         decimal_point = raw[1] & 0b111
         current_mode = (raw[1] & 0b11000) >> 3
         negative = (raw[1] & 0b100000) >> 5
-        stable = (raw[1] & 0b1000000) >> 6
+        self.stable = (raw[1] & 0b1000000) >> 6
         overflow = (raw[1] & 0b10000000) >> 7
         # TODO: Handle third byte
         digit1 = raw[2] & 0b1111
@@ -53,17 +59,51 @@ class Scale:
         digit5 = raw[4] & 0b1111
         digit6 = (raw[4] & 0b11110000) >> 4
         # Put it all together
-        result = digit1 + (digit2 * 10) + (digit3 * 100) + (digit4 * 1000) + (digit5 * 10000) + (digit6 * 100000)
+        result = digit1 + (digit2 * 10) + (digit3 * 100) + \
+            (digit4 * 1000) + (digit5 * 10000) + (digit6 * 100000)
         result /= 10 ** (decimal_point - 1)
         # Handle sixth byte
         unit = raw[5] & 0b1
-        return Reading(current_mode, stable, overflow, result, unit)
+        sw.stop()
+        print("TIME (decode): ", sw.read())
+        return result
 
     def __init__(self) -> None:
-        self.ser = serial.Serial('/dev/ttyUSB0')
+        self.ser = serial.Serial('/dev/ttyUSB0', 9600)
+        if (self.ser.isOpen()):
+            self.close()
+        self.open()
+        self.last_value = 0
+        self.stable = 0
+        self.original_weight = 0
+        self.still_increasing = 0
+        self.originnal_value = 0
 
-    def read(self) -> Reading:
-        return Scale.decode(self.ser.read(6))
+    def check(self):
+        sw.reset()
+        sw.start()
+        reading = self.ser.read(6)
+        sw.stop()
+        print("TIME (scale reading): ", sw.read())
+        sw.start()
+        a = Scale.decode(self, reading)
+        if self.stable == 1:
+            # min 0.005 increments, unit is lbs
+            if (self.last_value + 0.01) < a:
+                print("The weight increased")
+                difference = a - self.last_value
+                self.last_value = a
+                sw.stop()
+                print("TIME (check stable): ", sw.read())
+                return difference
+            print("the weight stays the same or decreased")
+            self.last_value = a
+        sw.stop()
+        print("TIME (check): ", sw.read())
+        return 0  # value stays the same or decreases
+
+    def open(self) -> None:
+        self.ser.open()
 
     def close(self) -> None:
         self.ser.close()
@@ -76,5 +116,10 @@ if __name__ == '__main__':
     # print(decode(unhexlify('ff4406180000')))
     # print(decode(unhexlify('ff4910000000')))
     # print(decode(unhexlify('ff4407180000')))
+
     s = Scale()
-    print(s.read())
+
+    while(True):
+        print(s.check())  # 0:unusable, -1:error, others: difference in mass
+
+    s.close()
