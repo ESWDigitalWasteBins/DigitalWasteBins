@@ -9,7 +9,7 @@ from scale import Scale
 
 from stopwatch import Stopwatch
 
-Reading = collections.namedtuple(
+Reading = namedtuple(
     'Reading', ['mode', 'stable', 'overflow', 'weight', 'units'])
 
 
