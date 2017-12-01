@@ -220,14 +220,16 @@ if __name__ == '__main__':
                 if event.key == pygame.K_ESCAPE:
                     running = False
                     break
-            elif event.type == SCALEREADEVENT:
-                weight = my_scale.check()
-                _sw_log(log, "scale", sw)
+            # elif event.type == SCALEREADEVENT:
+            #     pass
                 # if weight != 0:
                 #    display.is_using_scale = True
                 #    scale_read_frame.set_text(str(weight))
                 # elif display.frame_type == 1:
                 #    display.is_using_scale = False
+
+        weight = my_scale.check()
+        _sw_log(log, "scale", sw)
 
         screen.fill((0, 0, 0))
         _sw_log(log, "fill", sw)
