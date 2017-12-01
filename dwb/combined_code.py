@@ -17,6 +17,8 @@ _DEBUG = False
 
 
 sw = Stopwatch()
+sw_global = Stopwatch()
+log = open("debug.log", "w")
 
 
 def _debug_print(*args, **kwargs) -> None:
@@ -105,6 +107,9 @@ class Display(Frame):
 
 
 if __name__ == '__main__':
+    sw_global.start()
+    _sw_log(log, "BEGIN GLOBAL", sw_global)
+
     import math
     from mode import Mode
     from pathlib import Path
@@ -119,8 +124,6 @@ if __name__ == '__main__':
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
     CONTENT_RATIO = 1 - TEXT_RATIO
     CONTENT_PER_FRAME = 2
-
-    log = open("debug.log", "w")
 
     # Display modes for each bin
     landfill = Mode('LANDFILL', Path(
@@ -202,8 +205,10 @@ if __name__ == '__main__':
     SCALEREADTIME = 150  # milliseconds
     pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
+    _sw_log(log, "GLOBAL", sw_global)
     # Animation loop
     while running:
+        _sw_log(log, "GLOBAL", sw_global)
         sw.reset()
         sw.start()
         _sw_log(log, "begin while", sw)
@@ -243,3 +248,5 @@ if __name__ == '__main__':
     log.close()
 
     pygame.quit()
+
+_sw_log(log, "END GLOBAL", sw_global)
