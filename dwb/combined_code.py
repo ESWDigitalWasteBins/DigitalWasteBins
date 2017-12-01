@@ -23,8 +23,8 @@ def _debug_print(*args, **kwargs) -> None:
         print(*args, **kwargs)
 
 
-def _sw_print(time_type, sw: Stopwatch, *args, **kwargs) -> None:
-    print("TIME (" + time_type + "): " + sw.read(), *args, **kwargs)
+def _sw_log(log: "file", time_type, sw: Stopwatch, *args, **kwargs) -> None:
+    log.write("TIME (" + time_type + "): " + sw.read() + "\n")
 
 
 class Display(Frame):
@@ -118,6 +118,8 @@ if __name__ == '__main__':
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
     CONTENT_RATIO = 1 - TEXT_RATIO
     CONTENT_PER_FRAME = 2
+
+    log = open("debug.log", "w")
 
     # Display modes for each bin
     landfill = Mode('LANDFILL', Path(
@@ -222,13 +224,13 @@ if __name__ == '__main__':
         sw.start()
         screen.fill((0, 0, 0))
         sw.stop()
-        _sw_print("fill", sw)
+        _sw_log(log, "fill", sw)
 
         sw.reset()
         sw.start()
         display.draw()
         sw.stop()
-        _sw_print("draw", sw)
+        _sw_log("draw", sw)
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
@@ -237,5 +239,7 @@ if __name__ == '__main__':
         clock.tick(FPS)
 
         pygame.display.flip()
+
+    log.close()
 
     pygame.quit()
