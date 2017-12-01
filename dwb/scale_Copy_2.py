@@ -117,8 +117,6 @@ if __name__ == '__main__':
     # print(decode(unhexlify('ff4910000000')))
     # print(decode(unhexlify('ff4407180000')))
 
-    pygame.init()
-
     s = Scale()
 
     while(True):
