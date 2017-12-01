@@ -202,7 +202,7 @@ if __name__ == '__main__':
 
     # Scale
     SCALEREADEVENT = pygame.USEREVENT + 1
-    SCALEREADTIME = 500  # milliseconds
+    SCALEREADTIME = 300  # milliseconds
     pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
     _sw_log(log, "GLOBAL", sw_global)
@@ -222,7 +222,7 @@ if __name__ == '__main__':
                     break
             elif event.type == SCALEREADEVENT:
                 weight = my_scale.check()
-                _sw_log(log, "scale", sw)
+                _sw_log(log, "scale " + str(weight), sw)
                 # if weight != 0:
                 #    display.is_using_scale = True
                 #    scale_read_frame.set_text(str(weight))
