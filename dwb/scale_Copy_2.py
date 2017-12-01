@@ -25,6 +25,7 @@ D6: 0000 D5: 0000
 
 import serial
 import collections
+import pygame
 from stopwatch import Stopwatch
 
 sw = Stopwatch()
@@ -69,7 +70,6 @@ class Scale:
         return result
 
     def __init__(self) -> None:
-        self.close()  # close previous port if necessary
         self.ser = serial.Serial('/dev/ttyUSB0', 9600)
         self.last_value = 0
         self.stable = 0
@@ -94,18 +94,6 @@ class Scale:
                 sw.stop()
                 print("TIME (check stable): ", sw.read())
                 return difference
-            '''
-            if self.last_value == a and self.still_increasing == 1:
-                self.still_increasing = 0
-                difference = a - self.originnal_value
-                return difference  # weight finished rising
-            if self.last_value + 0.05 < a and self.still_increasing == 0:
-                self.still_increasing = 1
-                self.originnal_value = a  # weight start rising here
-            if self.last_value + 0.05 < a and self.still_increasing == 1:
-                self.still_increasing = 1  # weight is still rising
-            self.last_value = a
-            '''
             print("the weight stays the same or decreased")
             self.last_value = a
         sw.stop()
@@ -124,6 +112,24 @@ if __name__ == '__main__':
     # print(decode(unhexlify('ff4910000000')))
     # print(decode(unhexlify('ff4407180000')))
 
+    pygame.init()
+
     s = Scale()
-    while(True):
+
+    running = True
+
+    while(running):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                break
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                    break
+
         print(s.check())  # 0:unusable, -1:error, others: difference in mass
+
+    s.close()
+
+    pygame.quit()
