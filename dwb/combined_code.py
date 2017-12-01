@@ -228,8 +228,8 @@ if __name__ == '__main__':
                 # elif display.frame_type == 1:
                 #    display.is_using_scale = False
 
-        weight = my_scale.check()
-        _sw_log(log, "scale", sw)
+        # weight = my_scale.check()
+        # _sw_log(log, "scale", sw)
 
         screen.fill((0, 0, 0))
         _sw_log(log, "fill", sw)
