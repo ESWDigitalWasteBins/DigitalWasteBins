@@ -69,6 +69,7 @@ class Scale:
         return result
 
     def __init__(self) -> None:
+        self.close()  # close previous port if necessary
         self.ser = serial.Serial('/dev/ttyUSB0', 9600)
         self.last_value = 0
         self.stable = 0
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     # print(decode(unhexlify('ff4406180000')))
     # print(decode(unhexlify('ff4910000000')))
     # print(decode(unhexlify('ff4407180000')))
+
     s = Scale()
     while(True):
         print(s.check())  # 0:unusable, -1:error, others: difference in mass
-    s.close()
