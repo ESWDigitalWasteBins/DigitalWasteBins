@@ -3,6 +3,7 @@ from frame import Frame
 from header import Header
 from body import Body
 
+from collections import namedtuple
 
 from scale import Scale
 
