@@ -212,14 +212,14 @@ if __name__ == '__main__':
         sw.reset()
         sw.start()
         _sw_log(log, "begin while", sw)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        event = pygame.event.get()
+        if event.type == pygame.QUIT:
+            running = False
+            # break
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 running = False
-                break
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                    break
+                # break
             # elif event.type == SCALEREADEVENT:
             #     pass
                 # if weight != 0:
@@ -228,8 +228,8 @@ if __name__ == '__main__':
                 # elif display.frame_type == 1:
                 #    display.is_using_scale = False
 
-        # weight = my_scale.check()
-        # _sw_log(log, "scale", sw)
+        weight = my_scale.check()
+        _sw_log(log, "scale", sw)
 
         screen.fill((0, 0, 0))
         _sw_log(log, "fill", sw)
