@@ -34,6 +34,14 @@ Reading = collections.namedtuple(
 
 
 class Scale:
+    def __init__(self) -> None:
+        self.ser = serial.Serial('/dev/ttyUSB0', 9600)
+        if (self.ser.isOpen()):
+            self.close()
+        self.open()
+        self.last_value = 0
+        self.stable = 0
+
     def decode(self, raw: bytes) -> Reading:
         sw.reset()
         sw.start()
@@ -67,17 +75,6 @@ class Scale:
         sw.stop()
         print("TIME (decode): ", sw.read())
         return result
-
-    def __init__(self) -> None:
-        self.ser = serial.Serial('/dev/ttyUSB0', 9600)
-        if (self.ser.isOpen()):
-            self.close()
-        self.open()
-        self.last_value = 0
-        self.stable = 0
-        self.original_weight = 0
-        self.still_increasing = 0
-        self.originnal_value = 0
 
     def check(self):
         sw.reset()
