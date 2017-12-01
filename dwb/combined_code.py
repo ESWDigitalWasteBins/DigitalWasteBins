@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
     # Display setup values
     FULLSCREEN = True
-    FPS = 30
+    FPS = 60
     TEXT_WEIGHT = 1
     CONTENT_WEIGHT = 5
     TEXT_RATIO = TEXT_WEIGHT / (TEXT_WEIGHT + CONTENT_WEIGHT)
@@ -251,4 +251,4 @@ if __name__ == '__main__':
 
     pygame.quit()
 
-_sw_log(log, "END GLOBAL", sw_global)
+    _sw_log(log, "END GLOBAL", sw_global)
