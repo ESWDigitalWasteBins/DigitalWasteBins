@@ -34,7 +34,6 @@ Reading = collections.namedtuple(
 
 
 class Scale:
-    @staticmethod
     def decode(self, raw: bytes) -> Reading:
         sw.reset()
         sw.start()
