@@ -212,14 +212,10 @@ if __name__ == '__main__':
         sw.reset()
         sw.start()
         _sw_log(log, "begin while", sw)
-        event = pygame.event.get()[0]
-        if event.type == pygame.QUIT:
-            running = False
-            # break
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 running = False
-                break
+                # break
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
