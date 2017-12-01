@@ -212,7 +212,7 @@ if __name__ == '__main__':
         sw.reset()
         sw.start()
         _sw_log(log, "begin while", sw)
-        event = pygame.event.get()
+        event = pygame.event.get()[0]
         if event.type == pygame.QUIT:
             running = False
             # break
