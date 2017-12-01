@@ -24,7 +24,7 @@ def _debug_print(*args, **kwargs) -> None:
 
 
 def _sw_log(log: "file", time_type, sw: Stopwatch) -> None:
-    log.write("TIME (" + time_type + "): " + sw.read() + "\n")
+    log.write("TIME (" + time_type + "): " + str(sw.read()) + "\n")
 
 
 class Display(Frame):
@@ -120,6 +120,7 @@ if __name__ == '__main__':
     CONTENT_PER_FRAME = 2
 
     log = open("debug.log", "w")
+    log.write("testing123")
 
     # Display modes for each bin
     landfill = Mode('LANDFILL', Path(
