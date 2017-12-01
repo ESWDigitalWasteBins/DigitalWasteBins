@@ -121,7 +121,6 @@ if __name__ == '__main__':
     CONTENT_PER_FRAME = 2
 
     log = open("debug.log", "w")
-    log.write("testing123")
 
     # Display modes for each bin
     landfill = Mode('LANDFILL', Path(
@@ -200,7 +199,7 @@ if __name__ == '__main__':
 
     # Scale
     SCALEREADEVENT = pygame.USEREVENT + 1
-    SCALEREADTIME = 300  # milliseconds
+    SCALEREADTIME = 150  # milliseconds
     pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
     # Animation loop
