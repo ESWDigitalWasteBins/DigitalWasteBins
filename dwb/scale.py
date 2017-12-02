@@ -100,9 +100,9 @@ class Scale:
                     sw.stop()
                     print("TIME (check stable): ", sw.read())
                      # make it easier to see changed weight
-                    print(difference)
-                    time.sleep(3)
-                    return difference
+                    #print(difference)
+                    #time.sleep(3) #turn on for debugging
+                    return difference #return weight change between this and the last stable read in kg
                 print("the weight stays the same or decreased")
                 self.last_value = a
             sw.stop()
