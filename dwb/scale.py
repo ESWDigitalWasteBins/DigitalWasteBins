@@ -35,7 +35,7 @@ Reading = collections.namedtuple(
 
 class Scale:
     def __init__(self) -> None:
-        self.ser = serial.Serial('/dev/ttyUSB0', 9600)
+        self.ser = serial.Serial('/dev/ttyUSB0', 1200)
         #scale supports 1200, 2400, 4800, 9600
         if (self.ser.isOpen()):
             self.close()
