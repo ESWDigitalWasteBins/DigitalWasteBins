@@ -237,7 +237,7 @@ if __name__ == '__main__':
 
         # curr_reading = scale.check()
         # scale_reading.set_text(str(curr_reading))
-        # scale_reading.draw()
+        scale_reading.draw()
 
         clock.tick(FPS)
         _sw_log(log, "clock tick", sw)
