@@ -225,8 +225,7 @@ if __name__ == '__main__':
                 _sw_log(log, "scale " + str(weight), sw)
                 # if weight != 0:
                 # display.is_using_scale = True
-                scale_reading = TextFrame(
-                    scale_read_frame.set_text(str(weight)))
+                scale_reading.set_text(str(weight))
                 # elif display.frame_type == 1:
                 # display.is_using_scale=False
 
