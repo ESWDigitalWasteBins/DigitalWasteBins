@@ -245,8 +245,8 @@ if __name__ == '__main__':
         pygame.display.flip()
         _sw_log(log, "end while", sw)
 
-    log.close()
-
     pygame.quit()
 
     _sw_log(log, "END GLOBAL", sw_global)
+
+    log.close()
