@@ -36,6 +36,7 @@ Reading = collections.namedtuple(
 class Scale:
     def __init__(self) -> None:
         self.ser = serial.Serial('/dev/ttyUSB0', 9600)
+        #scale supports 1200, 2400, 4800, 9600
         if (self.ser.isOpen()):
             self.close()
         self.open()
@@ -79,25 +80,27 @@ class Scale:
     def check(self):
         sw.reset()
         sw.start()
-        reading = self.ser.read(6)
-        sw.stop()
-        print("TIME (scale reading): ", sw.read())
-        sw.start()
-        a = Scale.decode(self, reading)
-        if self.stable == 1:
-            # min 0.005 increments, unit is lbs
-            if (self.last_value + 0.01) < a:
-                print("The weight increased")
-                difference = a - self.last_value
+
+        if self.ser.in_waiting > 0:
+            reading = self.ser.read(6)
+            sw.stop()
+            print("TIME (scale reading): ", sw.read())
+            sw.start()
+            a = Scale.decode(self, reading)
+            if self.stable == 1:
+                # min 0.005 increments, unit is lbs
+                if (self.last_value + 0.01) < a:
+                    print("The weight increased")
+                    difference = a - self.last_value
+                    self.last_value = a
+                    sw.stop()
+                    print("TIME (check stable): ", sw.read())
+                    return difference
+                print("the weight stays the same or decreased")
                 self.last_value = a
-                sw.stop()
-                print("TIME (check stable): ", sw.read())
-                return difference
-            print("the weight stays the same or decreased")
-            self.last_value = a
-        sw.stop()
-        print("TIME (check): ", sw.read())
-        return 0  # value stays the same or decreases
+            sw.stop()
+            print("TIME (check): ", sw.read())
+            return 0  # value stays the same or decreases
 
     def open(self) -> None:
         self.ser.open()
