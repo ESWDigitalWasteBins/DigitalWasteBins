@@ -87,6 +87,8 @@ class Scale:
             print("TIME (scale reading): ", sw.read())
             sw.start()
             a = Scale.decode(self, reading)
+            #will record the last stable value and compare it to the next one
+            #run the scale in STB mode 
             if self.stable == 1:
                 # min 0.005 increments, unit is lbs
                 if (self.last_value + 0.01) < a:
@@ -101,6 +103,7 @@ class Scale:
             sw.stop()
             print("TIME (check): ", sw.read())
             return 0  # value stays the same or decreases
+        return -1 #there is no data from scale, meaning that it's not stable
 
     def open(self) -> None:
         self.ser.open()
