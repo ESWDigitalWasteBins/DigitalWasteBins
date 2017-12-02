@@ -202,7 +202,7 @@ if __name__ == '__main__':
 
     # Scale
     SCALEREADEVENT = pygame.USEREVENT + 1
-    SCALEREADTIME = 300  # milliseconds
+    SCALEREADTIME = 150  # milliseconds
     pygame.time.set_timer(SCALEREADEVENT, SCALEREADTIME)
 
     _sw_log(log, "GLOBAL", sw_global)
