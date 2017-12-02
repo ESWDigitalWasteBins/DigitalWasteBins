@@ -24,6 +24,7 @@ D6: 0000 D5: 0000
 """
 
 import serial
+import time 
 import collections
 from stopwatch import Stopwatch
 
@@ -92,18 +93,23 @@ class Scale:
             if self.stable == 1:
                 # min 0.005 increments, unit is lbs
                 if (self.last_value + 0.01) < a:
+ 
                     print("The weight increased")
                     difference = a - self.last_value
                     self.last_value = a
                     sw.stop()
                     print("TIME (check stable): ", sw.read())
+                     # make it easier to see changed weight
+                    print(difference)
+                    time.sleep(3)
                     return difference
                 print("the weight stays the same or decreased")
                 self.last_value = a
             sw.stop()
             print("TIME (check): ", sw.read())
             return 0  # value stays the same or decreases
-        return -2 #there is no data from scale, meaning that it's not stable
+        print("There is no data")
+        return 0 #there is no data from scale, meaning that it's not stable
 
     def open(self) -> None:
         self.ser.open()
