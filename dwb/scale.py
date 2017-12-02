@@ -103,7 +103,7 @@ class Scale:
             sw.stop()
             print("TIME (check): ", sw.read())
             return 0  # value stays the same or decreases
-        return -1 #there is no data from scale, meaning that it's not stable
+        return -2 #there is no data from scale, meaning that it's not stable
 
     def open(self) -> None:
         self.ser.open()
