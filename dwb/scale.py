@@ -36,7 +36,7 @@ Reading = collections.namedtuple(
 
 class Scale:
     def __init__(self) -> None:
-        self.ser = serial.Serial('/dev/ttyUSB0', 1200)
+        self.ser = serial.Serial('/dev/SCALE', 1200) #change from ttyUSB0 to SCALE after creating symlink
         #scale supports 1200, 2400, 4800, 9600
         if (self.ser.isOpen()):
             self.close()
@@ -82,7 +82,7 @@ class Scale:
         sw.reset()
         sw.start()
 
-        if self.ser.in_waiting > 0:
+        if self.ser.in_waiting > 0:#will only read if there is something waiting in buffer, scale at STB mode
             reading = self.ser.read(6)
             sw.stop()
             print("TIME (scale reading): ", sw.read())
