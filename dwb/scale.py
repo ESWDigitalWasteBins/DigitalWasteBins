@@ -76,7 +76,10 @@ class Scale:
         unit = raw[5] & 0b1
         sw.stop()
         print("TIME (decode): ", sw.read())
-        return result
+        if negative:
+            return result * (-1.0)
+        else:
+            return result
 
     def check(self):
         sw.reset()
