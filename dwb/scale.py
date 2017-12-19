@@ -71,7 +71,7 @@ class Scale:
         # Put it all together
         result = digit1 + (digit2 * 10) + (digit3 * 100) + \
             (digit4 * 1000) + (digit5 * 10000) + (digit6 * 100000)
-        result /= 10 ** (decimal_point - 1)
+        result /= float(10 ** (decimal_point - 1)) #more precision
         # Handle sixth byte
         unit = raw[5] & 0b1
         sw.stop()
