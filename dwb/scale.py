@@ -105,9 +105,10 @@ class Scale:
                     return difference #return weight change between this and the last stable read in kg
                 print("the weight stays the same or decreased")
                 self.last_value = a
+                return 0 # value stays the same or decreases
             sw.stop()
             print("TIME (check): ", sw.read())
-            return 0  # value stays the same or decreases
+            return 0 # value is not stable  
         print("There is no data")
         return 0 #there is no data from scale, meaning that it's not stable
 
