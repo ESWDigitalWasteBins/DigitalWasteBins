@@ -69,7 +69,7 @@ class Scale:
         digit5 = raw[4] & 0b1111
         digit6 = (raw[4] & 0b11110000) >> 4
         # Put it all together
-        result = digit1 + (digit2 * 10) + (digit3 * 100) + \
+        result = float(digit1) + (digit2 * 10) + (digit3 * 100) + \
             (digit4 * 1000) + (digit5 * 10000) + (digit6 * 100000)
         result /= float(10 ** (decimal_point - 1)) #more precision
         # Handle sixth byte
@@ -95,7 +95,7 @@ class Scale:
                 if (self.last_value + 0.01) < a:
                     #may need to add check so that people don't pick up thrown in trash and then called it recycled stuffs again
                     print("The weight increased")
-                    difference = a - self.last_value
+                    difference = float(a) - float(self.last_value)
                     self.last_value = a
                     sw.stop()
                     print("TIME (check stable): ", sw.read())
