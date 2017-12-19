@@ -92,7 +92,7 @@ class Scale:
             #run the scale in STB mode 
             if self.stable == 1:
                 # min 0.005 increments, unit is lbs
-                if (self.last_value + 0.01) < a:
+                if (self.last_value + 0.0005) < a:
                     #may need to add check so that people don't pick up thrown in trash and then called it recycled stuffs again
                     print("The weight increased")
                     difference = float(a) - float(self.last_value)
