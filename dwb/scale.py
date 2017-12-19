@@ -69,8 +69,8 @@ class Scale:
         digit5 = raw[4] & 0b1111
         digit6 = (raw[4] & 0b11110000) >> 4
         # Put it all together
-        result = float(digit1) + (digit2 * 10) + (digit3 * 100) + \
-            (digit4 * 1000) + (digit5 * 10000) + (digit6 * 100000)
+        result = float(digit1) + float(digit2 * 10) + float(digit3 * 100) + \
+            float(digit4 * 1000) + float(digit5 * 10000) + float(digit6 * 100000)
         result /= float(10 ** (decimal_point - 1)) #more precision
         # Handle sixth byte
         unit = raw[5] & 0b1
