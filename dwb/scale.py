@@ -73,13 +73,17 @@ class Scale:
             float(digit4 * 1000) + float(digit5 * 10000) + float(digit6 * 100000)
         result /= float(10 ** (decimal_point - 1)) #more precision
         # Handle sixth byte
-        unit = raw[5] & 0b1
+        unit = raw[5] & 0b1 #1 for lbs and 0 for kg
         sw.stop()
         print("TIME (decode): ", sw.read())
-        if negative:
-            return result * (-1.0)
+        #convert to ounces
+        if unit:
+            result*=16
         else:
-            return result
+            result*=35.274
+        if negative:
+            result*=(-1.0)
+        return result #return in ounces with negative number supported
 
     def check(self):
         sw.reset()
