@@ -225,7 +225,7 @@ if __name__ == '__main__':
                 _sw_log(log, "scale " + str(weight), sw)
                 # if weight != 0:
                 # display.is_using_scale = True
-                scale_reading.set_text(str(weight))
+                scale_reading.set_text(format(weight, '.5f')) #5 decimals
                 # elif display.frame_type == 1:
                 # display.is_using_scale=False
 

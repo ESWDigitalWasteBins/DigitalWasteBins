@@ -36,7 +36,7 @@ Reading = collections.namedtuple(
 
 class Scale:
     def __init__(self) -> None:
-        self.ser = serial.Serial('/dev/SCALE', 1200) #change from ttyUSB0 to SCALE after creating symlink
+        self.ser = serial.Serial('/dev/SCALE', 9600) #change from ttyUSB0 to SCALE after creating symlink
         #scale supports 1200, 2400, 4800, 9600
         if (self.ser.isOpen()):
             self.close()
