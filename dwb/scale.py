@@ -83,7 +83,7 @@ class Scale:
             result*=35.274
         if negative:
             result*=(-1.0)
-        return result #return in ounces with negative number supported
+        return result 
 
     def check(self):
         sw.reset()
