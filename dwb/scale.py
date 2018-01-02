@@ -24,7 +24,7 @@ D6: 0000 D5: 0000
 """
 
 import serial
-import time
+#import time
 import collections
 from stopwatch import Stopwatch
 
@@ -43,7 +43,7 @@ class Scale:
             self.close()
         self.open()
         self.last_value = 0
-        self.stable = 0
+        self.raw = 0
 
     def check(self, raw: bytes) -> Reading:
         sw.reset()
@@ -54,42 +54,46 @@ class Scale:
             print("TIME (decode fail): ", sw.read())
             return -1
             # raise ValueError('Not a Global 240878 message')
-        # Handle second byte
-        decimal_point = raw[1] & 0b111
-        #current_mode = (raw[1] & 0b11000) >> 3
-        negative = (raw[1] & 0b100000) >> 5
-        #self.stable = (raw[1] & 0b1000000) >> 6
-        #overflow = (raw[1] & 0b10000000) >> 7
-        # TODO: Handle third byte
-        digit1 = raw[2] & 0b1111
-        digit2 = (raw[2] & 0b11110000) >> 4
-        # TODO: Handle fourth byte
-        digit3 = raw[3] & 0b1111
-        digit4 = (raw[3] & 0b11110000) >> 4
-        # TODO: Handle fifth byte
-        digit5 = raw[4] & 0b1111
-        digit6 = (raw[4] & 0b11110000) >> 4
-        # Put it all together
-        result = float(digit1) + digit2 * 10 + digit3 * 100 + \
-            digit4 * 1000 + digit5 * 10000 + digit6 * 100000
-        result /= float(10 ** (decimal_point - 1))  # more precision
-        # Handle sixth byte
-        unit = raw[5] & 0b1  # 1 for lbs and 0 for kg
-        sw.stop()
-        print("TIME (decode): ", sw.read())
-        # convert to ounces
-        # TODO: Finalize the unit to get rid of the if statement
-        result = result * 16 if unit else result * 35.274
-        result = result * (-1.0) if negative else result
-        # if negative:
-        #    result *= (-1.0)
-        sw.reset()
-        sw.start()
-        #reading = self.ser.read(6)
-        sw.stop()
-        print("TIME (scale reading): ", sw.read())
-        sw.start()
-
+        # preliminary check if the number are equal to each other to
+        # avoid doing bitshifting and a lot of post processing
+        if not(raw[2] == self.raw[2] and raw[3] == self.raw[3] and raw[1] == self.raw[1] and raw[4] == self.raw[4]):
+            # Handle second byte
+            decimal_point = raw[1] & 0b111
+            #current_mode = (raw[1] & 0b11000) >> 3
+            negative = (raw[1] & 0b100000) >> 5
+            #self.stable = (raw[1] & 0b1000000) >> 6
+            #overflow = (raw[1] & 0b10000000) >> 7
+            # TODO: Handle third byte
+            digit1 = raw[2] & 0b1111
+            digit2 = (raw[2] & 0b11110000) >> 4
+            # TODO: Handle fourth byte
+            digit3 = raw[3] & 0b1111
+            digit4 = (raw[3] & 0b11110000) >> 4
+            # TODO: Handle fifth byte
+            digit5 = raw[4] & 0b1111
+            digit6 = (raw[4] & 0b11110000) >> 4
+            # Put it all together
+            result = float(digit1) + digit2 * 10 + digit3 * 100 + \
+                digit4 * 1000 + digit5 * 10000 + digit6 * 100000
+            result /= float(10 ** (decimal_point - 1))  # more precision
+            # Handle sixth byte
+            unit = raw[5] & 0b1  # 1 for lbs and 0 for kg
+            sw.stop()
+            print("TIME (decode): ", sw.read())
+            # convert to ounces
+            # TODO: Finalize the unit to get rid of the if statement
+            result = result * 16 if unit else result * 35.274
+            result = result * (-1.0) if negative else result
+            # if negative:
+            #    result *= (-1.0)
+            sw.reset()
+            sw.start()
+            #reading = self.ser.read(6)
+            sw.stop()
+            print("TIME (scale reading): ", sw.read())
+            sw.start()
+        else:
+            return 0
         # will record the last stable value and compare it to the next one
         # run the scale in STB mode
         # if self.stable == 1:
@@ -100,14 +104,16 @@ class Scale:
             difference = float(result) - float(self.last_value)
             self.last_value = result
             sw.stop()
+            self.raw = raw
             print("TIME (check stable): ", sw.read())
             # make it easier to see changed weight
             # print(difference)
             # time.sleep(3) #turn on for debugging
-            return difference  # return weight change between this and the last stable read in kg
-            #print("the weight stays the same or decreased")
             sw.stop()
             print("TIME (check): ", sw.read())
+            return difference  # return weight change between this and the last stable read in kg
+            #print("the weight stays the same or decreased")
+
         #print("There is no data")
         return 0  # weight haven't changed
 
