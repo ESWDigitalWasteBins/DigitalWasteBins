@@ -137,15 +137,15 @@ if __name__ == '__main__':
     while True:
         m = input('L, R, C: ').upper()
         if m == 'L':
-            energy_conversion=1 #no specific conversion factor for landfill 
+            energy_conversion = 1  # no specific conversion factor for landfill
             mode = landfill
             break
         elif m == 'R':
-            energy_conversion=3.1526066 
+            energy_conversion = 3.1526066
             mode = recycle
             break
         elif m == 'C':
-            energy_conversion=0.3968316
+            energy_conversion = 0.3968316
             mode = compost
             break
 
@@ -195,7 +195,7 @@ if __name__ == '__main__':
 
     # Scale Reading Test
     my_scale = Scale()
-    prev_reading = my_scale.check()
+    #prev_reading = my_scale.check()
     scale_reading = TextFrame(
         screen, display, text=str(prev_reading), text_color=(255, 255, 0))
 
@@ -224,14 +224,18 @@ if __name__ == '__main__':
                     running = False
                     break
             elif event.type == SCALEREADEVENT:
-                weight = my_scale.check() #unit should be converted to ounces
-                energy_saved= weight * energy_conversion #unit is ounces of carbon emission
-                _sw_log(log, "scale " + str(weight), sw)
-                # if weight != 0:
-                # display.is_using_scale = True
-                scale_reading.set_text(format(weight, '.5f')) #5 decimals
-                # elif display.frame_type == 1:
-                # display.is_using_scale=False
+                if my_scale.ser.in_waiting > 0:
+                    reading = my_scale.ser.read(6)
+                    # unit should be converted to ounces
+                    weight = my_scale.check(reading)
+
+                    energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
+                    _sw_log(log, "scale " + str(weight), sw)
+                    # if weight != 0:
+                    # display.is_using_scale = True
+                    scale_reading.set_text(format(weight, '.5f'))  # 5 decimals
+                    # elif display.frame_type == 1:
+                    # display.is_using_scale=False
 
         screen.fill((0, 0, 0))
         _sw_log(log, "fill", sw)

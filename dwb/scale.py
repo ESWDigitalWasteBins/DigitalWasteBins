@@ -24,7 +24,7 @@ D6: 0000 D5: 0000
 """
 
 import serial
-import time 
+import time
 import collections
 from stopwatch import Stopwatch
 
@@ -36,15 +36,16 @@ Reading = collections.namedtuple(
 
 class Scale:
     def __init__(self) -> None:
-        self.ser = serial.Serial('/dev/SCALE', 9600) #change from ttyUSB0 to SCALE after creating symlink
-        #scale supports 1200, 2400, 4800, 9600
+        # change from ttyUSB0 to SCALE after creating symlink
+        self.ser = serial.Serial('/dev/SCALE', 9600)
+        # scale supports 1200, 2400, 4800, 9600
         if (self.ser.isOpen()):
             self.close()
         self.open()
         self.last_value = 0
         self.stable = 0
 
-    def decode(self, raw: bytes) -> Reading:
+    def check(self, raw: bytes) -> Reading:
         sw.reset()
         sw.start()
         # Handle first byte
@@ -55,10 +56,10 @@ class Scale:
             # raise ValueError('Not a Global 240878 message')
         # Handle second byte
         decimal_point = raw[1] & 0b111
-        current_mode = (raw[1] & 0b11000) >> 3
+        #current_mode = (raw[1] & 0b11000) >> 3
         negative = (raw[1] & 0b100000) >> 5
-        self.stable = (raw[1] & 0b1000000) >> 6
-        overflow = (raw[1] & 0b10000000) >> 7
+        #self.stable = (raw[1] & 0b1000000) >> 6
+        #overflow = (raw[1] & 0b10000000) >> 7
         # TODO: Handle third byte
         digit1 = raw[2] & 0b1111
         digit2 = (raw[2] & 0b11110000) >> 4
@@ -69,55 +70,48 @@ class Scale:
         digit5 = raw[4] & 0b1111
         digit6 = (raw[4] & 0b11110000) >> 4
         # Put it all together
-        result = float(digit1) + float(digit2 * 10) + float(digit3 * 100) + \
-            float(digit4 * 1000) + float(digit5 * 10000) + float(digit6 * 100000)
-        result /= float(10 ** (decimal_point - 1)) #more precision
+        result = float(digit1) + digit2 * 10 + digit3 * 100 + \
+            digit4 * 1000 + digit5 * 10000 + digit6 * 100000
+        result /= float(10 ** (decimal_point - 1))  # more precision
         # Handle sixth byte
-        unit = raw[5] & 0b1 #1 for lbs and 0 for kg
+        unit = raw[5] & 0b1  # 1 for lbs and 0 for kg
         sw.stop()
         print("TIME (decode): ", sw.read())
-        #convert to ounces
-        if unit:
-            result*=16
-        else:
-            result*=35.274
-        if negative:
-            result*=(-1.0)
-        return result 
-
-    def check(self):
+        # convert to ounces
+        # TODO: Finalize the unit to get rid of the if statement
+        result = result * 16 if unit else result * 35.274
+        result = result * (-1.0) if negative else result
+        # if negative:
+        #    result *= (-1.0)
         sw.reset()
         sw.start()
+        #reading = self.ser.read(6)
+        sw.stop()
+        print("TIME (scale reading): ", sw.read())
+        sw.start()
 
-        if self.ser.in_waiting > 0:#will only read if there is something waiting in buffer, scale at STB mode
-            reading = self.ser.read(6)
+        # will record the last stable value and compare it to the next one
+        # run the scale in STB mode
+        # if self.stable == 1:
+        # min 0.005 increments, unit is lbs
+        if (self.last_value + 0.0005) < result:
+                    # may need to add check so that people don't pick up thrown in trash and then called it recycled stuffs again
+                    #print("The weight increased")
+            difference = float(result) - float(self.last_value)
+            self.last_value = result
             sw.stop()
-            print("TIME (scale reading): ", sw.read())
-            sw.start()
-            a = Scale.decode(self, reading)
-            #will record the last stable value and compare it to the next one
-            #run the scale in STB mode 
-            if self.stable == 1:
-                # min 0.005 increments, unit is lbs
-                if (self.last_value + 0.0005) < a:
-                    #may need to add check so that people don't pick up thrown in trash and then called it recycled stuffs again
-                    print("The weight increased")
-                    difference = float(a) - float(self.last_value)
-                    self.last_value = a
-                    sw.stop()
-                    print("TIME (check stable): ", sw.read())
-                     # make it easier to see changed weight
-                    #print(difference)
-                    #time.sleep(3) #turn on for debugging
-                    return difference #return weight change between this and the last stable read in kg
-                print("the weight stays the same or decreased")
-                self.last_value = a
-                return 0 # value stays the same or decreases
+            print("TIME (check stable): ", sw.read())
+            # make it easier to see changed weight
+            # print(difference)
+            # time.sleep(3) #turn on for debugging
+            return difference  # return weight change between this and the last stable read in kg
+            #print("the weight stays the same or decreased")
             sw.stop()
             print("TIME (check): ", sw.read())
-            return 0 # value is not stable  
-        print("There is no data")
-        return 0 #there is no data from scale, meaning that it's not stable
+        #print("There is no data")
+        return 0  # weight haven't changed
+
+    # def check(self):
 
     def open(self) -> None:
         self.ser.open()
@@ -126,7 +120,7 @@ class Scale:
         self.ser.close()
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # Test the examples from Khoi's screenshot
     # from binascii import unhexlify
     # print(decode(unhexlify('ff4487150000')))
@@ -134,9 +128,9 @@ if __name__ == '__main__':
     # print(decode(unhexlify('ff4910000000')))
     # print(decode(unhexlify('ff4407180000')))
 
-    s = Scale()
+#    s = Scale()
 
-    while(True):
-        print(s.check())  # 0:unusable, -1:error, others: difference in mass
+#    while(True):
+#        print(s.check())  # 0:unusable, -1:error, others: difference in mass
 
-    s.close()
+#    s.close()
