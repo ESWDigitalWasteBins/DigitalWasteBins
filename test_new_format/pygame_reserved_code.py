@@ -18,3 +18,20 @@ for (i, j) in zip(range(0, list_legnth), range(0, list_legnth)):
                                                             square_length, v * square_length, square_length, square_length))
         pygame.display.flip()
     clock1.tick(50)
+    # screen.fill((white))
+
+    # screen.blit(text_box, text_rect)
+    # pygame.display.flip()
+    # screen.blit(font.render(Compost, True, (black)), text_rect)
+    # pygame.display.flip()
+    # time.sleep(1)
+    # pygame.mouse.set_visible(0)
+
+    # if things_happened:
+    #     screen.fill((white))
+    #     screen.blit(font.render(str(l), True, (black)), text_rect)
+    #     time.sleep(1)
+    #     screen.fill((white), text_rect)
+    # if event.type == pygame.QUIT:
+    #     break
+    #     # Handle drawing

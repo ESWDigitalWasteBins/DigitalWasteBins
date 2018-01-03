@@ -4,83 +4,93 @@ import time
 import random
 import pygame
 from pygame.locals import *
-square_length = 25
-list_legnth = 16  # used to be 650 pixel
-total_square_length = 430
-pygame.init()
-im = []
-list_toprect = []
-list_midrect = []
-list_botrect = []
-list_botrightrect = []
 
-x_offset = 450
-y_offset = 450
-FPS = 30
-picture_update_frequency = 1.0 / 60
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-for i in range(0, 9):
-    im.append(pygame.image.load('c' + str(i) + '.png'))
-    im[i].convert()
-text_box = pygame.image.load('burger.png')
-text_box.convert()
-for i in range(0, list_legnth):
-    for j in range(0, list_legnth):
-        list_toprect.append(Rect(i * square_length, j *
-                                 square_length, square_length, square_length))
 
-for i in range(0, list_legnth):
-    for j in range(0, list_legnth):
-        list_midrect.append(Rect(i * square_length, y_offset + j *
-                                 square_length, square_length, square_length))
-
-for i in range(0, list_legnth):
-    for j in range(0, list_legnth):
-        list_botrect.append(Rect(i * square_length + x_offset,  j *
-                                 square_length, square_length, square_length))
-
-for i in range(0, list_legnth):
-    for j in range(0, list_legnth):
-        list_botrightrect.append(Rect(i * square_length + x_offset,  j *
-                                      square_length + y_offset, square_length, square_length))
-
-clock1 = pygame.time.Clock()
-clock2 = pygame.time.Clock()
-white = (255, 255, 255)
-black = (0, 0, 0)
-Compost = "Thanks for recyling compost"
-landfill = "Thanks for recyling landfill"
-start = time.time()
 if __name__ == '__main__':
+    # intialize important things here
+    pygame.init()
+    # full screen
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    clock1 = pygame.time.Clock()
     font = pygame.font.SysFont('Calibri', 25, True)
+    start = time.time()  # start of timer for when to draw
 
-    # screen.blit(font.render(landfill,
-    #                        True, (white)), (380, 860))
+    # dictate the width, length and number of squares
+    # all units are in pixel for this section
+    square_length = 25  # the length of each small square in the sector
+    list_legnth = 16  # number of squares in each sector=list_length^2
+    total_square_length = 430  # total length of each sector square
+    x_offset = 450  # x offset of the sector of the screen
+    y_offset = 450  # y offset of the sector of the screen
+
+    # auxillary variables
+    FPS = 40  # FPS when drawing
+    Compost = "Thanks for recyling compost"
+    landfill = "Thanks for recyling landfill"
+    current_pos = 0  # current section of the screen to be changed
+    things_happened = True  # event for scale
+    l = 0  # index of the current image to be displayed
+
+    # color to be used
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+
+    screen_update_interval = 5.0  # float of how many seconds before drawing new image
+
+    # Used for loading images to be used into multiple squares
+    im = []
+    list_toprect = []
+    list_midrect = []
+    list_botrect = []
+    list_botrightrect = []
+
+    # load images given by Tyson
+    for i in range(0, 9):
+        im.append(pygame.image.load(os.path.join(
+            'test_new_format', 'c' + str(i) + '.png')))
+        im[i].convert()
+    for i in range(0, list_legnth):
+        for j in range(0, list_legnth):
+            list_toprect.append(Rect(i * square_length, j *
+                                     square_length, square_length, square_length))
+
+    # Divide each section of the screen into many small squares to
+    # draw gradually instead at once
+    for i in range(0, list_legnth):
+        for j in range(0, list_legnth):
+            list_midrect.append(Rect(i * square_length, y_offset + j *
+                                     square_length, square_length, square_length))
+
+    for i in range(0, list_legnth):
+        for j in range(0, list_legnth):
+            list_botrect.append(Rect(i * square_length + x_offset,  j *
+                                     square_length, square_length, square_length))
+
+    for i in range(0, list_legnth):
+        for j in range(0, list_legnth):
+            list_botrightrect.append(Rect(i * square_length + x_offset,  j *
+                                          square_length + y_offset, square_length, square_length))
+
+    # rectange used for deleting before redraw of sections
     top_rect = Rect(0, 0, total_square_length, total_square_length)
     mid_rect = Rect(0, y_offset, total_square_length, total_square_length)
     bot_rect = Rect(x_offset, 0, total_square_length, total_square_length)
     botrigt_rect = Rect(x_offset, y_offset,
                         total_square_length, total_square_length)
     text_rect = Rect(0, 0, total_square_length, total_square_length)
-    # k = 0
+
+    # begin with a white color
     screen.fill(white)
     pygame.display.flip()
-    current_pos = 0
-    things_happened = True
-    l = 0
-    # for event in pygame.event.get():
+    pygame.event.pump()  # used for keeping the OS happy
+
+    # TODO: Refactor the code below
+    # the code below will cycle through screen sector as well
+    # as loaded images and display them with a defined time interval
+    # the images are displayed gradually in order to create transition effects
+    # as well as alleviate the load on the pi CPU
     while True:
-
-        # if things_happened:
-        #     screen.fill((white))
-        #     screen.blit(font.render(str(l), True, (black)), text_rect)
-        #     time.sleep(1)
-        #     screen.fill((white), text_rect)
-        # if event.type == pygame.QUIT:
-        #     break
-        #     # Handle drawing
-
-        if (time.time() - start) > 0.5:
+        if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
                 screen.fill((white), top_rect)
@@ -137,15 +147,5 @@ if __name__ == '__main__':
                         pygame.display.flip()
 
                     clock1.tick(FPS)
-            # divide into two half and pump in between to make sure that the system doesn't forget pygame is running
             l = l + 1 if l < 8 else 0
         pygame.event.pump()
-        # l += 1
-    # screen.fill((white))
-
-    # screen.blit(text_box, text_rect)
-    # pygame.display.flip()
-    # screen.blit(font.render(Compost, True, (black)), text_rect)
-    # pygame.display.flip()
-    # time.sleep(1)
-    # pygame.mouse.set_visible(0)
