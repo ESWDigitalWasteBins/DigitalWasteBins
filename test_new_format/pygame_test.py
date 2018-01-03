@@ -19,12 +19,14 @@ if __name__ == '__main__':
     # all units are in pixel for this section
     square_length = 25  # the length of each small square in the sector
     list_legnth = 16  # number of squares in each sector=list_length^2
-    total_square_length = 430  # total length of each sector square
+    head_room = 20
+    # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
+    total_square_length = square_length * list_legnth + head_room
     x_offset = 450  # x offset of the sector of the screen
     y_offset = 450  # y offset of the sector of the screen
 
     # auxillary variables
-    FPS = 60  # FPS when drawing
+    FPS = 0  # FPS when drawing
     Compost = "Thanks for recyling compost"
     landfill = "Thanks for recyling landfill"
     current_pos = 0  # current section of the screen to be changed
