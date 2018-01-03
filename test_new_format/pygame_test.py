@@ -4,7 +4,7 @@ import time
 import random
 import pygame
 from pygame.locals import *
-
+from sector_draw import *
 
 if __name__ == '__main__':
     # intialize important things here
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     current_pos = 0  # current section of the screen to be changed
     things_happened = True  # event for scale
     l = 0  # index of the current image to be displayed
-
+    exited = False  # indicate if user wants to exit
     # color to be used
     white = (255, 255, 255)
     black = (0, 0, 0)
@@ -89,63 +89,33 @@ if __name__ == '__main__':
     # as loaded images and display them with a defined time interval
     # the images are displayed gradually in order to create transition effects
     # as well as alleviate the load on the pi CPU
-    while True:
+    while (not(exited)):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if (event.key == pygame.K_ESCAPE):
+                    exited = True
+
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
-                screen.fill((white), top_rect)
                 current_pos += 1
-                for (i, j) in zip(range(0, list_legnth), range(0, list_legnth)):
-                    for(k, v) in zip(range(0, i + 1), range(0, j + 1)):
-                        screen.blit(im[l], list_toprect[k * list_legnth + j], (k *
-                                                                               square_length, j * square_length, square_length, square_length))
-                        screen.blit(im[l], list_toprect[i * list_legnth + v], (i *
-                                                                               square_length, v * square_length, square_length, square_length))
-                        pygame.event.pump()
-                        pygame.display.flip()
-
-                    clock1.tick(FPS)
-
+                draw_one_sector(screen, top_rect, list_legnth,
+                                l, list_toprect, square_length, FPS, im)
             elif current_pos == 1:
                 current_pos += 1
-                screen.fill((white), mid_rect)
-                for (i, j) in zip(range(0, list_legnth), range(0, list_legnth)):
-                    for(k, v) in zip(range(0, i + 1), range(0, j + 1)):
-                        screen.blit(im[l], list_midrect[k * list_legnth + j], (k *
-                                                                               square_length, j * square_length, square_length, square_length))
-                        screen.blit(im[l], list_midrect[i * list_legnth + v], (i *
-                                                                               square_length, v * square_length, square_length, square_length))
-                        pygame.event.pump()
-                        pygame.display.flip()
-
-                    clock1.tick(FPS)
+                draw_one_sector(screen, mid_rect, list_legnth,
+                                l, list_midrect, square_length, FPS, im)
 
             elif current_pos == 2:
                 current_pos += 1
-                screen.fill((white), bot_rect)
-                for (i, j) in zip(range(0, list_legnth), range(0, list_legnth)):
-                    for(k, v) in zip(range(0, i + 1), range(0, j + 1)):
-                        screen.blit(im[l], list_botrect[k * list_legnth + j], (k *
-                                                                               square_length, j * square_length, square_length, square_length))
-                        screen.blit(im[l], list_botrect[i * list_legnth + v], (i *
-                                                                               square_length, v * square_length, square_length, square_length))
-                        pygame.event.pump()
-                        pygame.display.flip()
-
-                    clock1.tick(FPS)
+                draw_one_sector(screen, bot_rect, list_legnth,
+                                l, list_botrect, square_length, FPS, im)
 
             elif current_pos == 3:
                 current_pos = 0
-                screen.fill((white), botrigt_rect)
-                for (i, j) in zip(range(0, list_legnth), range(0, list_legnth)):
-                    for(k, v) in zip(range(0, i + 1), range(0, j + 1)):
-                        screen.blit(im[l], list_botrightrect[k * list_legnth + j], (k *
-                                                                                    square_length, j * square_length, square_length, square_length))
-                        screen.blit(im[l], list_botrightrect[i * list_legnth + v], (i *
-                                                                                    square_length, v * square_length, square_length, square_length))
-                        pygame.event.pump()
-                        pygame.display.flip()
+                draw_one_sector(screen, botrigt_rect, list_legnth,
+                                l, list_botrightrect, square_length, FPS, im)
 
-                    clock1.tick(FPS)
             l = l + 1 if l < 8 else 0
-        pygame.event.pump()
+        # pygame.event.pump()
+    pygame.quit()
