@@ -24,7 +24,7 @@ if __name__ == '__main__':
     y_offset = 450  # y offset of the sector of the screen
 
     # auxillary variables
-    FPS = 40  # FPS when drawing
+    FPS = 60  # FPS when drawing
     Compost = "Thanks for recyling compost"
     landfill = "Thanks for recyling landfill"
     current_pos = 0  # current section of the screen to be changed
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     white = (255, 255, 255)
     black = (0, 0, 0)
 
-    screen_update_interval = 5.0  # float of how many seconds before drawing new image
+    screen_update_interval = 1.0  # float of how many seconds before drawing new image
 
     # Used for loading images to be used into multiple squares
     im = []
