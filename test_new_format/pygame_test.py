@@ -6,9 +6,6 @@ import pygame
 from pygame.locals import *
 from sector_draw import *
 #from scale import Scale
-from frame import Frame
-from header import Header
-from body import Body
 from collections import namedtuple
 
 if __name__ == '__main__':
@@ -92,13 +89,28 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'l'  # l for landfill, r for recycle and c for compost
+    m = 'c'  # l for landfill, r for recycle and c for compost
     # set mode of running
+    if m == 'l':
+        text_box_im = pygame.image.load((os.path.join(
+            'test_new_format', 'bl' + '.png')))
+        text_box_im.convert()
+    elif m == 'c':
+        text_box_im = pygame.image.load((os.path.join(
+            'test_new_format', 'gt' + '.png')))
+        text_box_im.convert()
+    elif m == 'r':
+        text_box_im = pygame.image.load((os.path.join(
+            'test_new_format', 'bt' + '.png')))
+        text_box_im.convert()
 
     for i in range(0, 9):
         im.append(pygame.image.load(os.path.join(
             'test_new_format', m + str(i) + '.png')))
         im[i].convert()
+
+    text_box_class = text_surface(
+        screen, text_box_im, 4, 0, 0, 82, 0, black, "")
     # begin with a white color
     screen.fill(white)
     pygame.display.flip()
@@ -117,22 +129,22 @@ if __name__ == '__main__':
                     exited = True
 
         if testing and l % 2 == 0:
-            if m == 'c':
-
-                # if my_scale.ser.in_waiting > 0:
-                #     reading = my_scale.ser.read(6)
-                #     # unit are in ounces
-                #     weight = my_scale.check(reading)
-                #     if (weight):
-                #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
-                #         screen.fill((white))
-                #         screen.blit(font.render(compost, True, (black)), text_rect)
-                #         screen.blit(font.render(
-                #             str(energy_saved), True, (black)), weight_rect)
-                #         pygame.display.flip()
-                #         time.sleep(3)
-                #         screen.fill((white))
-                #         pygame.display.flip()
+            text_box_class.draw_text_surface(compost_text_processing(5))
+            time.sleep(4)
+            # if my_scale.ser.in_waiting > 0:
+            #     reading = my_scale.ser.read(6)
+            #     # unit are in ounces
+            #     weight = my_scale.check(reading)
+            #     if (weight):
+            #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
+            #         screen.fill((white))
+            #         screen.blit(font.render(compost, True, (black)), text_rect)
+            #         screen.blit(font.render(
+            #             str(energy_saved), True, (black)), weight_rect)
+            #         pygame.display.flip()
+            #         time.sleep(3)
+            #         screen.fill((white))
+            #         pygame.display.flip()
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
@@ -157,4 +169,4 @@ if __name__ == '__main__':
             l = l + 1 if l < 8 else 0
         # pygame.event.pump()
     pygame.quit()
-    my_scale.ser.close()
+    # my_scale.ser.close()

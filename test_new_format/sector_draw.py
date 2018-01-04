@@ -22,8 +22,9 @@ class text_surface:
             self.line_list_rect_stored.append(pygame.Rect(
                 left_offset, top_offset + counter * self._size_per_line, self._surface_width, self._height))
 
-    def draw_text_bubble(self, line_list: []) ->None:
+    def draw_text_surface(self, line_list: []) ->None:
         """draw text on a saved surface"""
+        self._screen.fill((255, 255, 255))
         counter = 0
         tx_font = self._font
         tx_color = self._color
@@ -50,15 +51,6 @@ def draw_one_sector(screen, sec_rectange, list_legnth, l, list_rect, square_leng
 
         clock1.tick(FPS)
 # possible mode to be 'l', 'c', 'r'
-
-
-def text_line_append(m='l', line_list=[], ounces_recycled: int=0):
-    if m == 'l':
-        energy_conversion = 1  # no specific conversion factor for landfill
-    elif m == 'c':
-        energy_conversion = 0.3968316
-    elif m == 'r':
-        energy_conversion = 3.1526066
 
 
 def compost_text_processing(ounces_recycled: int=0):
