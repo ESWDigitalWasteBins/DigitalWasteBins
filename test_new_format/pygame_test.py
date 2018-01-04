@@ -19,7 +19,7 @@ if __name__ == '__main__':
     # full screen
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
-    font = pygame.font.SysFont('Calibri', 25, True)
+    font = pygame.font.SysFont('Calibri', 70, True)
     start = time.time()  # start of timer for when to draw
 
     # dictate the width, length and number of squares
@@ -127,6 +127,8 @@ if __name__ == '__main__':
                 screen.blit(font.render(
                     str(weight), True, (black)), weight_rect)
                 pygame.display.flip()
+                time.sleep(3)
+                screen.fill((white))
                 # if weight != 0:
                 # display.is_using_scale = Tru
                 # elif display.frame_type == 1:
