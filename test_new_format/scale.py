@@ -129,7 +129,7 @@ class Scale:
 
 
 if __name__ == '__main__':
-    Test the examples from Khoi's screenshot
+    # Test the examples from Khoi's screenshot
     from binascii import unhexlify
     print(decode(unhexlify('ff4487150000')))
     print(decode(unhexlify('ff4406180000')))
