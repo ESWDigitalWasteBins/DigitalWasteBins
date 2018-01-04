@@ -13,6 +13,7 @@ from collections import namedtuple
 
 
 if __name__ == '__main__':
+    #----------------------------------------------------
     # intialize important things here
     pygame.init()
     #my_scale = Scale()
@@ -22,6 +23,7 @@ if __name__ == '__main__':
     font = pygame.font.SysFont('Calibri', 70, True)
     start = time.time()  # start of timer for when to draw
 
+    #----------------------------------------------------
     # dictate the width, length and number of squares
     # all units are in pixel for this section
     square_length = 25  # the length of each small square in the sector
@@ -34,9 +36,9 @@ if __name__ == '__main__':
     header_width = 1000
     header_height = 500
 
+    #----------------------------------------------------
     # auxillary variables
     FPS = 0  # FPS when drawing
-
     compost = []
     compost.append("Thank you for composting!")
     compost.append("You just composted  ounces")
@@ -58,7 +60,6 @@ if __name__ == '__main__':
         "Keeping landfill waste in the landfill bins allows other waste to be truly composted and recycled!")
     landfill.append(
         "Keeping landfill items out of compost and recycling is important. Thank you!")
-
     current_pos = 0  # current section of the screen to be changed
     things_happened = True  # event for scale
     l = 0  # index of the current image to be displayed
@@ -66,9 +67,9 @@ if __name__ == '__main__':
     # color to be used
     white = (255, 255, 255)
     black = (0, 0, 0)
-
     screen_update_interval = 1.0  # float of how many seconds before drawing new image
 
+    #----------------------------------------------------
     # Used for loading images to be used into multiple squares
     im = []
     list_toprect = []
@@ -78,17 +79,14 @@ if __name__ == '__main__':
 
     # load images given by Tyson
     # TODO: Refactor the loading sections
-    for i in range(0, 9):
-        im.append(pygame.image.load(os.path.join(
-            'test_new_format', 'c' + str(i) + '.png')))
-        im[i].convert()
+
+    # Divide each section of the screen into many small squares to
+    # draw gradually instead at once
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_toprect.append(Rect(i * square_length, j *
                                      square_length, square_length, square_length))
 
-    # Divide each section of the screen into many small squares to
-    # draw gradually instead at once
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_midrect.append(Rect(i * square_length, y_offset + j *
@@ -114,17 +112,23 @@ if __name__ == '__main__':
 
     weight_rect = Rect(0, 60, header_width, header_height)
 
-    m = 'L'  # L for landfill, R for recycle and
+    #----------------------------------------------------
+    # used for selecting which mode to be in
+    m = 'l'  # l for landfill, r for recycle and c for compost
     # set mode of running
-    if m == 'L':
+    if m == 'l':
         energy_conversion = 1  # no specific conversion factor for landfill
 
-    elif m == 'C':
+    elif m == 'c':
         energy_conversion = 0.3968316
 
-    elif m == 'R':
+    elif m == 'r':
         energy_conversion = 3.1526066
 
+    for i in range(0, 9):
+        im.append(pygame.image.load(os.path.join(
+            'test_new_format', m + str(i) + '.png')))
+        im[i].convert()
     # begin with a white color
     screen.fill(white)
     pygame.display.flip()
