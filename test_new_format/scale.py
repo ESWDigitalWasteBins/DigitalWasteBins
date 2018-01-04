@@ -48,8 +48,6 @@ class Scale:
 
         # Handle first byte
         if len(raw) != 6 or raw[0] != 0xff:
-            sw.stop()
-            print("TIME (decode fail): ", sw.read())
             return -1
             # raise ValueError('Not a Global 240878 message')
         # preliminary check if the number are equal to each other to
@@ -99,14 +97,11 @@ class Scale:
             # print("The weight increased")
         difference = float(result) - float(self.last_value)
         self.last_value = result
-        sw.stop()
+
         self.raw = raw
-        print("TIME (check stable): ", sw.read())
         # make it easier to see changed weight
         # print(difference)
         # time.sleep(3) #turn on for debugging
-        sw.stop()
-        print("TIME (check): ", sw.read())
         return difference  # return weight change between this and the last stable read in kg
         # print("the weight stays the same or decreased")
 
