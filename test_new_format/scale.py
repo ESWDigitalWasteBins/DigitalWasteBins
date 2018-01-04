@@ -138,7 +138,7 @@ if __name__ == '__main__':
 
     s = Scale()
 
-   while(True):
-       print(s.check())  # 0:unusable, -1:error, others: difference in mass
+    while(True):
+        print(s.check())  # 0:unusable, -1:error, others: difference in mass
 
-   s.close()
+    s.close()
