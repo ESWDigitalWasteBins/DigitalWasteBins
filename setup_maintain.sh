@@ -29,6 +29,8 @@ sudo apt-get update
 sudo apt-get dist-upgrade -y 
 
 ifconfig wlan0 down
+#/etc/udev/rules.d/99-com.rules
+#ACTION=="add",SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="SCALE"
 cd DigitalWasteBins
 python3 ${MAIN_PY_FILE_DIR}${MAIN_PY_FILE}
 #sudo reboot -h 24:00
