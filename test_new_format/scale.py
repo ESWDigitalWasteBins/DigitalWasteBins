@@ -134,6 +134,7 @@ if __name__ == '__main__':
     s = Scale()
 
     while(True):
-        print(s.check())  # 0:unusable, -1:error, others: difference in mass
+        # 0:unusable, -1:error, others: difference in mass
+        print(s.check(s.ser.read(6)))
 
     s.close()
