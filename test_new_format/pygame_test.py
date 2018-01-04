@@ -61,18 +61,18 @@ if __name__ == '__main__':
     # draw gradually instead at once
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
-            list_toprect.append(Rect(i * square_length, j *
+            list_toprect.append(Rect(i * square_length + x_offset, j *
                                      square_length, square_length, square_length))
 
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
-            list_midrect.append(Rect(i * square_length, y_offset + j *
+            list_midrect.append(Rect(i * square_length + x_offset, y_offset + j *
                                      square_length, square_length, square_length))
 
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
-            list_botrect.append(Rect(i * square_length, 2 * y_offset + j *
-                                     square_length, square_length, square_length))
+            list_botrect.append(Rect(i * square_length + x_offset, j *
+                                     square_length + 2 * y_offset, square_length, square_length))
 
     # for i in range(0, list_legnth):
     #     for j in range(0, list_legnth):
@@ -170,6 +170,7 @@ if __name__ == '__main__':
         #         time.sleep(3)
         #         screen.fill((white))
         #         pygame.display.flip()
+
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
@@ -185,11 +186,6 @@ if __name__ == '__main__':
                 current_pos = 0
                 draw_one_sector(screen, bot_rect, list_legnth,
                                 l, list_botrect, square_length, FPS, im)
-
-            # elif current_pos == 3:
-            #     current_pos = 0
-            #     draw_one_sector(screen, botrigt_rect, list_legnth,
-            #                     l, list_botrightrect, square_length, FPS, im)
 
             l = l + 1 if l < 8 else 0
         # pygame.event.pump()
