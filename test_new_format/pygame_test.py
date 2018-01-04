@@ -22,12 +22,12 @@ if __name__ == '__main__':
     #----------------------------------------------------
     # dictate the width, length and number of squares
     # all units are in pixel for this section
-    square_length = 30  # the length of each small square in the sector
+    square_length = 15  # the length of each small square in the sector
     list_legnth = 20  # number of squares in each sector=list_length^2
-    head_room = 100
+    head_room = 500
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_legnth
-    x_offset = 500  # x offset of the sector of the screen
+    x_offset = 100  # x offset of the sector of the screen
     y_offset = 70  # y offset of the sector of the screen
     top_header_width = screen.get_width()
     top_header_height = 500
