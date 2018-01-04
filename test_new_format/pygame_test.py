@@ -27,7 +27,7 @@ if __name__ == '__main__':
     head_room = 0
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_legnth + head_room
-    x_offset = 70  # x offset of the sector of the screen
+    x_offset = 500  # x offset of the sector of the screen
     y_offset = 70  # y offset of the sector of the screen
     top_header_width = screen.get_width()
     top_header_height = 500
