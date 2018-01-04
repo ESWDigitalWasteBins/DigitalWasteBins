@@ -99,6 +99,7 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
         text_box_im.convert()
+        total_line = 6
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
@@ -110,7 +111,7 @@ if __name__ == '__main__':
         im[i].convert()
 
     text_box_class = text_surface(
-        screen, text_box_im, 4, 0, 0, 82, 0, black, "")
+        screen, text_box_im, total_line, 130, 150, black, "")
     # begin with a white color
     screen.fill(white)
     pygame.display.flip()
@@ -128,9 +129,10 @@ if __name__ == '__main__':
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
 
-        if testing and l % 2 == 0:
+        if testing and l % 3 == 0:
             text_box_class.draw_text_surface(compost_text_processing(5))
-            time.sleep(4)
+            time.sleep(5)
+            screen.fill(white)
             # if my_scale.ser.in_waiting > 0:
             #     reading = my_scale.ser.read(6)
             #     # unit are in ounces
