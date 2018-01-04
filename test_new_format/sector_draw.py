@@ -9,7 +9,7 @@ black = (0, 0, 0)
 
 
 class text_surface:
-    def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0,  color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=(255, 255, 255)):
+    def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0,  color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=None):
         self._bg_color = bg_color
         self._font = pygame.font.SysFont('Calibri', 70, True)
         self._height = self._font.get_height()
@@ -30,8 +30,6 @@ class text_surface:
         self._screen.fill(white)
         if header_rect == None:
             self._screen.blit(self._surface, (0, 0))
-        else:
-            self._screen.fill(self._bg_color, header_rect)
         counter = 0
         tx_font = self._font
         tx_color = self._color
