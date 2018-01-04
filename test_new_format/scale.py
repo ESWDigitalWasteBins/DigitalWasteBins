@@ -21,6 +21,10 @@ Bytes 3-5 to Digits
 D2: 0001 D1: 0000
 D4: 0000 D3: 0000
 D6: 0000 D5: 0000
+
+IMPORTANT: Assumptions made on the hardware
+Assuming that the scale runs in STB mode(send when stable)
+Assuming that the units are in lbs
 """
 
 import serial
@@ -43,10 +47,13 @@ class Scale:
         self.open()
         self.last_value = 0
         self.raw = [0, 0, 0, 0, 0, 0]
+        # minimum increase in weight to be counted as increased
+        self.weight_threshold = 0.0005
 
     def check(self, raw: bytes) -> Reading:
 
         # Handle first byte
+        # self.ser.flush() #flush all inputs in buffer
         if len(raw) != 6 or raw[0] != 0xff:
             return -1
             # raise ValueError('Not a Global 240878 message')
@@ -87,26 +94,17 @@ class Scale:
             # reading = self.ser.read(6)
 
         else:
-            return 0
-        # will record the last stable value and compare it to the next one
-        # run the scale in STB mode
-        # if self.stable == 1:
-        # min 0.005 increments, unit is lbs
-        # if (self.last_value + 0.0005) < result:
-            # may need to add check so that people don't pick up thrown in trash and then called it recycled stuffs again
-            # print("The weight increased")
-        difference = float(result) - float(self.last_value)
-        self.last_value = result
+            return 0 #means values stay the same
 
-        self.raw = raw
-        # make it easier to see changed weight
-        # print(difference)
-        # time.sleep(3) #turn on for debugging
-        return difference  # return weight change between this and the last stable read in kg
-        # print("the weight stays the same or decreased")
+        if (self.last_value + self.weight_threshold) < result:
 
-        # print("There is no data")
-        # return 0  # weight haven't changed
+            difference = float(result) - float(self.last_value)
+            self.last_value = result
+
+            self.raw = raw
+            return difference  # return weight change between this and the last stable read in lbs
+        else:
+            return 0 #weight decreased or stayed the same
 
     # def check(self):
 
@@ -116,7 +114,7 @@ class Scale:
     def close(self) -> None:
         self.ser.close()
 
-
+"""
 if __name__ == '__main__':
     # Test the examples from Khoi's screenshot
 
@@ -127,3 +125,4 @@ if __name__ == '__main__':
         print(s.check(s.ser.read(6)))
 
     s.close()
+"""

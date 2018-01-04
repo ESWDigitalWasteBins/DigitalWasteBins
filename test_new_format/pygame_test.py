@@ -5,7 +5,7 @@ import random
 import pygame
 from pygame.locals import *
 from sector_draw import *
-from scale import Scale
+#from scale import Scale
 from frame import Frame
 from header import Header
 from body import Body
@@ -15,7 +15,7 @@ from collections import namedtuple
 if __name__ == '__main__':
     # intialize important things here
     pygame.init()
-    my_scale = Scale()
+    #my_scale = Scale()
     # full screen
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
@@ -33,10 +33,32 @@ if __name__ == '__main__':
     y_offset = 450  # y offset of the sector of the screen
     header_width = 1000
     header_height = 500
+
     # auxillary variables
     FPS = 0  # FPS when drawing
-    Compost = "Thanks for recyling compost"
-    landfill = "Thanks for recyling landfill"
+
+    compost = []
+    compost.append("Thank you for composting!")
+    compost.append("You just composted  ounces")
+    compost.append(
+        "You just helped avoid  ounces of carbone-equivalent emmissions!")
+    compost.append(
+        "Food waste is the single largest part of waste. Keeping it out of landfills is important!")
+
+    recycle = []
+    recycle.append("Thank you for recycling")
+    recycle.append("You just composted  ounces")
+    recycle.append(
+        "You just helped avoid  ounces of carbon-equivalent emissions!")
+
+    landfill = []
+    landfill.append(
+        "It’s important to separate items that can’t be composted or recycled. Thank you!")
+    landfill.append(
+        "Keeping landfill waste in the landfill bins allows other waste to be truly composted and recycled!")
+    landfill.append(
+        "Keeping landfill items out of compost and recycling is important. Thank you!")
+
     current_pos = 0  # current section of the screen to be changed
     things_happened = True  # event for scale
     l = 0  # index of the current image to be displayed
@@ -55,6 +77,7 @@ if __name__ == '__main__':
     list_botrightrect = []
 
     # load images given by Tyson
+    # TODO: Refactor the loading sections
     for i in range(0, 9):
         im.append(pygame.image.load(os.path.join(
             'test_new_format', 'c' + str(i) + '.png')))
@@ -88,7 +111,9 @@ if __name__ == '__main__':
     botrigt_rect = Rect(x_offset, y_offset,
                         total_square_length, total_square_length)
     text_rect = Rect(0, 0, header_width, header_height)
-    weight_rect = Rect(0, 20, header_width, header_height)
+
+    weight_rect = Rect(0, 60, header_width, header_height)
+
     m = 'L'  # L for landfill, R for recycle and
     # set mode of running
     if m == 'L':
@@ -105,6 +130,7 @@ if __name__ == '__main__':
     pygame.display.flip()
     pygame.event.pump()  # used for keeping the OS happy
 
+    testing = True
     # TODO: Refactor the code below
     # the code below will cycle through screen sector as well
     # as loaded images and display them with a defined time interval
@@ -116,23 +142,29 @@ if __name__ == '__main__':
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
 
-        if my_scale.ser.in_waiting > 0:
-            reading = my_scale.ser.read(6)
-            # unit are in ounces
-            weight = my_scale.check(reading)
-            if (weight):
-                energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
-                screen.fill((white))
-                screen.blit(font.render(Compost, True, (black)), text_rect)
-                screen.blit(font.render(
-                    str(weight), True, (black)), weight_rect)
-                pygame.display.flip()
-                time.sleep(3)
-                screen.fill((white))
-                # if weight != 0:
-                # display.is_using_scale = Tru
-                # elif display.frame_type == 1:
-                # display.is_using_scale=False
+        if testing and l % 2 == 0:
+            screen.fill((white))
+            screen.fill((black), text_rect)
+            screen.fill((black), weight_rect)
+            screen.blit(font.render(compost, True, (white)), text_rect)
+            screen.blit(font.render(
+                str(5), True, (white)), weight_rect)
+            pygame.display.flip()
+            time.sleep(3)
+            screen.fill((white))
+        # if my_scale.ser.in_waiting > 0:
+        #     reading = my_scale.ser.read(6)
+        #     # unit are in ounces
+        #     weight = my_scale.check(reading)
+        #     if (weight):
+        #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
+        #         screen.fill((white))
+        #         screen.blit(font.render(compost, True, (black)), text_rect)
+        #         screen.blit(font.render(
+        #             str(energy_saved), True, (black)), weight_rect)
+        #         pygame.display.flip()
+        #         time.sleep(3)
+        #         screen.fill((white))
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
