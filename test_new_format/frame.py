@@ -46,7 +46,8 @@ class Frame(pygame.Surface):
                 self.__class__.__name__, pady))
         pygame.Surface.__init__(self, (width, height))
         self._screen = screen
-        self.set_position(x, y)
+        self.x = x
+        self.y = y
         self._padx = padx
         self._pady = pady
         self._bg_color = bg_color
@@ -71,30 +72,6 @@ class Frame(pygame.Surface):
         self.set_position(self._parent.get_x() + self._padx,
                           self._parent.get_y() + self._pady)
 
-    def set_position(self, x: int=None, y: int=None) -> None:
-        """Set frame's top-left coordinate, unchanged if not specified.
-        Args:
-            x(=None): set frame's top-left x coordinate
-            y(=None): set frame's top-left y coordinate
-        """
-        if x is not None:
-            self._x = x
-        if y is not None:
-            self._y = y
-        self._position = (self._x, self._y)
-
-    def change_position(self, dx: int=None, dy: int=None) -> None:
-        """Change frame's top-left coordinate, unchanged if not specified.
-        Args:
-            dx(=None): change frame's top-left x coordinate
-            dy(=None): change frame's top-left y coordinate
-        """
-        if dx is not None:
-            self._x += dx
-        if dy is not None:
-            self._y += dy
-        self._position = (self._x, self._y)
-
     def get_x(self) -> int:
         """Return top-left x coordinate."""
         return self._x
@@ -111,62 +88,3 @@ class Frame(pygame.Surface):
         """Return 2-tuple of ints representing center (x, y) coordinate."""
         return (self.get_x() + self.get_width() // 2,
                 self.get_y() + self.get_height() // 2)
-
-
-
-# Test Frame
-if __name__ == '__main__':
-    pygame.init()
-
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    pygame.display.set_caption('Frame Test')
-    pygame.mouse.set_visible(0)
-
-    running = True
-    clock = pygame.time.Clock()
-
-    topbase = Frame(screen, None, 0, 0,
-                    width=screen.get_width(),
-                    height=screen.get_height() // 2,
-                    padx=100, pady=100)
-    botbase = Frame(screen, None, 0, topbase.get_height(),
-                    width=screen.get_width(),
-                    height=screen.get_height() // 2)
-    topframe = Frame(screen, topbase,
-                     padx=100, pady=100,
-                     bg_color=(255, 0, 0))
-    botframe = Frame(screen, botbase,
-                     padx=100, pady=100,
-                     bg_color=(0, 255, 0))
-    subframe = Frame(screen, botframe,
-                     padx=50, pady=100,
-                     bg_color=(0, 255, 255))
-
-    y = -screen.get_height()
-
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                break
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                    break
-
-        y += 5
-
-        screen.fill(0)
-
-        topbase.set_position(y=y)
-        botbase.set_position(y=y + topbase.get_height())
-
-        topframe.draw()
-        botframe.draw()
-        subframe.draw()
-
-        clock.tick(60)
-
-        pygame.display.flip()
-
-    pygame.quit()

@@ -18,37 +18,3 @@ class Header(Frame):
     def draw(self) -> None:
         Frame.draw(self)
         self._text_frame.draw()
-
-
-if __name__ == '__main__':
-    from pathlib import Path
-
-    pygame.init()
-
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    pygame.display.set_caption('Header Test')
-    pygame.mouse.set_visible(0)
-
-    running = True
-    clock = pygame.time.Clock()
-
-    header = Header(screen, 0, 0, screen.get_width(), screen.get_height(
-    ), font_file=str(Path('./assets/fnt/arial.ttf')))
-
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                break
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                    break
-
-        header.draw()
-
-        clock.tick(60)
-
-        pygame.display.flip()
-
-    pygame.quit()
