@@ -85,6 +85,7 @@ if __name__ == '__main__':
                     total_square_length)
     bot_rect = Rect(x_offset, y_offset * 2,
                     total_square_length, total_square_length)
+
     # botrigt_rect = Rect(x_offset, y_offset,
     #                    total_square_length, total_square_length)
     top_header_rect = Rect(0, 0, top_header_width, top_header_height)
