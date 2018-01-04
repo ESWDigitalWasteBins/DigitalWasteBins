@@ -156,6 +156,7 @@ if __name__ == '__main__':
             pygame.display.flip()
             time.sleep(3)
             screen.fill((white))
+            pygame.display.flip()
         # if my_scale.ser.in_waiting > 0:
         #     reading = my_scale.ser.read(6)
         #     # unit are in ounces
@@ -169,6 +170,7 @@ if __name__ == '__main__':
         #         pygame.display.flip()
         #         time.sleep(3)
         #         screen.fill((white))
+        #         pygame.display.flip()
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
