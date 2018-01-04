@@ -146,10 +146,10 @@ if __name__ == '__main__':
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
 
-        if testing and l % 3 == 0:
-            text_box_class.draw_text_surface(compost_text_processing(5))
-            time.sleep(5)
-            screen.fill(white)
+        # if testing and l % 3 == 0:
+        #     text_box_class.draw_text_surface(compost_text_processing(5))
+        #     time.sleep(5)
+        #     screen.fill(white)
 
         # if my_scale.ser.in_waiting > 0:
         #     reading = my_scale.ser.read(6)
