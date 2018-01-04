@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # all units are in pixel for this section
     square_length = 25  # the length of each small square in the sector
     list_legnth = 16  # number of squares in each sector=list_length^2
-    head_room = 20
+    head_room = 0
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_legnth + head_room
     x_offset = 70  # x offset of the sector of the screen
