@@ -5,6 +5,35 @@ from pygame.locals import *
 # of the screen
 
 
+class text_surface:
+    def __init__(self, screen: pygame.surface, surface_image: pygame.surface, line_number: int=4, top_offset: int=0, bot_offset: int=0, left_offset: int=0, right_offset: int=0, color: (int, int, int)=(0, 0, 0), font: str="")->None:
+        self._font = pygame.font.SysFont('Calibri', 70, True)
+        self._height = self._font.get_height()
+        self._size_per_line = self._font.get_linesize()
+        self._surface_width = surface_image.get_size()
+
+        self._screen = screen
+        self._surface = surface_image
+        self._color = color
+        self._line_number = line_number
+
+        self.line_list_rect_stored = []
+        for counter in range(0, line_number):
+            self.line_list_rect_stored.append(pygame.Rect(
+                left_offset, top_offset + counter * self._size_per_line, self._surface_width, self._height))
+
+    def draw_text_bubble(self, line_list: []) ->None:
+        """draw text on a saved surface"""
+        counter = 0
+        tx_font = self._font
+        tx_color = self._color
+        for i in line_list:
+            self._screen.blit(tx_font.render(i, True, tx_color),
+                              self.line_list_rect_stored[counter])
+            counter += 1
+        self._screen.pygame.display.flip()
+
+
 def draw_one_sector(screen, sec_rectange, list_legnth, l, list_rect, square_length, FPS, im)->None:
     white = (255, 255, 255)
     black = (0, 0, 0)
@@ -20,32 +49,46 @@ def draw_one_sector(screen, sec_rectange, list_legnth, l, list_rect, square_leng
             pygame.display.flip()
 
         clock1.tick(FPS)
+# possible mode to be 'l', 'c', 'r'
 
 
-class text_surface():
-    def __init__(self, screen: pygame.surface, surface_image: pygame.surface, line_list: [], top_offset: int=0, bot_offset: int=0, left_offset: int=0, right_offset: int=0, color: (int, int, int)=(0, 0, 0), font: str="")->None:
-        self._font = pygame.font.SysFont('Calibri', 70, True)
-        self._height = font.get_height()
-        self._size_per_line = font.get_linesize()
-        self._surface_width = surface_image.get_size()
+def text_line_append(m='l', line_list=[], ounces_recycled: int=0):
+    if m == 'l':
+        energy_conversion = 1  # no specific conversion factor for landfill
+    elif m == 'c':
+        energy_conversion = 0.3968316
+    elif m == 'r':
+        energy_conversion = 3.1526066
 
-        self._screen = screen
-        self._surface = surface_image
-        self._color = color
-        self._line_number = len(line_list)
-        counter = 0
-        self.line_list_rect_stored = []
-        self.line_list_text_stored = []
-        for i in line_list:
-            self.line_list_rect_stored.append(pygame.Rect(
-                left_offset, top_offset + counter * self._size_per_line, self._surface_width, self._height))
-            self.line_list_text_stored.append(
-                font.render(i, True, self._color))
-            counter += 1
 
-    def draw_text_bubble(self) ->None:
-        """draw text on a saved surface"""
-        for i in range(0, self._line_number):
-            self._screen.blit(self.line_list_text_stored[i],
-                              self.line_list_rect_stored[i])
-        self._screen.pygame.display.flip()
+def compost_text_processing(ounces_recycled: int=0):
+    processed_text = []
+    energy_conversion = 0.3968316
+    processed_text.append("Thank you for composting!")
+    processed_text.append("You just composted " +
+                          str(ounces_recycled) + " ounces")
+    processed_text.append("You just helped avoid " + str(ounces_recycled *
+                                                         energy_conversion) + " ounces of carbone-equivalent emissions!")
+    processed_text.append(
+        "Food waste is the single largest part of waste. Keeping it out of landfills is important!")
+    return processed_text
+
+
+def recycle_text_processing(ounces_recycled: int=0):
+    energy_conversion = 3.1526066
+    processed_text = []
+    processed_text.append("Thank you for recycling")
+    processed_text.append("You just composted " +
+                          str(ounces_recycled) + " ounces")
+    processed_text.append("You just helped avoid " +
+                          str(ounces_recycled * energy_conversion) + " ounces")
+
+
+def landfill_text_processing(ounces_recycled: int=0):
+    processed_text = []
+    processed_text.append(
+        "It’s important to separate items that can’t be composted or recycled. Thank you!")
+    processed_text.append(
+        "Keeping landfill waste in the landfill bins allows other waste to be truly composted and recycled!")
+    processed_text.append(
+        "Keeping landfill items out of compost and recycling is important. Thank you!")

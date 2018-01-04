@@ -11,7 +11,6 @@ from header import Header
 from body import Body
 from collections import namedtuple
 
-
 if __name__ == '__main__':
     #----------------------------------------------------
     # intialize important things here
@@ -39,27 +38,6 @@ if __name__ == '__main__':
     #----------------------------------------------------
     # auxillary variables
     FPS = 0  # FPS when drawing
-    compost = []
-    compost.append("Thank you for composting!")
-    compost.append("You just composted  ounces")
-    compost.append(
-        "You just helped avoid  ounces of carbone-equivalent emmissions!")
-    compost.append(
-        "Food waste is the single largest part of waste. Keeping it out of landfills is important!")
-
-    recycle = []
-    recycle.append("Thank you for recycling")
-    recycle.append("You just composted  ounces")
-    recycle.append(
-        "You just helped avoid  ounces of carbon-equivalent emissions!")
-
-    landfill = []
-    landfill.append(
-        "It’s important to separate items that can’t be composted or recycled. Thank you!")
-    landfill.append(
-        "Keeping landfill waste in the landfill bins allows other waste to be truly composted and recycled!")
-    landfill.append(
-        "Keeping landfill items out of compost and recycling is important. Thank you!")
     current_pos = 0  # current section of the screen to be changed
     things_happened = True  # event for scale
     l = 0  # index of the current image to be displayed
@@ -116,14 +94,6 @@ if __name__ == '__main__':
     # used for selecting which mode to be in
     m = 'l'  # l for landfill, r for recycle and c for compost
     # set mode of running
-    if m == 'l':
-        energy_conversion = 1  # no specific conversion factor for landfill
-
-    elif m == 'c':
-        energy_conversion = 0.3968316
-
-    elif m == 'r':
-        energy_conversion = 3.1526066
 
     for i in range(0, 9):
         im.append(pygame.image.load(os.path.join(
@@ -147,30 +117,22 @@ if __name__ == '__main__':
                     exited = True
 
         if testing and l % 2 == 0:
-            screen.fill((white))
-            screen.fill((black), text_rect)
-            screen.fill((black), weight_rect)
-            screen.blit(font.render(compost, True, (white)), text_rect)
-            screen.blit(font.render(
-                str(5), True, (white)), weight_rect)
-            pygame.display.flip()
-            time.sleep(3)
-            screen.fill((white))
-            pygame.display.flip()
-        # if my_scale.ser.in_waiting > 0:
-        #     reading = my_scale.ser.read(6)
-        #     # unit are in ounces
-        #     weight = my_scale.check(reading)
-        #     if (weight):
-        #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
-        #         screen.fill((white))
-        #         screen.blit(font.render(compost, True, (black)), text_rect)
-        #         screen.blit(font.render(
-        #             str(energy_saved), True, (black)), weight_rect)
-        #         pygame.display.flip()
-        #         time.sleep(3)
-        #         screen.fill((white))
-        #         pygame.display.flip()
+            if m == 'c':
+
+                # if my_scale.ser.in_waiting > 0:
+                #     reading = my_scale.ser.read(6)
+                #     # unit are in ounces
+                #     weight = my_scale.check(reading)
+                #     if (weight):
+                #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
+                #         screen.fill((white))
+                #         screen.blit(font.render(compost, True, (black)), text_rect)
+                #         screen.blit(font.render(
+                #             str(energy_saved), True, (black)), weight_rect)
+                #         pygame.display.flip()
+                #         time.sleep(3)
+                #         screen.fill((white))
+                #         pygame.display.flip()
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
