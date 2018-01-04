@@ -72,7 +72,7 @@ if __name__ == '__main__':
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_botrect.append(Rect(i * square_length + x_offset, j *
-                                     square_length + 2 * total_square_length, square_length + y_offset, square_length))
+                                     square_length + 2 * total_square_length, square_length, square_length))
 
     # for i in range(0, list_legnth):
     #     for j in range(0, list_legnth):
