@@ -27,8 +27,8 @@ if __name__ == '__main__':
     head_room = 20
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_legnth + head_room
-    x_offset = 450  # x offset of the sector of the screen
-    y_offset = 450  # y offset of the sector of the screen
+    x_offset = 200  # x offset of the sector of the screen
+    y_offset = 300  # y offset of the sector of the screen
     top_header_width = screen.get_width()
     top_header_height = 500
     bot_header_width = screen.get_width()
@@ -62,17 +62,17 @@ if __name__ == '__main__':
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_toprect.append(Rect(i * square_length + x_offset, j *
-                                     square_length, square_length, square_length))
+                                     square_length + y_offset, square_length, square_length))
 
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_midrect.append(Rect(i * square_length + x_offset, total_square_length + j *
-                                     square_length, square_length, square_length))
+                                     square_length + y_offset, square_length, square_length))
 
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_botrect.append(Rect(i * square_length + x_offset, j *
-                                     square_length + 2 * total_square_length, square_length, square_length))
+                                     square_length + 2 * total_square_length, square_length + y_offset, square_length))
 
     # for i in range(0, list_legnth):
     #     for j in range(0, list_legnth):
@@ -80,10 +80,11 @@ if __name__ == '__main__':
     #                                       square_length + y_offset, square_length, square_length))
 
     # rectange used for deleting before redraw of sections
-    top_rect = Rect(x_offset, 0, total_square_length, total_square_length)
-    mid_rect = Rect(x_offset, y_offset, total_square_length,
+    top_rect = Rect(x_offset, y_offset, total_square_length,
                     total_square_length)
-    bot_rect = Rect(x_offset, y_offset * 2,
+    mid_rect = Rect(x_offset, y_offset + total_square_length, total_square_length,
+                    total_square_length)
+    bot_rect = Rect(x_offset, y_offset + total_square_length * 2,
                     total_square_length, total_square_length)
 
     # botrigt_rect = Rect(x_offset, y_offset,
