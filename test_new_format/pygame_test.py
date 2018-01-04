@@ -22,11 +22,11 @@ if __name__ == '__main__':
     #----------------------------------------------------
     # dictate the width, length and number of squares
     # all units are in pixel for this section
-    square_length = 25  # the length of each small square in the sector
-    list_legnth = 16  # number of squares in each sector=list_length^2
-    head_room = 0
+    square_length = 30  # the length of each small square in the sector
+    list_legnth = 20  # number of squares in each sector=list_length^2
+    head_room = 100
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
-    total_square_length = square_length * list_legnth + head_room
+    total_square_length = square_length * list_legnth
     x_offset = 500  # x offset of the sector of the screen
     y_offset = 70  # y offset of the sector of the screen
     top_header_width = screen.get_width()
@@ -62,17 +62,17 @@ if __name__ == '__main__':
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_toprect.append(Rect(i * square_length + x_offset, j *
-                                     square_length + y_offset, square_length, square_length))
+                                     square_length + y_offset, square_length + head_room, square_length))
 
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_midrect.append(Rect(i * square_length + x_offset, total_square_length + j *
-                                     square_length + y_offset, square_length, square_length))
+                                     square_length + y_offset, square_length + head_room, square_length))
 
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_botrect.append(Rect(i * square_length + x_offset, j *
-                                     square_length + 2 * total_square_length + y_offset, square_length, square_length))
+                                     square_length + 2 * total_square_length + y_offset, square_length + head_room, square_length))
 
     # for i in range(0, list_legnth):
     #     for j in range(0, list_legnth):
@@ -80,12 +80,12 @@ if __name__ == '__main__':
     #                                       square_length + y_offset, square_length, square_length))
 
     # rectange used for deleting before redraw of sections
-    top_rect = Rect(x_offset, y_offset, total_square_length,
+    top_rect = Rect(x_offset, y_offset, total_square_length + head_room,
                     total_square_length)
-    mid_rect = Rect(x_offset, y_offset + total_square_length, total_square_length,
+    mid_rect = Rect(x_offset, y_offset + total_square_length, total_square_length + head_room,
                     total_square_length)
     bot_rect = Rect(x_offset, y_offset + total_square_length * 2,
-                    total_square_length, total_square_length)
+                    total_square_length + head_room, total_square_length)
 
     top_header_rect = Rect(0, 0, top_header_width, top_header_height)
     bot_header_rect = Rect(
