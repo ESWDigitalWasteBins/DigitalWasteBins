@@ -135,20 +135,21 @@ if __name__ == '__main__':
             text_box_class.draw_text_surface(compost_text_processing(5))
             time.sleep(5)
             screen.fill(white)
-            # if my_scale.ser.in_waiting > 0:
-            #     reading = my_scale.ser.read(6)
-            #     # unit are in ounces
-            #     weight = my_scale.check(reading)
-            #     if (weight):
-            #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
-            #         screen.fill((white))
-            #         screen.blit(font.render(compost, True, (black)), text_rect)
-            #         screen.blit(font.render(
-            #             str(energy_saved), True, (black)), weight_rect)
-            #         pygame.display.flip()
-            #         time.sleep(3)
-            #         screen.fill((white))
-            #         pygame.display.flip()
+
+        # if my_scale.ser.in_waiting > 0:
+        #     reading = my_scale.ser.read(6)
+        #     # unit are in ounces
+        #     weight = my_scale.check(reading)
+        #     if (weight):
+        #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
+        #         screen.fill((white))
+        #         screen.blit(font.render(compost, True, (black)), text_rect)
+        #         screen.blit(font.render(
+        #             str(energy_saved), True, (black)), weight_rect)
+        #         pygame.display.flip()
+        #         time.sleep(3)
+        #         screen.fill((white))
+        #         pygame.display.flip()
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:

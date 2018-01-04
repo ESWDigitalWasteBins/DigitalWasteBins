@@ -55,7 +55,11 @@ class Scale:
         # Handle first byte
         # self.ser.flush() #flush all inputs in buffer
         if len(raw) != 6 or raw[0] != 0xff:
-            return -1
+            self.ser.close()
+            self.ser.open()
+            raw = self.ser.read(6)
+            if len(raw) != 6 or raw[0] != 0xff:
+                return -1
             # raise ValueError('Not a Global 240878 message')
         # preliminary check if the number are equal to each other to
         # avoid doing bitshifting and a lot of post processing
@@ -94,7 +98,7 @@ class Scale:
             # reading = self.ser.read(6)
 
         else:
-            return 0 #means values stay the same
+            return 0  # means values stay the same
 
         if (self.last_value + self.weight_threshold) < result:
 
@@ -104,7 +108,7 @@ class Scale:
             self.raw = raw
             return difference  # return weight change between this and the last stable read in lbs
         else:
-            return 0 #weight decreased or stayed the same
+            return 0  # weight decreased or stayed the same
 
     # def check(self):
 
@@ -113,6 +117,7 @@ class Scale:
 
     def close(self) -> None:
         self.ser.close()
+
 
 """
 if __name__ == '__main__':
