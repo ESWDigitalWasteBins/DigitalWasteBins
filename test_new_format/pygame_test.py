@@ -95,6 +95,7 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
+        total_line = 6
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
@@ -104,6 +105,7 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
+        total_line = 4
 
     for i in range(0, 9):
         im.append(pygame.image.load(os.path.join(
