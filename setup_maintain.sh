@@ -14,7 +14,7 @@
 MAIN_PY_FILE_DIR="test_new_format/" 
 MAIN_PY_FILE="pygame_test"
 #list of necessary software
-SOFTWARE=" python3 python3-pygame python-serial ufw "
+SOFTWARE=" python3 python3-pygame python-serial ufw ntp "
 
 if [ -e /home/dwb_installed ]
 then
@@ -27,10 +27,9 @@ sudo service ntp restart
 sudo ufw enable
 sudo apt-get update
 sudo apt-get dist-upgrade -y 
-
+sudo timedatectl set-timezone US/Pacific
 ifconfig wlan0 down
-#/etc/udev/rules.d/99-com.rules
-#ACTION=="add",SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="SCALE"
+
 cd DigitalWasteBins
 python3 ${MAIN_PY_FILE_DIR}${MAIN_PY_FILE}
 #sudo reboot -h 24:00
@@ -41,12 +40,17 @@ sudo apt-get dist-upgrade -y
 sudo apt-get install ${SOFTWARE}
 sudo ufw enable 
 sudo ufw status
+sudo timedatectl set-timezone US/Pacific
 #python3 -m pip install pygame
 
 
+#/etc/udev/rules.d/99-com.rules
+#ACTION=="add",SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="SCALE"
+
+#Create symlink for the scale
 lsusb
-cd /lib/udev/rules.d/
-ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="SCALE"
+echo "ACTION==\"add\",SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6001\", SYMLINK+=\"SCALE\"" >> /etc/udev/rules.d/99-com.rules
+
 
 #touch ${HOME}/dwb_installed
 #sudo reboot
