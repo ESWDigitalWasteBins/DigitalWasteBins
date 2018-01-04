@@ -28,6 +28,7 @@ class text_surface:
             self._screen.fill(self._bg_color)
             self._screen.blit(self._surface, (0, 0))
         else:
+            self._screen.fill(self._bg_color, (255, 255, 255))
             self._screen.fill(self._bg_color, header_rect)
         counter = 0
         tx_font = self._font
