@@ -102,3 +102,4 @@ ENV/
 /.vs/DigitalWasteBins/v15/.suo
 /.vs/ProjectSettings.json
 /.vs/slnx.sqlite
+*.json

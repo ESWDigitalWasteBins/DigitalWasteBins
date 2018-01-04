@@ -5,10 +5,17 @@ import random
 import pygame
 from pygame.locals import *
 from sector_draw import *
+from scale import Scale
+from frame import Frame
+from header import Header
+from body import Body
+from collections import namedtuple
+
 
 if __name__ == '__main__':
     # intialize important things here
     pygame.init()
+    my_scale = Scale()
     # full screen
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
@@ -24,7 +31,8 @@ if __name__ == '__main__':
     total_square_length = square_length * list_legnth + head_room
     x_offset = 450  # x offset of the sector of the screen
     y_offset = 450  # y offset of the sector of the screen
-
+    header_width = 1000
+    header_height = 500
     # auxillary variables
     FPS = 0  # FPS when drawing
     Compost = "Thanks for recyling compost"
@@ -79,7 +87,18 @@ if __name__ == '__main__':
     bot_rect = Rect(x_offset, 0, total_square_length, total_square_length)
     botrigt_rect = Rect(x_offset, y_offset,
                         total_square_length, total_square_length)
-    text_rect = Rect(0, 0, total_square_length, total_square_length)
+    text_rect = Rect(0, 0, header_width, header_height)
+    weight_rect = Rect(0, 20, header_width, header_height)
+    m = 'L'  # L for landfill, R for recycle and
+    # set mode of running
+    if m == 'L':
+        energy_conversion = 1  # no specific conversion factor for landfill
+
+    elif m == 'C':
+        energy_conversion = 0.3968316
+
+    elif m == 'R':
+        energy_conversion = 3.1526066
 
     # begin with a white color
     screen.fill(white)
@@ -97,6 +116,21 @@ if __name__ == '__main__':
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
 
+        if my_scale.ser.in_waiting > 0:
+            reading = my_scale.ser.read(6)
+            # unit are in ounces
+            weight = my_scale.check(reading)
+            if (weight):
+                energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
+                screen.fill((white))
+                screen.blit(font.render(Compost, True, (black)), text_rect)
+                screen.blit(font.render(
+                    str(weight), True, (black)), weight_rect)
+                pygame.display.flip()
+                # if weight != 0:
+                # display.is_using_scale = Tru
+                # elif display.frame_type == 1:
+                # display.is_using_scale=False
         if (time.time() - start) > screen_update_interval:
             start = time.time()
             if current_pos == 0:
@@ -121,3 +155,4 @@ if __name__ == '__main__':
             l = l + 1 if l < 8 else 0
         # pygame.event.pump()
     pygame.quit()
+    my_scale.ser.close()
