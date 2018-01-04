@@ -72,7 +72,7 @@ if __name__ == '__main__':
     for i in range(0, list_legnth):
         for j in range(0, list_legnth):
             list_botrect.append(Rect(i * square_length + x_offset, j *
-                                     square_length + 2 * total_square_length, square_length, square_length))
+                                     square_length + 2 * total_square_length + y_offset, square_length, square_length))
 
     # for i in range(0, list_legnth):
     #     for j in range(0, list_legnth):
@@ -87,8 +87,6 @@ if __name__ == '__main__':
     bot_rect = Rect(x_offset, y_offset + total_square_length * 2,
                     total_square_length, total_square_length)
 
-    # botrigt_rect = Rect(x_offset, y_offset,
-    #                    total_square_length, total_square_length)
     top_header_rect = Rect(0, 0, top_header_width, top_header_height)
     bot_header_rect = Rect(
         screen.get_height() - bot_header_height, 0, bot_header_width, bot_header_height)
