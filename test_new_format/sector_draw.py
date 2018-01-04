@@ -4,6 +4,9 @@ from pygame.locals import *
 # contain the functions to draw each sector
 # of the screen
 
+white = (255, 255, 255)
+black = (0, 0, 0)
+
 
 class text_surface:
     def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0,  color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=(255, 255, 255)):
@@ -24,18 +27,17 @@ class text_surface:
 
     def draw_text_surface(self, line_list: [], header_rect=None) ->None:
         """draw text on a saved surface"""
+        self._screen.fill(white)
         if header_rect == None:
-            self._screen.fill(self._bg_color)
             self._screen.blit(self._surface, (0, 0))
         else:
-            self._screen.fill((255, 255, 255))
             self._screen.fill(self._bg_color, header_rect)
         counter = 0
         tx_font = self._font
         tx_color = self._color
         for i in line_list:
             # self._screen.fill(self._bg_color, self.line_list_rect_stored[counter])
-            self._screen.blit(tx_font.render(i, True, tx_color),
+            self._screen.blit(tx_font.render(i, True, tx_color, self._bg_color),
                               self.line_list_rect_stored[counter])
             counter += 1
         pygame.display.flip()
