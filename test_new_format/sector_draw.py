@@ -62,7 +62,7 @@ def draw_one_sector(screen, sec_rectange, list_length_vertical, list_length_hori
             for v in range(0, j + 1):
                 screen.blit(im[l], list_rect[i * list_length_vertical + v], (i *
                                                                              (square_length + headroom), v * square_length, square_length, square_length))
-            pygame.display.flip()
+        pygame.display.flip()
 
 # possible mode to be 'l', 'c', 'r'
 
