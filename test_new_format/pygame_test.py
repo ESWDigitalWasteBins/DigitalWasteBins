@@ -146,10 +146,9 @@ if __name__ == '__main__':
 
     # begin with a white color
     screen.fill(white)
-    pygame.display.flip()
     pygame.event.pump()  # used for keeping the OS happy
 
-    testing = True
+    # testing = True
     # TODO: Refactor the code below
     # the code below will cycle through screen sector as well
     # as loaded images and display them with a defined time interval
@@ -166,6 +165,8 @@ if __name__ == '__main__':
                     1, mid_rect_offset_im[l], square_length, FPS, im)
     draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
                     2, bot_rect_offset_im[l], square_length, FPS, im)
+    pygame.display.flip()
+
     while (not(exited)):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
