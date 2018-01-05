@@ -23,11 +23,11 @@ if __name__ == '__main__':
     #----------------------------------------------------
     # dictate the width, length and number of squares
     # all units are in pixel for this section
-    square_length = 15  # the length of each small square in the sector
+    square_length = 30  # the length of each small square in the sector
 
     # number of squares in each sector=list_length_vertical *list_length_horizontal
-    list_length_vertical = 20
-    list_length_horizontal = 60
+    list_length_vertical = 10
+    list_length_horizontal = 30
 
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_length_vertical
@@ -154,12 +154,13 @@ if __name__ == '__main__':
     # as loaded images and display them with a defined time interval
     # the images are displayed gradually in order to create transition effects
     # as well as alleviate the load on the pi CPU
-    
+
     # display initial image first
     bot_header.draw_text_surface(bot_header_text, True)
     top_header.draw_text_surface(top_header_text, True)
-    
-    draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal, 0, top_rect_offset_im[l], square_length, FPS, im)
+
+    draw_one_sector(screen, top_rect, list_length_vertical,
+                    list_length_horizontal, 0, top_rect_offset_im[l], square_length, FPS, im)
 
     draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
                     1, mid_rect_offset_im[l], square_length, FPS, im)

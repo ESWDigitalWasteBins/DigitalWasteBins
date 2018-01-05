@@ -48,16 +48,6 @@ class text_surface:
         pygame.display.flip()
 
 
-# def draw_header(self, screen, header_width, header_height,line_list, line_number: int=1, left_offset: int=0, top_offset: int=0, color: (int, int, int)=(0, 0, 0), type_font: str="",top=True)->None:
-#     if top:
-#         screen.blit((0,0,header_width, header_height),(0,0))
-#     else:
-#         screen.blit((0,0,header_width, header_height),(0,screen.get_height-header_height))
-#     type_font=pygame.font.SysFont('Calibri', 70, True)
-
-#     for i in line_list:
-#         screen.blit(type_font.render(i, True, color), Rect())
-
 def draw_one_sector(screen, sec_rectange, list_length_vertical, list_length_horizontal, l, list_rect, square_length, FPS, im, headroom: int=0)->None:
     white = (255, 255, 255)
     black = (0, 0, 0)
@@ -73,7 +63,7 @@ def draw_one_sector(screen, sec_rectange, list_length_vertical, list_length_hori
                 screen.blit(im[l], list_rect[i * list_length_vertical + v], (i *
                                                                              (square_length + headroom), v * square_length, square_length, square_length))
             pygame.display.flip()
-        clock1.tick(FPS)
+
 # possible mode to be 'l', 'c', 'r'
 
 
