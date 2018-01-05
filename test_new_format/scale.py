@@ -46,7 +46,7 @@ class Scale:
         self.last_value = 0
         self.raw = [0, 0, 0, 0, 0, 0]
         # minimum increase in weight to be counted as increased
-        self.weight_threshold = 0.0005
+        self.weight_threshold = 0.001
 
     def check(self, raw: bytes) -> Reading:
 
