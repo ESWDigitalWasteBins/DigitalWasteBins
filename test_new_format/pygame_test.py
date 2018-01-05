@@ -5,14 +5,14 @@ import random
 import pygame
 from pygame.locals import *
 from sector_draw import *
-from scale import Scale
+#from scale import Scale
 from collections import namedtuple
 
 if __name__ == '__main__':
     #----------------------------------------------------
     # intialize important things here
     pygame.init()
-    my_scale = Scale()
+    #my_scale = Scale()
     # full screen
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
@@ -132,7 +132,7 @@ if __name__ == '__main__':
                     screen.get_width(), total_square_length)
 
     text_box_class = text_surface(
-        screen, text_box_im, 5, 130, 150, black, "")
+        screen, text_box_im, total_line, 130, 150, black, "")
 
     # Initializing Top and Bottom header
 
@@ -174,27 +174,31 @@ if __name__ == '__main__':
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
 
-        if my_scale.ser.in_waiting > 0:
-            reading = my_scale.ser.read(6)
-            # unit are in ounces
-            weight = my_scale.check(reading)
-            if (weight):
-                # unit is ounces of carbon emission
-                screen.fill(white)
-                text_box_class.draw_text_surface(
-                    compost_text_processing(weight))
-                pygame.display.flip()
-                time.sleep(5)
-                screen.fill(white)
-                bot_header.draw_text_surface(bot_header_text, True)
-                top_header.draw_text_surface(top_header_text, True)
-                draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal,
-                                0, top_rect_offset_im[l], square_length, FPS, im)
-                draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
-                                1, mid_rect_offset_im[l], square_length, FPS, im)
-                draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
-                                2, bot_rect_offset_im[l], square_length, FPS, im)
-                pygame.display.flip()
+        if l%3==0:
+            text_box_class.draw_text_surface(compost_text_processing(5))
+            pygame.display.flip()
+
+        # if my_scale.ser.in_waiting > 0:
+        #     reading = my_scale.ser.read(6)
+        #     # unit are in ounces
+        #     weight = my_scale.check(reading)
+        #     if (weight):
+        #         # unit is ounces of carbon emission
+        #         screen.fill(white)
+        #         text_box_class.draw_text_surface(
+        #             compost_text_processing(weight))
+        #         pygame.display.flip()
+        #         time.sleep(5)
+        #         screen.fill(white)
+        #         bot_header.draw_text_surface(bot_header_text, True)
+        #         top_header.draw_text_surface(top_header_text, True)
+        #         draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal,
+        #                         0, top_rect_offset_im[l], square_length, FPS, im)
+        #         draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
+        #                         1, mid_rect_offset_im[l], square_length, FPS, im)
+        #         draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
+        #                         2, bot_rect_offset_im[l], square_length, FPS, im)
+        #         pygame.display.flip()
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
