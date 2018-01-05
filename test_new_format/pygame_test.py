@@ -161,8 +161,8 @@ if __name__ == '__main__':
     # as well as alleviate the load on the pi CPU
 
     # display initial image first
-    bot_header.draw_text_surface(bot_header_text, True)
-    top_header.draw_text_surface(top_header_text, True)
+    bot_header.draw_text_surface(bot_header_text)
+    top_header.draw_text_surface(top_header_text)
 
     # draw_one_sector(screen, top_rect, list_length_vertical,
     #                 list_length_horizontal, 0, top_rect_offset_im[l], square_length, FPS, im)
@@ -195,8 +195,8 @@ if __name__ == '__main__':
                 pygame.display.flip()
                 time.sleep(3)
                 screen.fill(white)
-                bot_header.draw_text_surface(bot_header_text, True)
-                top_header.draw_text_surface(top_header_text, True)
+                bot_header.draw_text_surface(bot_header_text)
+                top_header.draw_text_surface(top_header_text)
                 # draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
                 #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
