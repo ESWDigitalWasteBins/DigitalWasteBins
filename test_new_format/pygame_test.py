@@ -101,17 +101,17 @@ if __name__ == '__main__':
         for i in range(0, list_legnth):
             for j in range(0, list_legnth):
                 list_toprect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, j *
-                                         square_length + y_offset, square_length + head_room, square_length))
+                                         square_length + y_offset, square_length + head_room / list_legnth, square_length))
         top_rect_offset_im.append(list_toprect)
         for i in range(0, list_legnth):
             for j in range(0, list_legnth):
                 list_midrect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, total_square_length + j *
-                                         square_length + y_offset, square_length + head_room, square_length))
+                                         square_length + y_offset, square_length + head_room / list_legnth, square_length))
         mid_rect_offset_im.append(list_midrect)
         for i in range(0, list_legnth):
             for j in range(0, list_legnth):
                 list_botrect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, j *
-                                         square_length + 2 * total_square_length + y_offset, square_length + head_room, square_length))
+                                         square_length + 2 * total_square_length + y_offset, square_length + head_room / list_legnth, square_length))
         bot_rect_offset_im.append(list_botrect)
         list_toprect = []
         list_midrect = []
