@@ -32,7 +32,7 @@ class text_surface:
         if header_rect == None:
             self._screen.blit(self._surface, (0, 0))
         else:
-            self._screen.fill((self._bg_color), (0, self._left_offset,
+            self._screen.fill((self._bg_color), (0, self._top_offset,
                                                  self._surface_width, self._size_per_line * self._line_number))
         counter = 0
         tx_font = self._font
@@ -60,12 +60,13 @@ def draw_one_sector(screen, sec_rectange, list_legnth, l, list_rect, square_leng
     black = (0, 0, 0)
     clock1 = pygame.time.Clock()
     screen.fill((white), sec_rectange)
+    x_picture_offset = (screen.get_width() - im[l].get_width()) / 2
     for (i, j) in zip(range(0, list_legnth), range(0, list_legnth)):
         for(k, v) in zip(range(0, i + 1), range(0, j + 1)):
             screen.blit(im[l], list_rect[k * list_legnth + j], (k *
-                                                                square_length, j * square_length, square_length, square_length))
+                                                                square_length + x_picture_offset, j * square_length, square_length, square_length))
             screen.blit(im[l], list_rect[i * list_legnth + v], (i *
-                                                                square_length, v * square_length, square_length, square_length))
+                                                                square_length + x_picture_offset, v * square_length, square_length, square_length))
             pygame.display.flip()
         clock1.tick(FPS)
 # possible mode to be 'l', 'c', 'r'
