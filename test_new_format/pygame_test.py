@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # color to be used
     white = (255, 255, 255)
     black = (0, 0, 0)
-    screen_update_interval = 4.0  # float of how many seconds before drawing new image
+    screen_update_interval = 2.0  # float of how many seconds before drawing new image
 
     #----------------------------------------------------
     # Used for loading images to be used into multiple squares
