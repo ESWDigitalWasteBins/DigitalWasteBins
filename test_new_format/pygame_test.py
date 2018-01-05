@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     # number of squares in each sector=list_length_vertical *list_length_horizontal
     list_length_vertical = 15
-    list_length_horizontal = 30
+    list_length_horizontal = 60
 
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_length_vertical
@@ -199,7 +199,7 @@ if __name__ == '__main__':
                 draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
                                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
-                time.sleep(3)
+                time.sleep(0.5)
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
