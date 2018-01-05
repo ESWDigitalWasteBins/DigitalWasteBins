@@ -61,7 +61,7 @@ class Scale:
         # preliminary check if the number are equal to each other to
         # avoid doing bitshifting and a lot of post processing
 
-        self.ser.flush()  # flush all inputs in buffer to avoid cluttering
+        self.ser.reset_input_buffer()  # flush all inputs in buffer to avoid cluttering
         if not(raw[2] == self.raw[2] and raw[3] == self.raw[3] and raw[1] == self.raw[1] and raw[4] == self.raw[4]):
             # Handle second byte
             self.raw = raw
