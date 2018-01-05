@@ -32,7 +32,8 @@ if __name__ == '__main__':
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_length_vertical
     x_offset = 0  # x offset of the sector of the screen
-    y_offset = 100  # y offset of the sector of the screen
+    y_offset_top = 100  # y offset of the sector of the screen
+    y_offset_bot = 200
     top_header_width = screen.get_width()
     top_header_height = 200
     bot_header_width = screen.get_width()
@@ -102,36 +103,36 @@ if __name__ == '__main__':
 
     top_rect_offset_im = []
     mid_rect_offset_im = []
-    bot_rect_offset_im = []
+    # bot_rect_offset_im = []
     for k in im:
         for i in range(0, list_length_horizontal):
             for j in range(0, list_length_vertical):
                 list_toprect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, j *
-                                         square_length + y_offset, square_length, square_length))
+                                         square_length + y_offset_top, square_length, square_length))
         top_rect_offset_im.append(list_toprect)
 
         for i in range(0, list_length_horizontal):
             for j in range(0, list_length_vertical):
                 list_midrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, total_square_length + j *
-                                         square_length + y_offset, square_length, square_length))
+                                         square_length + y_offset_bot, square_length, square_length))
         mid_rect_offset_im.append(list_midrect)
 
-        for i in range(0, list_length_horizontal):
-            for j in range(0, list_length_vertical):
-                list_botrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, j *
-                                         square_length + 2 * total_square_length + y_offset, square_length, square_length))
-        bot_rect_offset_im.append(list_botrect)
+        # for i in range(0, list_length_horizontal):
+        #     for j in range(0, list_length_vertical):
+        #         list_botrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, j *
+        #                                  square_length + 2 * total_square_length + y_offset, square_length, square_length))
+        # bot_rect_offset_im.append(list_botrect)
         list_toprect = []
         list_midrect = []
-        list_botrect = []
+        # list_botrect = []
 
     # rectange used for deleting before redraw of sections
-    top_rect = Rect(0, y_offset, screen.get_width(),
+    top_rect = Rect(0, y_offset_top, screen.get_width(),
                     total_square_length)
-    mid_rect = Rect(0, y_offset + total_square_length, screen.get_width(),
+    mid_rect = Rect(0, y_offset_bot + total_square_length, screen.get_width(),
                     total_square_length)
-    bot_rect = Rect(0, y_offset + total_square_length * 2,
-                    screen.get_width(), total_square_length)
+    # bot_rect = Rect(0, y_offset + total_square_length * 2,
+    #                 screen.get_width(), total_square_length)
 
     text_box_class = text_surface(
         screen, text_box_im, total_line, 130, 150, black, "")
