@@ -58,39 +58,6 @@ if __name__ == '__main__':
     # load images given by Tyson
     # TODO: Refactor the loading sections
 
-    # Divide each section of the screen into many small squares to
-    # draw gradually instead at once
-    for i in range(0, list_legnth):
-        for j in range(0, list_legnth):
-            list_toprect.append(Rect(i * square_length + x_offset, j *
-                                     square_length + y_offset, square_length + head_room, square_length))
-
-    for i in range(0, list_legnth):
-        for j in range(0, list_legnth):
-            list_midrect.append(Rect(i * square_length + x_offset, total_square_length + j *
-                                     square_length + y_offset, square_length + head_room, square_length))
-
-    for i in range(0, list_legnth):
-        for j in range(0, list_legnth):
-            list_botrect.append(Rect(i * square_length + x_offset, j *
-                                     square_length + 2 * total_square_length + y_offset, square_length + head_room, square_length))
-
-    # for i in range(0, list_legnth):
-    #     for j in range(0, list_legnth):
-    #         list_botrightrect.append(Rect(i * square_length + x_offset,  j *
-    #                                       square_length + y_offset, square_length, square_length))
-
-    # rectange used for deleting before redraw of sections
-    top_rect = Rect(x_offset, y_offset, total_square_length + head_room,
-                    total_square_length)
-    mid_rect = Rect(x_offset, y_offset + total_square_length, total_square_length + head_room,
-                    total_square_length)
-    bot_rect = Rect(x_offset, y_offset + total_square_length * 2,
-                    total_square_length + head_room, total_square_length)
-
-    top_header_rect = Rect(0, 0, top_header_width, top_header_height)
-    bot_header_rect = Rect(
-        screen.get_height() - bot_header_height, 0, bot_header_width, bot_header_height)
     #----------------------------------------------------
     # used for selecting which mode to be in
     m = 'c'  # l for landfill, r for recycle and c for compost
@@ -123,6 +90,49 @@ if __name__ == '__main__':
         im.append(pygame.image.load(os.path.join(
             'test_new_format', m + str(i) + '.png')))
         im[i].convert()
+
+    # Divide each section of the screen into many small squares to
+    # draw gradually instead at once
+
+    top_rect_offset_im = []
+    mid_rect_offset_im = []
+    bot_rect_offset_im = []
+    for k in im:
+        for i in range(0, list_legnth):
+            for j in range(0, list_legnth):
+                list_toprect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, j *
+                                         square_length + y_offset, square_length + head_room, square_length))
+        top_rect_offset_im.append(list_toprect)
+        for i in range(0, list_legnth):
+            for j in range(0, list_legnth):
+                list_midrect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, total_square_length + j *
+                                         square_length + y_offset, square_length + head_room, square_length))
+        mid_rect_offset_im.append(list_midrect)
+        for i in range(0, list_legnth):
+            for j in range(0, list_legnth):
+                list_botrect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, j *
+                                         square_length + 2 * total_square_length + y_offset, square_length + head_room, square_length))
+        bot_rect_offset_im.append(list_botrect)
+        list_toprect = []
+        list_midrect = []
+        list_botrect = []
+
+    # for i in range(0, list_legnth):
+    #     for j in range(0, list_legnth):
+    #         list_botrightrect.append(Rect(i * square_length + x_offset,  j *
+    #                                       square_length + y_offset, square_length, square_length))
+
+    # rectange used for deleting before redraw of sections
+    top_rect = Rect(x_offset, y_offset, total_square_length + head_room,
+                    total_square_length)
+    mid_rect = Rect(x_offset, y_offset + total_square_length, total_square_length + head_room,
+                    total_square_length)
+    bot_rect = Rect(x_offset, y_offset + total_square_length * 2,
+                    total_square_length + head_room, total_square_length)
+
+    top_header_rect = Rect(0, 0, top_header_width, top_header_height)
+    bot_header_rect = Rect(
+        screen.get_height() - bot_header_height, 0, bot_header_width, bot_header_height)
 
     text_box_class = text_surface(
         screen, text_box_im, 1, 130, 150, black, "")
@@ -176,16 +186,16 @@ if __name__ == '__main__':
             if current_pos == 0:
                 current_pos += 1
                 draw_one_sector(screen, top_rect, list_legnth,
-                                l, list_toprect, square_length, FPS, im)
+                                l, top_rect_offset_im[l], square_length, FPS, im)
             elif current_pos == 1:
                 current_pos += 1
                 draw_one_sector(screen, mid_rect, list_legnth,
-                                l, list_midrect, square_length, FPS, im)
+                                l, mid_rect_offset_im[l], square_length, FPS, im)
 
             elif current_pos == 2:
                 current_pos = 0
                 draw_one_sector(screen, bot_rect, list_legnth,
-                                l, list_botrect, square_length, FPS, im)
+                                l, bot_rect_offset_im[l], square_length, FPS, im)
 
             l = l + 1 if l < 8 else 0
         # pygame.event.pump()
