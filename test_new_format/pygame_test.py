@@ -24,11 +24,14 @@ if __name__ == '__main__':
     # dictate the width, length and number of squares
     # all units are in pixel for this section
     square_length = 15  # the length of each small square in the sector
-    list_legnth = 20  # number of squares in each sector=list_length^2
-    head_room = 500
+
+    # number of squares in each sector=list_length_vertical *list_length_horizontal
+    list_length_vertical = 20
+    list_length_horizontal = 60
+
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
-    total_square_length = square_length * list_legnth
-    x_offset = 100  # x offset of the sector of the screen
+    total_square_length = square_length * list_length_vertical
+    x_offset = 0  # x offset of the sector of the screen
     y_offset = 70  # y offset of the sector of the screen
     top_header_width = screen.get_width()
     top_header_height = 200
@@ -45,7 +48,7 @@ if __name__ == '__main__':
     # color to be used
     white = (255, 255, 255)
     black = (0, 0, 0)
-    screen_update_interval = 1.0  # float of how many seconds before drawing new image
+    screen_update_interval = 4.0  # float of how many seconds before drawing new image
 
     #----------------------------------------------------
     # Used for loading images to be used into multiple squares
@@ -53,7 +56,6 @@ if __name__ == '__main__':
     list_toprect = []
     list_midrect = []
     list_botrect = []
-    list_botrightrect = []
 
     # load images given by Tyson
     # TODO: Refactor the loading sections
@@ -98,52 +100,49 @@ if __name__ == '__main__':
     mid_rect_offset_im = []
     bot_rect_offset_im = []
     for k in im:
-        for i in range(0, list_legnth):
-            for j in range(0, list_legnth):
-                list_toprect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, j *
-                                         square_length + y_offset, square_length + head_room / list_legnth, square_length))
+        for i in range(0, list_length_horizontal):
+            for j in range(0, list_length_vertical):
+                list_toprect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, j *
+                                         square_length + y_offset, square_length, square_length))
         top_rect_offset_im.append(list_toprect)
-        for i in range(0, list_legnth):
-            for j in range(0, list_legnth):
-                list_midrect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, total_square_length + j *
-                                         square_length + y_offset, square_length + head_room / list_legnth, square_length))
+
+        for i in range(0, list_length_horizontal):
+            for j in range(0, list_length_vertical):
+                list_midrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, total_square_length + j *
+                                         square_length + y_offset, square_length, square_length))
         mid_rect_offset_im.append(list_midrect)
-        for i in range(0, list_legnth):
-            for j in range(0, list_legnth):
-                list_botrect.append(Rect(i * square_length + x_offset + (screen.get_width() - k.get_width()) // 2, j *
-                                         square_length + 2 * total_square_length + y_offset, square_length + head_room / list_legnth, square_length))
+
+        for i in range(0, list_length_horizontal):
+            for j in range(0, list_length_vertical):
+                list_botrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, j *
+                                         square_length + 2 * total_square_length + y_offset, square_length, square_length))
         bot_rect_offset_im.append(list_botrect)
         list_toprect = []
         list_midrect = []
         list_botrect = []
 
-    # for i in range(0, list_legnth):
-    #     for j in range(0, list_legnth):
-    #         list_botrightrect.append(Rect(i * square_length + x_offset,  j *
-    #                                       square_length + y_offset, square_length, square_length))
-
     # rectange used for deleting before redraw of sections
-    top_rect = Rect(x_offset, y_offset, total_square_length + head_room,
+    top_rect = Rect(0, y_offset, screen.get_width(),
                     total_square_length)
-    mid_rect = Rect(x_offset, y_offset + total_square_length, total_square_length + head_room,
+    mid_rect = Rect(0, y_offset + total_square_length, screen.get_width(),
                     total_square_length)
-    bot_rect = Rect(x_offset, y_offset + total_square_length * 2,
-                    total_square_length + head_room, total_square_length)
-
-    top_header_rect = Rect(0, 0, top_header_width, top_header_height)
-    bot_header_rect = Rect(
-        screen.get_height() - bot_header_height, 0, bot_header_width, bot_header_height)
+    bot_rect = Rect(0, y_offset + total_square_length * 2,
+                    screen.get_width(), total_square_length)
 
     text_box_class = text_surface(
         screen, text_box_im, 1, 130, 150, black, "")
 
-    top_header = text_surface(screen, screen, 2, 0, 0, white, "", black)
-    top_header.draw_text_surface(top_header_text, top_header_rect)
+    # Initializing Top and Bottom header
+    screen.fill(white)
+    top_header = text_surface(screen, screen, 1, 0, 0, white, "", black)
+    top_header.draw_text_surface(top_header_text, True)
 
     bot_header = text_surface(
         screen, screen, 1, 0, screen.get_height() - 1 * size_per_line, white, "", black)
-    bot_header.draw_text_surface(bot_header_text, bot_header_rect)
+    bot_header.draw_text_surface(bot_header_text, True)
+
     time.sleep(5)
+
     # begin with a white color
     screen.fill(white)
     pygame.display.flip()
@@ -162,6 +161,7 @@ if __name__ == '__main__':
                     exited = True
 
         # if testing and l % 3 == 0:
+        #     screen.fill(white)
         #     text_box_class.draw_text_surface(compost_text_processing(5))
         #     time.sleep(5)
         #     screen.fill(white)
@@ -185,16 +185,16 @@ if __name__ == '__main__':
             start = time.time()
             if current_pos == 0:
                 current_pos += 1
-                draw_one_sector(screen, top_rect, list_legnth,
+                draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal,
                                 l, top_rect_offset_im[l], square_length, FPS, im)
             elif current_pos == 1:
                 current_pos += 1
-                draw_one_sector(screen, mid_rect, list_legnth,
+                draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
                                 l, mid_rect_offset_im[l], square_length, FPS, im)
 
             elif current_pos == 2:
                 current_pos = 0
-                draw_one_sector(screen, bot_rect, list_legnth,
+                draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
                                 l, bot_rect_offset_im[l], square_length, FPS, im)
 
             l = l + 1 if l < 8 else 0

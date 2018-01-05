@@ -9,36 +9,39 @@ black = (0, 0, 0)
 
 
 class text_surface:
-    def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0,  color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=None):
+    def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0,  tx_color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=None):
+
         self._bg_color = bg_color
         self._font = pygame.font.SysFont('Calibri', 70, True)
         self._height = self._font.get_height()
         self._size_per_line = (self._font).get_linesize()
-        (self._surface_width, a) = surface_image.get_size()
+        self._surface_width = surface_image.get_width()
         self._screen = screen
         self._surface = surface_image
-        self._color = color
+        self._txcolor = tx_color
         self._line_number = line_number
         self._top_offset = top_offset
         self._left_offset = left_offset
         self.line_list_rect_stored = []
+
         for counter in range(0, line_number):
             (self.line_list_rect_stored).append(pygame.Rect(
                 left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._height))
 
-    def draw_text_surface(self, line_list: [], header_rect=None) ->None:
+    def draw_text_surface(self, line_list: [], isheader: False) ->None:
         """draw text on a saved surface"""
-        self._screen.fill(white)
-        if header_rect == None:
+
+        if not(isheader):
+            # load the image of the textbox
             self._screen.blit(self._surface, (0, 0))
         else:
             self._screen.fill((self._bg_color), (0, self._top_offset,
                                                  self._surface_width, self._size_per_line * self._line_number))
         counter = 0
         tx_font = self._font
-        tx_color = self._color
+        tx_color = self._txcolor
         for i in line_list:
-            # self._screen.fill(self._bg_color, self.line_list_rect_stored[counter])
+
             self._screen.blit(tx_font.render(i, True, tx_color, self._bg_color),
                               self.line_list_rect_stored[counter])
             counter += 1
@@ -55,18 +58,20 @@ class text_surface:
 #     for i in line_list:
 #         screen.blit(type_font.render(i, True, color), Rect())
 
-def draw_one_sector(screen, sec_rectange, list_legnth, l, list_rect, square_length, FPS, im)->None:
+def draw_one_sector(screen, sec_rectange, list_length_vertical, list_length_horizontal, l, list_rect, square_length, FPS, im, headroom: int=0)->None:
     white = (255, 255, 255)
     black = (0, 0, 0)
     clock1 = pygame.time.Clock()
     screen.fill((white), sec_rectange)
 
-    for (i, j) in zip(range(0, list_legnth), range(0, list_legnth)):
-        for(k, v) in zip(range(0, i + 1), range(0, j + 1)):
-            screen.blit(im[l], list_rect[k * list_legnth + j], (k *
-                                                                square_length, j * square_length, square_length, square_length))
-            screen.blit(im[l], list_rect[i * list_legnth + v], (i *
-                                                                square_length, v * square_length, square_length, square_length))
+    for i in range(0, list_length_horizontal):
+        for j in range(0, list_length_vertical):
+            for k in range(0, i + 1):
+                screen.blit(im[l], list_rect[k * list_length_vertical + j], (k *
+                                                                             (square_length), j * square_length, square_length, square_length))
+            for v in range(0, j + 1):
+                screen.blit(im[l], list_rect[i * list_length_vertical + v], (i *
+                                                                             (square_length + headroom), v * square_length, square_length, square_length))
             pygame.display.flip()
         clock1.tick(FPS)
 # possible mode to be 'l', 'c', 'r'
