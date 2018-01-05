@@ -72,9 +72,9 @@ def compost_text_processing(ounces_recycled: int=0):
     energy_conversion = 0.3968316
     processed_text.append("Thank you for composting!")
     processed_text.append("You just composted " +
-                          str(ounces_recycled) + " ounces")
-    processed_text.append("You just helped avoid " + str(ounces_recycled *
-                                                         energy_conversion) + " ounces")
+                          str(round(ounces_recycled), 3) + " ounces")
+    processed_text.append("You just helped avoid " + str(round(ounces_recycled *
+                                                               energy_conversion), 3) + " ounces")
     processed_text.append(" of carbone-equivalent emissions!")
     processed_text.append(
         "Food waste is the single largest part of waste.")
@@ -87,9 +87,10 @@ def recycle_text_processing(ounces_recycled: int = 0):
     processed_text = []
     processed_text.append("Thank you for recycling")
     processed_text.append("You just composted " +
-                          str(ounces_recycled) + " ounces")
+                          str(round(ounces_recycled), 3) + " ounces")
     processed_text.append("You just helped avoid " +
-                          str(ounces_recycled * energy_conversion) + " ounces")
+                          str(round(ounces_recycled *
+                                    energy_conversion), 3) + " ounces")
 
 
 def landfill_text_processing(ounces_recycled: int = 0):
