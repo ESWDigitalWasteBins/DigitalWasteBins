@@ -5,14 +5,14 @@ import random
 import pygame
 from pygame.locals import *
 from sector_draw import *
-#from scale import Scale
+from scale import Scale
 from collections import namedtuple
 
 if __name__ == '__main__':
     #----------------------------------------------------
     # intialize important things here
     pygame.init()
-    #my_scale = Scale()
+    my_scale = Scale()
     # full screen
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_length_vertical
     x_offset = 0  # x offset of the sector of the screen
-    y_offset = 70  # y offset of the sector of the screen
+    y_offset = 100  # y offset of the sector of the screen
     top_header_width = screen.get_width()
     top_header_height = 200
     bot_header_width = screen.get_width()
@@ -71,22 +71,24 @@ if __name__ == '__main__':
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
         total_line = 6
-        top_header_text.append("Food Scraps")
-        bot_header_text.append("Landfill")
+        top_header_text.append("                            Food Scraps")
+        bot_header_text.append("                                Landfill")
+        text_processing_function = compost_text_processing
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
         text_box_im.convert()
         total_line = 6
-        top_header_text.append("Soiled Containers")
-        bot_header_text.append("Compost")
+        top_header_text.append("                            Soiled Containers")
+        bot_header_text.append("                                Compost")
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
         total_line = 4
-        top_header_text.append("Non-soiled Containers")
-        bot_header_text.append("recycle")
+        top_header_text.append(
+            "                            Non-soiled Containers")
+        bot_header_text.append("                                Recycle")
 
     for i in range(0, 9):
         im.append(pygame.image.load(os.path.join(
@@ -133,13 +135,12 @@ if __name__ == '__main__':
         screen, text_box_im, 1, 130, 150, black, "")
 
     # Initializing Top and Bottom header
-    screen.fill(white)
-    top_header = text_surface(screen, screen, 1, 0, 0, white, "", black)
-    top_header.draw_text_surface(top_header_text, True)
+
+    top_header = text_surface(
+        screen, screen, 1, 0, 0, white, "", black)
 
     bot_header = text_surface(
         screen, screen, 1, 0, screen.get_height() - 1 * size_per_line, white, "", black)
-    bot_header.draw_text_surface(bot_header_text, True)
 
     time.sleep(5)
 
@@ -154,32 +155,26 @@ if __name__ == '__main__':
     # as loaded images and display them with a defined time interval
     # the images are displayed gradually in order to create transition effects
     # as well as alleviate the load on the pi CPU
+    bot_header.draw_text_surface(bot_header_text, True)
+    top_header.draw_text_surface(top_header_text, True)
     while (not(exited)):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
 
-        # if testing and l % 3 == 0:
-        #     screen.fill(white)
-        #     text_box_class.draw_text_surface(compost_text_processing(5))
-        #     time.sleep(5)
-        #     screen.fill(white)
-
-        # if my_scale.ser.in_waiting > 0:
-        #     reading = my_scale.ser.read(6)
-        #     # unit are in ounces
-        #     weight = my_scale.check(reading)
-        #     if (weight):
-        #         energy_saved = weight * energy_conversion  # unit is ounces of carbon emission
-        #         screen.fill((white))
-        #         screen.blit(font.render(compost, True, (black)), text_rect)
-        #         screen.blit(font.render(
-        #             str(energy_saved), True, (black)), weight_rect)
-        #         pygame.display.flip()
-        #         time.sleep(3)
-        #         screen.fill((white))
-        #         pygame.display.flip()
+        if my_scale.ser.in_waiting > 0:
+            reading = my_scale.ser.read(6)
+            # unit are in ounces
+            weight = my_scale.check(reading)
+            if (weight):
+                # unit is ounces of carbon emission
+                screen.fill(white)
+                text_box_class.draw_text_surface(
+                    compost_text_processing(weight))
+                time.sleep(5)
+                screen.fill(white)
+                pygame.display.flip()
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
@@ -200,4 +195,4 @@ if __name__ == '__main__':
             l = l + 1 if l < 8 else 0
         # pygame.event.pump()
     pygame.quit()
-    # my_scale.ser.close()
+    my_scale.ser.close()
