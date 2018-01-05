@@ -166,9 +166,9 @@ if __name__ == '__main__':
 
     draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
                     1, mid_rect_offset_im[l], square_length, FPS, im)
-    draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
-                    2, bot_rect_offset_im[l], square_length, FPS, im)
-    pygame.display.flip()
+    # draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
+    #                 2, bot_rect_offset_im[l], square_length, FPS, im)
+    # pygame.display.flip()
 
     while (not(exited)):
         for event in pygame.event.get():
@@ -198,8 +198,8 @@ if __name__ == '__main__':
                                 0, top_rect_offset_im[l], square_length, FPS, im)
                 draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
                                 1, mid_rect_offset_im[l], square_length, FPS, im)
-                draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
-                                2, bot_rect_offset_im[l], square_length, FPS, im)
+                # draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
+                #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
                 l = 3  # set so that images don't repeat immediately
                 time.sleep(0.5)
