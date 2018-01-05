@@ -132,7 +132,7 @@ if __name__ == '__main__':
                     screen.get_width(), total_square_length)
 
     text_box_class = text_surface(
-        screen, text_box_im, 1, 130, 150, black, "")
+        screen, text_box_im, 5, 130, 150, black, "")
 
     # Initializing Top and Bottom header
 
