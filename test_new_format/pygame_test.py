@@ -199,6 +199,7 @@ if __name__ == '__main__':
                 draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
                                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
+                l = 3  # set so that images don't repeat immediately
                 time.sleep(0.5)
 
         if (time.time() - start) > screen_update_interval:
