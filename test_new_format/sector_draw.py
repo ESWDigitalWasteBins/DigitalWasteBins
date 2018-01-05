@@ -24,14 +24,9 @@ class text_surface:
         self._left_offset = left_offset
         self.line_list_rect_stored = []
         self._isheader = isheader
-        if not(self._isheader):
-            for counter in range(0, line_number):
-                (self.line_list_rect_stored).append(pygame.Rect(
-                    left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._height))
-        else:
-            for counter in range(0, line_number):
-                (self.line_list_rect_stored).append(pygame.Rect(
-                    left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._height))
+        for counter in range(0, line_number):
+            (self.line_list_rect_stored).append(pygame.Rect(
+                left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._height))
 
     def draw_text_surface(self, line_list: []) ->None:
         """draw text on a saved surface"""

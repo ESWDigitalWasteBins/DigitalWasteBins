@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     # Initializing Top and Bottom header
     char_size=15
-    compensation=(len(top_header_text[0]) - len(bot_header_text[0]))*char_size/2 #30 is the size of about 1 character
+    compensation=(len(top_header_text[0]) - len(bot_header_text[0]))*char_size/2 
 
     top_header = text_surface(
         screen, screen, 1, screen.get_width()/2, 0, white, "", black, True)
