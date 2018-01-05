@@ -80,9 +80,9 @@ if __name__ == '__main__':
         text_box_im.convert()
         total_line = 6
         top_header_text.append(
-            "                                    Soiled Containers")
+            "                                                               Soiled Containers")
         bot_header_text.append(
-            "                                        Compost")
+            "                                                                       Compost")
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
