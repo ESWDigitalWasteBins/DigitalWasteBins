@@ -20,6 +20,7 @@ class text_surface:
         self._color = color
         self._line_number = line_number
         self._top_offset = top_offset
+        self._left_offset = left_offset
         self.line_list_rect_stored = []
         for counter in range(0, line_number):
             (self.line_list_rect_stored).append(pygame.Rect(
@@ -31,7 +32,7 @@ class text_surface:
         if header_rect == None:
             self._screen.blit(self._surface, (0, 0))
         else:
-            self._screen.fill((self._bg_color), (0, self._top_offset,
+            self._screen.fill((self._bg_color), (0, self._left_offset,
                                                  self._surface_width, self._size_per_line * self._line_number))
         counter = 0
         tx_font = self._font

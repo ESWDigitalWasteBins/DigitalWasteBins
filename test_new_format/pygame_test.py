@@ -30,9 +30,9 @@ if __name__ == '__main__':
     x_offset = 100  # x offset of the sector of the screen
     y_offset = 70  # y offset of the sector of the screen
     top_header_width = screen.get_width()
-    top_header_height = 500
+    top_header_height = 200
     bot_header_width = screen.get_width()
-    bot_header_height = 500
+    bot_header_height = 200
 
     #----------------------------------------------------
     # auxillary variables
