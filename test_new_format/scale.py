@@ -30,8 +30,6 @@ Assuming that the units are in lbs
 import serial
 # import time
 import collections
-from stopwatch import Stopwatch
-
 
 Reading = collections.namedtuple(
     'Reading', ['mode', 'stable', 'overflow', 'weight', 'units'])
