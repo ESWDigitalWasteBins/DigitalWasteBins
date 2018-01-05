@@ -155,8 +155,17 @@ if __name__ == '__main__':
     # as loaded images and display them with a defined time interval
     # the images are displayed gradually in order to create transition effects
     # as well as alleviate the load on the pi CPU
+    
+    # display initial image first
     bot_header.draw_text_surface(bot_header_text, True)
     top_header.draw_text_surface(top_header_text, True)
+    
+    draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal, 0, top_rect_offset_im[l], square_length, FPS, im)
+
+    draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
+                    1, mid_rect_offset_im[l], square_length, FPS, im)
+    draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
+                    2, bot_rect_offset_im[l], square_length, FPS, im)
     while (not(exited)):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -172,8 +181,17 @@ if __name__ == '__main__':
                 screen.fill(white)
                 text_box_class.draw_text_surface(
                     compost_text_processing(weight))
+                pygame.display.flip()
                 time.sleep(5)
                 screen.fill(white)
+                bot_header.draw_text_surface(bot_header_text, True)
+                top_header.draw_text_surface(top_header_text, True)
+                draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal,
+                                0, top_rect_offset_im[l], square_length, FPS, im)
+                draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
+                                1, mid_rect_offset_im[l], square_length, FPS, im)
+                draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
+                                2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
 
         if (time.time() - start) > screen_update_interval:
