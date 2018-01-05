@@ -81,9 +81,9 @@ if __name__ == '__main__':
         text_box_im.convert()
         total_line = 6
         top_header_text.append(
-            "                                                               Soiled Containers")
+            "Soiled Containers")
         bot_header_text.append(
-            "                                                                 Compost")
+            "Compost")
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
@@ -138,12 +138,14 @@ if __name__ == '__main__':
         screen, text_box_im, total_line, 130, 150, black, "")
 
     # Initializing Top and Bottom header
+    char_size=15
+    compensation=(len(top_header_text[0]) - len(bot_header_text[0]))*char_size/2 #30 is the size of about 1 character
 
     top_header = text_surface(
-        screen, screen, 1, 0, 0, white, "", black)
+        screen, screen, 1, screen.get_width()/2, 0, white, "", black, True)
 
     bot_header = text_surface(
-        screen, screen, 1, 0, screen.get_height() - 1 * size_per_line, white, "", black)
+        screen, screen, 1, screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
 
     time.sleep(5)
 
