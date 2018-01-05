@@ -33,7 +33,7 @@ if __name__ == '__main__':
     total_square_length = square_length * list_length_vertical
     x_offset = 0  # x offset of the sector of the screen
     y_offset_top = 100  # y offset of the sector of the screen
-    y_offset_bot = 200
+    y_offset_bot = 150
     top_header_width = screen.get_width()
     top_header_height = 200
     bot_header_width = screen.get_width()
