@@ -51,7 +51,6 @@ class Scale:
     def check(self, raw: bytes) -> Reading:
 
         # Handle first byte
-        # self.ser.flush() #flush all inputs in buffer
         if len(raw) != 6 or raw[0] != 0xff:
             self.ser.close()
             self.ser.open()
@@ -61,6 +60,8 @@ class Scale:
             # raise ValueError('Not a Global 240878 message')
         # preliminary check if the number are equal to each other to
         # avoid doing bitshifting and a lot of post processing
+
+        self.ser.flush()  # flush all inputs in buffer to avoid cluttering
         if not(raw[2] == self.raw[2] and raw[3] == self.raw[3] and raw[1] == self.raw[1] and raw[4] == self.raw[4]):
             # Handle second byte
             self.raw = raw

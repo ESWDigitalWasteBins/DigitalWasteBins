@@ -161,11 +161,11 @@ if __name__ == '__main__':
     bot_header.draw_text_surface(bot_header_text, True)
     top_header.draw_text_surface(top_header_text, True)
 
-    draw_one_sector(screen, top_rect, list_length_vertical,
-                    list_length_horizontal, 0, top_rect_offset_im[l], square_length, FPS, im)
+    # draw_one_sector(screen, top_rect, list_length_vertical,
+    #                 list_length_horizontal, 0, top_rect_offset_im[l], square_length, FPS, im)
 
-    draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
-                    1, mid_rect_offset_im[l], square_length, FPS, im)
+    # draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
+    #                 1, mid_rect_offset_im[l], square_length, FPS, im)
     # draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
     #                 2, bot_rect_offset_im[l], square_length, FPS, im)
     # pygame.display.flip()
@@ -190,14 +190,10 @@ if __name__ == '__main__':
                 text_box_class.draw_text_surface(
                     compost_text_processing(weight))
                 pygame.display.flip()
-                time.sleep(5)
+                time.sleep(3)
                 screen.fill(white)
                 bot_header.draw_text_surface(bot_header_text, True)
                 top_header.draw_text_surface(top_header_text, True)
-                draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal,
-                                0, top_rect_offset_im[l], square_length, FPS, im)
-                draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
-                                1, mid_rect_offset_im[l], square_length, FPS, im)
                 # draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
                 #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
