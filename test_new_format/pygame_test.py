@@ -79,8 +79,10 @@ if __name__ == '__main__':
             'test_new_format', 'gt' + '.png')))
         text_box_im.convert()
         total_line = 6
-        top_header_text.append("                            Soiled Containers")
-        bot_header_text.append("                                Compost")
+        top_header_text.append(
+            "                                    Soiled Containers")
+        bot_header_text.append(
+            "                                        Compost")
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
@@ -209,14 +211,14 @@ if __name__ == '__main__':
                 draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal,
                                 l, top_rect_offset_im[l], square_length, FPS, im)
             elif current_pos == 1:
-                current_pos += 1
+                current_pos = 0
                 draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
                                 l, mid_rect_offset_im[l], square_length, FPS, im)
 
-            elif current_pos == 2:
-                current_pos = 0
-                draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
-                                l, bot_rect_offset_im[l], square_length, FPS, im)
+            # elif current_pos == 2:
+            #     current_pos = 0
+            #     draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
+            #                     l, bot_rect_offset_im[l], square_length, FPS, im)
 
             l = l + 1 if l < 8 else 0
         # pygame.event.pump()
