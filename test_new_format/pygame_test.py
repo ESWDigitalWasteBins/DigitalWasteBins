@@ -17,6 +17,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
     font = pygame.font.SysFont('Calibri', 70, True)
+    size_per_line = font.get_linesize()
     start = time.time()  # start of timer for when to draw
 
     #----------------------------------------------------
@@ -124,13 +125,13 @@ if __name__ == '__main__':
         im[i].convert()
 
     text_box_class = text_surface(
-        screen, text_box_im, total_line, 130, 150, black, "")
+        screen, text_box_im, 1, 130, 150, black, "")
 
     top_header = text_surface(screen, screen, 2, 0, 0, white, "", black)
     top_header.draw_text_surface(top_header_text, top_header_rect)
 
     bot_header = text_surface(
-        screen, screen, 2, 0, screen.get_height() - bot_header_height, white, "", black)
+        screen, screen, 1, 0, screen.get_height() - 1 * size_per_line, white, "", black)
     bot_header.draw_text_surface(bot_header_text, bot_header_rect)
     time.sleep(5)
     # begin with a white color
