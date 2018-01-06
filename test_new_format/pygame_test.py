@@ -17,6 +17,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
     font = pygame.font.SysFont('Calibri', 70, True)
+    dist_btw_line=font.get_linesize()
     size_per_line = font.get_linesize()
     start = time.time()  # start of timer for when to draw
 
@@ -131,8 +132,6 @@ if __name__ == '__main__':
                     total_square_length)
     mid_rect = Rect(0, y_offset_bot + total_square_length, screen.get_width(),
                     total_square_length)
-    # bot_rect = Rect(0, y_offset + total_square_length * 2,
-    #                 screen.get_width(), total_square_length)
 
     text_box_class = text_surface(
         screen, text_box_im, total_line, 300, 150, black, "")
@@ -145,8 +144,8 @@ if __name__ == '__main__':
     top_header = text_surface(
         screen, screen, 1, screen.get_width()/2 + header_offset, 0, white, "", black, True)
 
-    bot_header = text_surface(
-        screen, screen, 1, header_offset+ screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
+    # bot_header = text_surface(
+    #     screen, screen, 1, header_offset+ screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
 
     # begin with a white color
     screen.fill(white)
@@ -160,17 +159,8 @@ if __name__ == '__main__':
     # as well as alleviate the load on the pi CPU
 
     # display initial image first
-    bot_header.draw_text_surface(bot_header_text)
+    # bot_header.draw_text_surface(bot_header_text)
     top_header.draw_text_surface(top_header_text)
-
-    # draw_one_sector(screen, top_rect, list_length_vertical,
-    #                 list_length_horizontal, 0, top_rect_offset_im[l], square_length, FPS, im)
-
-    # draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
-    #                 1, mid_rect_offset_im[l], square_length, FPS, im)
-    # draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
-    #                 2, bot_rect_offset_im[l], square_length, FPS, im)
-    # pygame.display.flip()
 
     while (not(exited)):
         for event in pygame.event.get():
@@ -192,12 +182,10 @@ if __name__ == '__main__':
                 text_box_class.draw_text_surface(
                     compost_text_processing(weight))
                 pygame.display.flip()
-                time.sleep(20)
+                time.sleep(15)
                 screen.fill(white)
-                bot_header.draw_text_surface(bot_header_text)
+                # bot_header.draw_text_surface(bot_header_text)
                 top_header.draw_text_surface(top_header_text)
-                # draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
-                #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
                 l = 3  # set so that images don't repeat immediately
 
@@ -212,12 +200,6 @@ if __name__ == '__main__':
                 draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
                                 l, mid_rect_offset_im[l], square_length, FPS, im)
 
-            # elif current_pos == 2:
-            #     current_pos = 0
-            #     draw_one_sector(screen, bot_rect, list_length_vertical, list_length_horizontal,
-            #                     l, bot_rect_offset_im[l], square_length, FPS, im)
-
             l = l + 1 if l < 8 else 0
-        # pygame.event.pump()
     pygame.quit()
     my_scale.ser.close()
