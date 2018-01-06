@@ -92,6 +92,7 @@ def recycle_text_processing(ounces_recycled: int = 0):
                           str(round(ounces_recycled *
                                     energy_conversion, 3)) + " ounces")
     processed_text.append(" of CO2e emissions!")
+    return processed_text
 
 
 def landfill_text_processing(ounces_recycled: int = 0):
@@ -105,3 +106,4 @@ def landfill_text_processing(ounces_recycled: int = 0):
     processed_text.append(
         "Keeping landfill items out of compost and recycling is important.")
     processed_text.append("Thank you!")
+    return processed_text
