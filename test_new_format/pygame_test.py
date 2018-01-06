@@ -63,11 +63,11 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'l'  # l for landfill, r for recycle and c for compost
+    m = 'c'  # l for landfill, r for recycle and c for compost
     # set mode of running
     top_header_text = []
     bot_header_text = []
-    if m == 'c':
+    if m == 'l':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
