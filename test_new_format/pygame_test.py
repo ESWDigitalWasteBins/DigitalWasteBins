@@ -148,8 +148,6 @@ if __name__ == '__main__':
     bot_header = text_surface(
         screen, screen, 1, header_offset+ screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
 
-    time.sleep(5)
-
     # begin with a white color
     screen.fill(white)
     pygame.event.pump()  # used for keeping the OS happy
@@ -202,7 +200,7 @@ if __name__ == '__main__':
                 #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
                 l = 3  # set so that images don't repeat immediately
-                time.sleep(0.5)
+                time.sleep(5)
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
