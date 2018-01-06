@@ -71,7 +71,7 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
-        total_line = 6
+        total_line = 5
         top_header_text.append("                            Food Scraps")
         bot_header_text.append("                                Landfill")
         text_processing_function = compost_text_processing
