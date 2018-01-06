@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'c'  # l for landfill, r for recycle and c for compost
+    m = 'l'  # l for landfill, r for recycle and c for compost
     # set mode of running
     top_header_text = []
     bot_header_text = []
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     #                 screen.get_width(), total_square_length)
 
     text_box_class = text_surface(
-        screen, text_box_im, total_line, 180, 150, black, "")
+        screen, text_box_im, total_line, 300, 150, black, "")
 
     # Initializing Top and Bottom header
     char_size=15
@@ -190,7 +190,7 @@ if __name__ == '__main__':
                 # unit is ounces of carbon emission
                 screen.fill(white)
                 text_box_class.draw_text_surface(
-                    compost_text_processing(weight))
+                    landfill_text_processing(weight))
                 pygame.display.flip()
                 time.sleep(3)
                 screen.fill(white)
@@ -200,7 +200,7 @@ if __name__ == '__main__':
                 #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
                 l = 3  # set so that images don't repeat immediately
-                time.sleep(20)
+                time.sleep(30)
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
