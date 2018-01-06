@@ -9,7 +9,7 @@ black = (0, 0, 0)
 
 
 class text_surface:
-    def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0,  tx_color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=None, isheader=False):
+    def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0, surface_left_offset: int=0, surface_top_offset: int=0, tx_color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=None, isheader=False):
 
         self._bg_color = bg_color
         self._font = pygame.font.SysFont('Calibri', 70, True)
@@ -24,6 +24,8 @@ class text_surface:
         self._left_offset = left_offset
         self.line_list_rect_stored = []
         self._isheader = isheader
+        self._surface_top_offset = surface_top_offset
+        self._surface_left_offset = surface_left_offset
         for counter in range(0, line_number):
             (self.line_list_rect_stored).append(pygame.Rect(
                 left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._height))
@@ -33,7 +35,8 @@ class text_surface:
 
         if not(self._isheader):
             # load the image of the textbox
-            self._screen.blit(self._surface, (200, 200))
+            self._screen.blit(
+                self._surface, (self._surface_left_offset, self._surface_top_offset))
         else:
             self._screen.fill((self._bg_color), (0, self._top_offset,
                                                  self._surface_width, self._size_per_line * self._line_number))

@@ -76,6 +76,8 @@ if __name__ == '__main__':
         top_header_text.append("                            Food Scraps")
         bot_header_text.append("                                Landfill")
         text_processing_function = compost_text_processing
+        surface_left_offset=200
+        surface_top_offset=200
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
@@ -85,6 +87,8 @@ if __name__ == '__main__':
             "Soiled Containers")
         bot_header_text.append(
             "Compost")
+        surface_left_offset=200
+        surface_top_offset=200
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
@@ -93,6 +97,8 @@ if __name__ == '__main__':
         top_header_text.append(
             "                            Non-soiled Containers")
         bot_header_text.append("                                Recycle")
+        surface_left_offset=200
+        surface_top_offset=200
 
     for i in range(0, 9):
         im.append(pygame.image.load(os.path.join(
@@ -135,7 +141,7 @@ if __name__ == '__main__':
 
     # textbox image
     text_box_class = text_surface(
-        screen, text_box_im, total_line, 300, 150, black, "")
+        screen, text_box_im, total_line, surface_left_offset+ 20, surface_top_offset +30, surface_left_offset, surface_top_offset, black, "")
 
     # Initializing Top and Bottom header
     char_size=15
@@ -143,7 +149,7 @@ if __name__ == '__main__':
     header_offset= -200 #offset the text off the center for symmetry
 
     top_header = text_surface(
-        screen, screen, 1, screen.get_width()/2 + header_offset, 0, white, "", black, True)
+        screen, screen, 1, screen.get_width()/2 + header_offset, 0, 0,0,white, "", black, True)
 
     # bot_header = text_surface(
     #     screen, screen, 1, header_offset+ screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
