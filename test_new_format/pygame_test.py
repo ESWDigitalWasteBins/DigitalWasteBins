@@ -67,7 +67,7 @@ if __name__ == '__main__':
     # set mode of running
     top_header_text = []
     bot_header_text = []
-    if m == 'l':
+    if m == 'c':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
@@ -79,7 +79,7 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
         text_box_im.convert()
-        total_line = 6
+        total_line = 5
         top_header_text.append(
             "Soiled Containers")
         bot_header_text.append(
@@ -190,7 +190,7 @@ if __name__ == '__main__':
                 # unit is ounces of carbon emission
                 screen.fill(white)
                 text_box_class.draw_text_surface(
-                    landfill_text_processing(weight))
+                    compost_text_processing(weight))
                 pygame.display.flip()
                 time.sleep(3)
                 screen.fill(white)
