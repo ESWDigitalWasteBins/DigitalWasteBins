@@ -200,7 +200,7 @@ if __name__ == '__main__':
                 #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
                 l = 3  # set so that images don't repeat immediately
-                time.sleep(10)
+                time.sleep(20)
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
