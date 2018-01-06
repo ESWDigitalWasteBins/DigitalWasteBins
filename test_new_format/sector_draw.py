@@ -75,7 +75,7 @@ def compost_text_processing(ounces_recycled: int=0):
                           str(round(ounces_recycled, 3)) + " ounces")
     processed_text.append("You just helped avoid " + str(round(ounces_recycled *
                                                                energy_conversion, 3)) + " ounces")
-    processed_text.append(" of carbone-equivalent emissions!")
+    processed_text.append(" of CO2e")
     processed_text.append(
         "Food waste is the single largest part of waste.")
     processed_text.append("Keeping it out of landfills is important!")

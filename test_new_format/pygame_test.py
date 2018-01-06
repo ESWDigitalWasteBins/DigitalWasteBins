@@ -135,7 +135,7 @@ if __name__ == '__main__':
     #                 screen.get_width(), total_square_length)
 
     text_box_class = text_surface(
-        screen, text_box_im, total_line, 130, 150, black, "")
+        screen, text_box_im, total_line, 180, 150, black, "")
 
     # Initializing Top and Bottom header
     char_size=15
@@ -200,7 +200,7 @@ if __name__ == '__main__':
                 #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
                 l = 3  # set so that images don't repeat immediately
-                time.sleep(5)
+                time.sleep(10)
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
