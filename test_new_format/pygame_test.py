@@ -139,13 +139,14 @@ if __name__ == '__main__':
 
     # Initializing Top and Bottom header
     char_size=15
-    compensation=(len(top_header_text[0]) - len(bot_header_text[0]))*char_size/2 
+    compensation=(len(top_header_text[0]) - len(bot_header_text[0]))*char_size/2 #offset the texts relative to each other for symmetry
+    header_offset= 40 #offset the text off the center for symmetry
 
     top_header = text_surface(
-        screen, screen, 1, screen.get_width()/2, 0, white, "", black, True)
+        screen, screen, 1, screen.get_width()/2 + header_offset, 0, white, "", black, True)
 
     bot_header = text_surface(
-        screen, screen, 1, screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
+        screen, screen, 1, header_offset+ screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
 
     time.sleep(5)
 
