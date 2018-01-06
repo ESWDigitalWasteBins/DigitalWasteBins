@@ -192,7 +192,7 @@ if __name__ == '__main__':
                 text_box_class.draw_text_surface(
                     compost_text_processing(weight))
                 pygame.display.flip()
-                time.sleep(30)
+                time.sleep(20)
                 screen.fill(white)
                 bot_header.draw_text_surface(bot_header_text)
                 top_header.draw_text_surface(top_header_text)
@@ -200,7 +200,6 @@ if __name__ == '__main__':
                 #                 2, bot_rect_offset_im[l], square_length, FPS, im)
                 pygame.display.flip()
                 l = 3  # set so that images don't repeat immediately
-                time.sleep(3)
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
