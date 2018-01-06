@@ -34,7 +34,7 @@ if __name__ == '__main__':
     total_square_length = square_length * list_length_vertical
     x_offset = 0  # x offset of the sector of the screen
     y_offset_top = 100  # y offset of the sector of the screen
-    y_offset_bot = 150
+    y_offset_bot = 200
     top_header_width = screen.get_width()
     top_header_height = 200
     bot_header_width = screen.get_width()
@@ -133,6 +133,7 @@ if __name__ == '__main__':
     mid_rect = Rect(0, y_offset_bot + total_square_length, screen.get_width(),
                     total_square_length)
 
+    # textbox image
     text_box_class = text_surface(
         screen, text_box_im, total_line, 300, 150, black, "")
 

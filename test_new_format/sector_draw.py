@@ -33,7 +33,7 @@ class text_surface:
 
         if not(self._isheader):
             # load the image of the textbox
-            self._screen.blit(self._surface, (0, 0))
+            self._screen.blit(self._surface, (200, 200))
         else:
             self._screen.fill((self._bg_color), (0, self._top_offset,
                                                  self._surface_width, self._size_per_line * self._line_number))
