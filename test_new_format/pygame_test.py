@@ -17,7 +17,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
     font = pygame.font.Font(
-        './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 70)
+        './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 50)
     dist_btw_line = font.get_linesize()
     size_per_line = font.get_linesize()
     start = time.time()  # start of timer for when to draw
@@ -67,6 +67,8 @@ if __name__ == '__main__':
     # used for selecting which mode to be in
     m = 'c'  # l for landfill, r for recycle and c for compost
     # set mode of running
+    surface_left_offset = 0
+    surface_top_offset = 0
     top_header_text = []
     bot_header_text = []
     if m == 'l':
@@ -77,8 +79,8 @@ if __name__ == '__main__':
         top_header_text.append("                            Food Scraps")
         bot_header_text.append("                                Landfill")
         text_processing_function = compost_text_processing
-        surface_left_offset = 20
-        surface_top_offset = 20
+        # surface_left_offset = 20
+        # surface_top_offset = 20
         total_image = 9
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
@@ -89,8 +91,8 @@ if __name__ == '__main__':
             "Soiled Containers")
         bot_header_text.append(
             "Compost")
-        surface_left_offset = 20
-        surface_top_offset = 20
+        # surface_left_offset = 20
+        # surface_top_offset = 20
         total_image = 9
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
@@ -100,8 +102,8 @@ if __name__ == '__main__':
         top_header_text.append(
             "                            Non-soiled Containers")
         bot_header_text.append("                                Recycle")
-        surface_left_offset = 20
-        surface_top_offset = 20
+        # surface_left_offset = 20
+        # surface_top_offset = 20
 
     for i in range(0, total_line):
         im.append(pygame.image.load(os.path.join(
@@ -194,7 +196,7 @@ if __name__ == '__main__':
             text_box_class.draw_text_surface(
                 compost_text_processing(weight))
             pygame.display.flip()
-            time.sleep(15)
+            time.sleep(10)
             screen.fill(white)
         #         # bot_header.draw_text_surface(bot_header_text)
         #         top_header.draw_text_surface(top_header_text)

@@ -13,7 +13,7 @@ class text_surface:
 
         self._bg_color = bg_color
         self._font = pygame.font.Font(
-            './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 70)
+            './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 50)
         self._height = self._font.get_height()
         self._size_per_line = (self._font).get_linesize()
         self._surface_width = surface_image.get_width()
