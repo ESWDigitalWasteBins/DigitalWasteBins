@@ -5,14 +5,14 @@ import random
 import pygame
 from pygame.locals import *
 from sector_draw import *
-from scale import Scale
+# from scale import Scale
 from collections import namedtuple
 
 if __name__ == '__main__':
     #----------------------------------------------------
     # intialize important things here
     pygame.init()
-    my_scale = Scale()
+    # my_scale = Scale()
     # full screen
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
@@ -182,22 +182,22 @@ if __name__ == '__main__':
         #     text_box_class.draw_text_surface(compost_text_processing(5))
         #     pygame.display.flip()
 
-        if my_scale.ser.in_waiting > 0:
-            reading = my_scale.ser.read(6)
-            # unit are in ounces
-            weight = my_scale.check(reading)
-            if (weight):
-                # unit is ounces of carbon emission
-                screen.fill(white)
-                text_box_class.draw_text_surface(
-                    compost_text_processing(weight))
-                pygame.display.flip()
-                time.sleep(15)
-                screen.fill(white)
-                # bot_header.draw_text_surface(bot_header_text)
-                top_header.draw_text_surface(top_header_text)
-                pygame.display.flip()
-                l = 3  # set so that images don't repeat immediately
+        # if my_scale.ser.in_waiting > 0:
+        #     reading = my_scale.ser.read(6)
+        #     # unit are in ounces
+        #     weight = my_scale.check(reading)
+        #     if (weight):
+        #         # unit is ounces of carbon emission
+        #         screen.fill(white)
+        #         text_box_class.draw_text_surface(
+        #             compost_text_processing(weight))
+        #         pygame.display.flip()
+        #         time.sleep(15)
+        #         screen.fill(white)
+        #         # bot_header.draw_text_surface(bot_header_text)
+        #         top_header.draw_text_surface(top_header_text)
+        #         pygame.display.flip()
+        #         l = 3  # set so that images don't repeat immediately
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
