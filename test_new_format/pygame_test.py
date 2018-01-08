@@ -79,6 +79,7 @@ if __name__ == '__main__':
         text_processing_function = compost_text_processing
         surface_left_offset = 200
         surface_top_offset = 200
+        total_image = 9
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
@@ -90,18 +91,19 @@ if __name__ == '__main__':
             "Compost")
         surface_left_offset = 200
         surface_top_offset = 200
+        total_image = 9
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
-        total_line = 4
+        total_line = 5
         top_header_text.append(
             "                            Non-soiled Containers")
         bot_header_text.append("                                Recycle")
         surface_left_offset = 200
         surface_top_offset = 200
 
-    for i in range(0, 9):
+    for i in range(0, total_line):
         im.append(pygame.image.load(os.path.join(
             'test_new_format', m + str(i) + '.png')))
         im[i].convert()
