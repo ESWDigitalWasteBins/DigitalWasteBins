@@ -176,7 +176,7 @@ if __name__ == '__main__':
     # display initial image first
     # bot_header.draw_text_surface(bot_header_text)
     top_header.draw_text_surface(top_header_text)
-    weight = 0  # only for testing
+    weight = 3  # only for testing
     while (not(exited)):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
