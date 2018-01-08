@@ -105,7 +105,7 @@ if __name__ == '__main__':
         # surface_left_offset = 20
         # surface_top_offset = 20
 
-    for i in range(0, total_line):
+    for i in range(0, total_image):
         im.append(pygame.image.load(os.path.join(
             'test_new_format', m + str(i) + '.png')))
         im[i].convert()
