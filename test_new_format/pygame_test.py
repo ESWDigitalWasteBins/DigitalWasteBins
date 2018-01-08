@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'r'  # l for landfill, r for recycle and c for compost
+    m = 'l'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 0
     surface_top_offset = 0
@@ -97,7 +97,7 @@ if __name__ == '__main__':
         # surface_top_offset = 20
         total_image = 9
     elif m == 'r':
-        header_offset = -400
+        header_offset = -500
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
