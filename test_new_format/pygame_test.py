@@ -77,8 +77,8 @@ if __name__ == '__main__':
         top_header_text.append("                            Food Scraps")
         bot_header_text.append("                                Landfill")
         text_processing_function = compost_text_processing
-        surface_left_offset = 200
-        surface_top_offset = 200
+        surface_left_offset = 20
+        surface_top_offset = 20
         total_image = 9
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
@@ -89,8 +89,8 @@ if __name__ == '__main__':
             "Soiled Containers")
         bot_header_text.append(
             "Compost")
-        surface_left_offset = 200
-        surface_top_offset = 200
+        surface_left_offset = 20
+        surface_top_offset = 20
         total_image = 9
     elif m == 'r':
         text_box_im = pygame.image.load((os.path.join(
@@ -100,8 +100,8 @@ if __name__ == '__main__':
         top_header_text.append(
             "                            Non-soiled Containers")
         bot_header_text.append("                                Recycle")
-        surface_left_offset = 200
-        surface_top_offset = 200
+        surface_left_offset = 20
+        surface_top_offset = 20
 
     for i in range(0, total_line):
         im.append(pygame.image.load(os.path.join(
