@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'l'  # l for landfill, r for recycle and c for compost
+    m = 'r'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 0
     surface_top_offset = 0
