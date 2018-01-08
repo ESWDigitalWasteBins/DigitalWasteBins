@@ -34,7 +34,7 @@ if __name__ == '__main__':
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_length = square_length * list_length_vertical
     x_offset = 0  # x offset of the sector of the screen
-    y_offset_top = 100  # y offset of the sector of the screen
+    y_offset_top = size_per_line  # y offset of the sector of the screen
     y_offset_bot = 200
     top_header_width = screen.get_width()
     top_header_height = 200
@@ -157,7 +157,7 @@ if __name__ == '__main__':
         screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", black, True)
 
     # bot_header = text_surface(
-    #     screen, screen, 1, header_offset+ screen.get_width()/2+compensation, screen.get_height() - 1 * size_per_line, white, "", black, True)
+    #     screen, screen, 1, header_offset + screen.get_width() / 2 + compensation, 400, white, "", black, True)
 
     # begin with a white color
     screen.fill(white)
@@ -212,6 +212,6 @@ if __name__ == '__main__':
                 draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
                                 l, mid_rect_offset_im[l], square_length, FPS, im)
 
-            l = l + 1 if l < 8 else 0
+            l = l + 1 if l < total_image - 1 else 0
     pygame.quit()
     my_scale.ser.close()

@@ -55,7 +55,7 @@ class text_surface:
 def draw_one_sector(screen, sec_rectange, list_length_vertical, list_length_horizontal, l, list_rect, square_length, FPS, im, headroom: int=0)->None:
     white = (255, 255, 255)
     black = (0, 0, 0)
-    clock1 = pygame.time.Clock()
+    # clock1 = pygame.time.Clock()
     screen.fill((white), sec_rectange)
 
     for i in range(0, list_length_horizontal):
