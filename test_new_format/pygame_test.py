@@ -67,7 +67,7 @@ if __name__ == '__main__':
     # used for selecting which mode to be in
     m = 'c'  # l for landfill, r for recycle and c for compost
     # set mode of running
-    surface_left_offset = 0
+    surface_left_offset = 70
     surface_top_offset = 0
     top_header_text = []
     bot_header_text = []
@@ -143,14 +143,14 @@ if __name__ == '__main__':
         # list_botrect = []
 
     # rectange used for deleting before redraw of sections
-    top_rect = Rect(0, y_offset_top, screen.get_width(),
+    top_rect = Rect(0, y_offset_top + 30, screen.get_width(),
                     total_square_length)
     mid_rect = Rect(0, y_offset_bot + total_square_length, screen.get_width(),
                     total_square_length)
 
     # textbox image
     text_box_class = text_surface(
-        screen, text_box_im, total_line, surface_left_offset + 460, surface_top_offset + 70, surface_left_offset, surface_top_offset, black, "")
+        screen, text_box_im, total_line, surface_left_offset + 500, surface_top_offset + 120, surface_left_offset, surface_top_offset, black, "")
 
     # Initializing Top and Bottom header
     char_size = 15
