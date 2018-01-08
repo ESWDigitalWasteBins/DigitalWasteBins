@@ -56,10 +56,7 @@ echo "dtoverlay=pi3-disable-bt" | sudo tee --append /boot/config.txt
 
 #Create symlink for the scale, note that the ATTRS{idProduct} needs to be 
 #changed for different scales
-lsusb
-echo "Enter the product ID(a 4 digits number belonging to FTDI device)"
-read PROD_ID
-echo "ACTION==\"add\",SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"${PROD_ID}\", SYMLINK+=\"SCALE\"" >> /etc/udev/rules.d/99-com.rules
+echo "ACTION==\"add\",SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6001\", SYMLINK+=\"SCALE\"" >> /etc/udev/rules.d/99-com.rules
 
 echo "Setup done, the system will now reboot"
 
