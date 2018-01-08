@@ -99,6 +99,7 @@ if __name__ == '__main__':
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
         total_line = 5
+        total_image = 5
         top_header_text.append(
             "                            Non-soiled Containers")
         bot_header_text.append("                                Recycle")
