@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'r'  # l for landfill, r for recycle and c for compost
+    m = 'l'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 0
     surface_top_offset = 0
@@ -79,6 +79,7 @@ if __name__ == '__main__':
         top_header_text.append("                            Food Scraps")
         bot_header_text.append("                                Landfill")
         text_processing_function = compost_text_processing
+        header_offset = -400
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
@@ -91,10 +92,12 @@ if __name__ == '__main__':
             "Soiled Containers")
         bot_header_text.append(
             "Compost")
+        header_offset = -200
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
     elif m == 'r':
+        header_offset = -400
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
@@ -154,7 +157,7 @@ if __name__ == '__main__':
     # offset the texts relative to each other for symmetry
     compensation = (len(top_header_text[0]) -
                     len(bot_header_text[0])) * char_size / 4
-    header_offset = -200  # offset the text off the center for symmetry
+    # offset the text off the center for symmetry
 
     top_header = text_surface(
         screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", black, True)
