@@ -84,7 +84,7 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
         text_box_im.convert()
-        total_line = 5
+        total_line = 6
         top_header_text.append(
             "Soiled Containers")
         bot_header_text.append(
