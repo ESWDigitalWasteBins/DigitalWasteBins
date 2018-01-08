@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
     # textbox image
     text_box_class = text_surface(
-        screen, text_box_im, total_line, surface_left_offset + 20, surface_top_offset + 30, surface_left_offset, surface_top_offset, black, "")
+        screen, text_box_im, total_line, surface_left_offset + 60, surface_top_offset + 60, surface_left_offset, surface_top_offset, black, "")
 
     # Initializing Top and Bottom header
     char_size = 15
