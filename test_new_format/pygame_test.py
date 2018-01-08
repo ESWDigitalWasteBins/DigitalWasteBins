@@ -173,7 +173,7 @@ if __name__ == '__main__':
     # display initial image first
     # bot_header.draw_text_surface(bot_header_text)
     top_header.draw_text_surface(top_header_text)
-
+    weight = 5  # only for testing
     while (not(exited)):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -188,14 +188,14 @@ if __name__ == '__main__':
         #     reading = my_scale.ser.read(6)
         #     # unit are in ounces
         #     weight = my_scale.check(reading)
-        #     if (weight):
-        #         # unit is ounces of carbon emission
-        #         screen.fill(white)
-        #         text_box_class.draw_text_surface(
-        #             compost_text_processing(weight))
-        #         pygame.display.flip()
-        #         time.sleep(15)
-        #         screen.fill(white)
+        if (weight):
+            # unit is ounces of carbon emission
+            screen.fill(white)
+            text_box_class.draw_text_surface(
+                compost_text_processing(weight))
+            pygame.display.flip()
+            time.sleep(15)
+            screen.fill(white)
         #         # bot_header.draw_text_surface(bot_header_text)
         #         top_header.draw_text_surface(top_header_text)
         #         pygame.display.flip()
