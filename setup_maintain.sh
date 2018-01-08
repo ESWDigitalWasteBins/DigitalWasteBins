@@ -2,55 +2,66 @@
 #script file used for setting up rpi for digital wastebin
 #as well as run daily maintainance 
 
-
-# https://www.raspberrypi.org/forums/viewtopic.php?t=158976 prevent screen from going out
 #https://elinux.org/RPi_Debian_Auto_Login auto login
-# https://unix.stackexchange.com/questions/129143/what-is-the-purpose-of-bashrc-and-how-does-it-work .bashrc
-# https://raspberrypi.stackexchange.com/questions/43720/disable-wifi-wlan0-on-pi-3 turn off wifi at boot 
 
-#https://www.raspberrypi.org/forums/viewtopic.php?t=185867 turn off wifi atboot
+MAIN_PY_FILE_DIR="test_new_format" 
+MAIN_PY_FILE="pygame_test.py"
 
-#https://developers.google.com/time/guides google ntp server to time syncing
-MAIN_PY_FILE_DIR="test_new_format/" 
-MAIN_PY_FILE="pygame_test"
 #list of necessary software
 SOFTWARE=" python3 python3-pygame python-serial ufw ntp "
 
-if [ -e /home/dwb_installed ]
+#time for the computer to sleep
+REBOOT_TIME="24:00" 
+
+#quit if there is any error
+set -e 
+
+if [ -e /home/${USER}/dwb_installed ]
 then
-#if [-e /home/wifi_off ]
-#dtoverlay=pi3-disable-wifi
-#dtoverlay=pi3-disable-bt
-#/boot/config.txt
-ifconfig wlan0 up
+sudo ifconfig wlan0 up
 sudo service ntp restart
 sudo ufw enable
 sudo apt-get update
 sudo apt-get dist-upgrade -y 
 sudo timedatectl set-timezone US/Pacific
-ifconfig wlan0 down
+sudo ifconfig wlan0 down
+shutdown -r ${REBOOT_TIME}
+cd /home/${USER}/DigitalWasteBins
+python3 ${MAIN_PY_FILE_DIR}/${MAIN_PY_FILE}
 
-cd DigitalWasteBins
-python3 ${MAIN_PY_FILE_DIR}${MAIN_PY_FILE}
-#sudo reboot -h 24:00
+
 
 else
+#change password from default
+echo "Please enter password"
+passwd
+
+#update and install the necessary software
 sudo apt-get update
 sudo apt-get dist-upgrade -y 
 sudo apt-get install ${SOFTWARE}
+
+#enable firewall
 sudo ufw enable 
 sudo ufw status
+
+#set the correct timezone to California
 sudo timedatectl set-timezone US/Pacific
-#python3 -m pip install pygame
 
+#disable bluetooth after reboot
+echo "dtoverlay=pi3-disable-bt" | sudo tee --append /boot/config.txt
 
-#/etc/udev/rules.d/99-com.rules
-#ACTION=="add",SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="SCALE"
+#enable auto-login
+# sed -i -e '/autologin-user/s/#//' -e '/autologin-user/s/$/pi' /etc/lightdm/lightdm.conf
 
-#Create symlink for the scale
+#Create symlink for the scale, note that the ATTRS{idProduct} needs to be 
+#changed for different scales
 lsusb
-echo "ACTION==\"add\",SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6001\", SYMLINK+=\"SCALE\"" >> /etc/udev/rules.d/99-com.rules
+echo "Enter the product ID(a 4 digits number belonging to FTDI device)"
+read PROD_ID
+echo "ACTION==\"add\",SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"${PROD_ID}\", SYMLINK+=\"SCALE\"" >> /etc/udev/rules.d/99-com.rules
 
+echo "Setup done, the system will now reboot"
 
 #touch ${HOME}/dwb_installed
 #sudo reboot
