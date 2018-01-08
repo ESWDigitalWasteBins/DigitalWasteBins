@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'l'  # l for landfill, r for recycle and c for compost
+    m = 'c'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 0
     surface_top_offset = 0
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     # display initial image first
     # bot_header.draw_text_surface(bot_header_text)
     top_header.draw_text_surface(top_header_text)
-    weight = 3  # only for testing
+    weight = 0  # only for testing
     while (not(exited)):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
