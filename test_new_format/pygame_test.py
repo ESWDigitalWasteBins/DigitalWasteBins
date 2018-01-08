@@ -17,7 +17,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
     font = pygame.font.Font(
-        './Font_Folder/SourceSansPro-Black.ttf', 70)
+        './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 70)
     dist_btw_line = font.get_linesize()
     size_per_line = font.get_linesize()
     start = time.time()  # start of timer for when to draw
