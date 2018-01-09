@@ -105,6 +105,7 @@ class Scale:
             self.last_value = result
 
             self.raw = raw
+
             return difference  # return weight change between this and the last stable read in lbs
         else:
             return 0  # weight decreased or stayed the same
