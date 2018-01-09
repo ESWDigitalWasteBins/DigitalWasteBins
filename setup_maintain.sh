@@ -8,7 +8,7 @@ MAIN_PY_FILE_DIR="test_new_format"
 MAIN_PY_FILE="pygame_test.py"
 
 #list of necessary software
-SOFTWARE=" python3 python3-pygame python-serial ufw ntp "
+SOFTWARE=" python3 python3-pygame python-serial ufw ntp python3-pip "
 
 #time for the computer to sleep
 REBOOT_TIME="24:00" 
@@ -40,7 +40,7 @@ passwd
 sudo apt-get update
 sudo apt-get dist-upgrade -y 
 sudo apt-get install ${SOFTWARE}
-
+python3 -m pip install pyserial
 #enable firewall
 sudo ufw enable 
 sudo ufw status
@@ -61,5 +61,5 @@ echo "ACTION==\"add\",SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idPro
 echo "Setup done, the system will now reboot"
 
 #touch ${HOME}/dwb_installed
-#sudo reboot
+sudo reboot
 fi

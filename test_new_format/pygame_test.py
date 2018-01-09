@@ -89,7 +89,7 @@ if __name__ == '__main__':
         text_box_im.convert()
         total_line = 6
         top_header_text.append(
-            "COMPOST")
+            "               COMPOST")
         bot_header_text.append(
             "Compost")
         header_offset = -200
