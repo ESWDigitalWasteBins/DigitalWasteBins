@@ -65,20 +65,19 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'l'  # l for landfill, r for recycle and c for compost
+    m = 'r'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 70
     surface_top_offset = 0
     top_header_text = []
     bot_header_text = []
-    if m == 'r':
+    if m == 'l':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
         total_line = 6
         top_header_text.append("                            LANDFILL/TRASH")
         bot_header_text.append("                                DL")
-        text_processing_function = compost_text_processing
         header_offset = -400
         # surface_left_offset = 20
         # surface_top_offset = 20
