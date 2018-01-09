@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'c'  # l for landfill, r for recycle and c for compost
+    m = 'l'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 70
     surface_top_offset = 0
@@ -130,7 +130,7 @@ if __name__ == '__main__':
         for i in range(0, list_length_horizontal):
             for j in range(0, list_length_vertical):
                 list_midrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, total_square_length + j *
-                                         square_length + y_offset_bot, square_length, square_length))
+                                         square_length + y_offset_bot - 20, square_length, square_length))
         mid_rect_offset_im.append(list_midrect)
 
         # for i in range(0, list_length_horizontal):
