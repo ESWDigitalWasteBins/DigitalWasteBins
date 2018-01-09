@@ -75,7 +75,7 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
-        total_line = 8
+        total_line = 7
         top_header_text.append("                            LANDFILL/TRASH")
         bot_header_text.append("                                DL")
         header_offset = -400

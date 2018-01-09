@@ -110,6 +110,5 @@ def landfill_text_processing(ounces_recycled: int = 0):
     processed_text.append("waste to be truly composted and recycled!")
     processed_text.append(
         "Keeping landfill items out of compost and")
-    processed_text.append("recycling is important.")
-    processed_text.append("Thank you!")
+    processed_text.append("recycling is important. Thank you!")
     return processed_text
