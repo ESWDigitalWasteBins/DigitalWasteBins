@@ -200,7 +200,7 @@ if __name__ == '__main__':
                 text_box_class.draw_text_surface(
                     recycle_text_processing(weight))
                 pygame.display.flip()
-                time.sleep(10)
+                time.sleep(8)
                 screen.fill(white)
         #         # bot_header.draw_text_surface(bot_header_text)
                 top_header.draw_text_surface(top_header_text)
