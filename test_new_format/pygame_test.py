@@ -76,8 +76,8 @@ if __name__ == '__main__':
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
         total_line = 6
-        top_header_text.append("                            Food Scraps")
-        bot_header_text.append("                                Landfill")
+        top_header_text.append("                            LANDFILL")
+        bot_header_text.append("                                DL")
         text_processing_function = compost_text_processing
         header_offset = -400
         # surface_left_offset = 20
@@ -89,7 +89,7 @@ if __name__ == '__main__':
         text_box_im.convert()
         total_line = 6
         top_header_text.append(
-            "Soiled Containers")
+            "COMPOST")
         bot_header_text.append(
             "Compost")
         header_offset = -200
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         total_line = 5
         total_image = 5
         top_header_text.append(
-            "                            Non-soiled Containers")
+            "                            RECYCLE")
         bot_header_text.append("                                Recycle")
         # surface_left_offset = 20
         # surface_top_offset = 20
