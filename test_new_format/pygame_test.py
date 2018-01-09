@@ -82,6 +82,7 @@ if __name__ == '__main__':
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
+        surface_left_offset -= 30
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
