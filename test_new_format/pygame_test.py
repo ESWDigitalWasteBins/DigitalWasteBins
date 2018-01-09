@@ -79,7 +79,7 @@ if __name__ == '__main__':
         top_header_text.append("                            LANDFILL")
         bot_header_text.append("                                DL")
         text_processing_function = compost_text_processing
-        header_offset = -400
+        header_offset = -200
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
@@ -97,7 +97,7 @@ if __name__ == '__main__':
         # surface_top_offset = 20
         total_image = 9
     elif m == 'r':
-        header_offset = -500
+        header_offset = -200
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
