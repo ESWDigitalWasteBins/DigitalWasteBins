@@ -196,8 +196,12 @@ if __name__ == '__main__':
             if (weight):
                 # unit is ounces of carbon emission
                 screen.fill(white)
+                # text_box_class.draw_text_surface(
+                #     recycle_text_processing(weight))
+                # text_box_class.draw_text_surface(
+                #     compost_text_processing(weight))
                 text_box_class.draw_text_surface(
-                    recycle_text_processing(weight))
+                    landfill_text_processing(weight))
                 pygame.display.flip()
                 time.sleep(8)
                 screen.fill(white)
