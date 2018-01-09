@@ -76,7 +76,7 @@ if __name__ == '__main__':
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
         total_line = 6
-        top_header_text.append("                            LANDFILL")
+        top_header_text.append("                            LANDFILL/TRASH")
         bot_header_text.append("                                DL")
         text_processing_function = compost_text_processing
         header_offset = -350
