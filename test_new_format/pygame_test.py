@@ -79,7 +79,7 @@ if __name__ == '__main__':
         top_header_text.append("                            LANDFILL/TRASH")
         bot_header_text.append("                                DL")
         text_processing_function = compost_text_processing
-        header_offset = -350
+        header_offset = -400
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
