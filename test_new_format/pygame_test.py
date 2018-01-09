@@ -71,7 +71,7 @@ if __name__ == '__main__':
     surface_top_offset = 0
     top_header_text = []
     bot_header_text = []
-    if m == 'l':
+    if m == 'r':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
