@@ -95,8 +95,8 @@ if __name__ == '__main__':
         bot_header_text.append(
             "Compost")
         header_offset = -200
-        additional_left_offset = 500
-        additiona_top_offset = 120
+        additional_left_offset = 450
+        additiona_top_offset = 90
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
