@@ -82,7 +82,9 @@ if __name__ == '__main__':
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
-        surface_left_offset -= 30
+        additional_left_offset = 400
+        additiona_top_offset = 80
+        # surface_left_offset -= 30
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'gt' + '.png')))
@@ -93,6 +95,8 @@ if __name__ == '__main__':
         bot_header_text.append(
             "Compost")
         header_offset = -200
+        additional_left_offset = 500
+        additiona_top_offset = 120
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
@@ -106,6 +110,8 @@ if __name__ == '__main__':
         top_header_text.append(
             "                            RECYCLE")
         bot_header_text.append("                                Recycle")
+        additional_left_offset = 500
+        additiona_top_offset = 120
         # surface_left_offset = 20
         # surface_top_offset = 20
 
@@ -150,7 +156,7 @@ if __name__ == '__main__':
 
     # textbox image
     text_box_class = text_surface(
-        screen, text_box_im, total_line, surface_left_offset + 500, surface_top_offset + 120, surface_left_offset, surface_top_offset, black, "")
+        screen, text_box_im, total_line, surface_left_offset + additional_left_offset, surface_top_offset + additiona_top_offset, surface_left_offset, surface_top_offset, black, "")
 
     # Initializing Top and Bottom header
     char_size = 15
