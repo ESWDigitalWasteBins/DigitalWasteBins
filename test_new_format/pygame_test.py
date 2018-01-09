@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'c'  # l for landfill, r for recycle and c for compost
+    m = 'r'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 70
     surface_top_offset = 0
@@ -203,10 +203,10 @@ if __name__ == '__main__':
             if (weight):
                 # unit is ounces of carbon emission
                 screen.fill(white)
-                # text_box_class.draw_text_surface(
-                #     recycle_text_processing(weight))
                 text_box_class.draw_text_surface(
-                    compost_text_processing(weight))
+                    recycle_text_processing(weight))
+                # text_box_class.draw_text_surface(
+                #     compost_text_processing(weight))
                 # text_box_class.draw_text_surface(
                 #     landfill_text_processing(weight))
                 pygame.display.flip()
