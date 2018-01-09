@@ -102,12 +102,14 @@ def recycle_text_processing(ounces_recycled: int = 0):
 def landfill_text_processing(ounces_recycled: int = 0):
     processed_text = []
     processed_text.append(
-        "It’s important to separate items that can’t be composted or recycled.")
+        "It’s important to separate items that can’t be")
+    processed_text.append("composted or recycled.")
     processed_text.append("Thank you!")
     processed_text.append(
         "Keeping landfill waste in the landfill bins allows other")
     processed_text.append("waste to be truly composted and recycled!")
     processed_text.append(
-        "Keeping landfill items out of compost and recycling is important.")
+        "Keeping landfill items out of compost and")
+    processed_text.append("recycling is important.")
     processed_text.append("Thank you!")
     return processed_text

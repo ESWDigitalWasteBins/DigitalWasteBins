@@ -75,15 +75,15 @@ if __name__ == '__main__':
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
-        total_line = 6
+        total_line = 8
         top_header_text.append("                            LANDFILL/TRASH")
         bot_header_text.append("                                DL")
         header_offset = -400
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
-        additional_left_offset = 400
-        additiona_top_offset = 80
+        additional_left_offset = 300
+        additiona_top_offset = 30
         # surface_left_offset -= 30
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
