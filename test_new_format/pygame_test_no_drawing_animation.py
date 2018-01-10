@@ -130,6 +130,8 @@ if __name__ == '__main__':
     # Divide each section of the screen into many small squares to
     # draw gradually instead at once
     pygame.event.pump()
+    screen.fill(white)
+    pygame.display.flip()
     toprect_offset_im = []
     midrect_offset_im = []
     botrect_offset_im = []
