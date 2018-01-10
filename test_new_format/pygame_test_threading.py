@@ -8,13 +8,13 @@ from sector_draw import *
 #from scale import Scale
 from collections import namedtuple
 import threading
-import scale_threading
+from scale_threading import Scale_Thread
 
 if __name__ == '__main__':
     #----------------------------------------------------
     # intialize important things here
     pygame.init()
-    # my_scale = Scale()
+
     # full screen
     screen = pygame.display.set_mode(
         (0, 0), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
@@ -24,6 +24,8 @@ if __name__ == '__main__':
     dist_btw_line = font.get_linesize()
     size_per_line = font.get_linesize()
     start = time.time()  # start of timer for when to draw
+
+    scale_lock = threading.RLock()
 
     #----------------------------------------------------
     # dictate the width, length and number of squares
@@ -175,6 +177,7 @@ if __name__ == '__main__':
 
     # display initial image first
     # bot_header.draw_text_surface(bot_header_text)
+    scale_thread = Scale_Thread(screen, scale_lock, text_box_class, top_header)
     top_header.draw_text_surface(top_header_text)
     # weight = 5  # only for testing
     while (not(exited)):
@@ -214,6 +217,8 @@ if __name__ == '__main__':
         #             pygame.display.flip()
 
         if (time.time() - start) > screen_update_interval:
+            # wait if the other thread is using the screen
+            scale_lock.acquire()
             start = time.time()
             if current_pos == section_num - 1:
                 current_pos = 0
@@ -228,7 +233,7 @@ if __name__ == '__main__':
                 screen.fill((white), mid_rect)
                 screen.blit(im[l], midrect_offset_im[l])
                 pygame.display.update(mid_rect)
-
+            scale_lock.release()
             l = l + 1 if l < total_image - 1 else 0
     pygame.quit()
     my_scale.ser.close()

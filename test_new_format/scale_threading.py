@@ -62,9 +62,7 @@ class Scale_Thread(threading.Thread):
                 if not(reading[2] == self._Scale.raw[2] and reading[3] == self._Scale.raw[3] and reading[1] == self._Scale.raw[1] and reading[4] == self._Scale.raw[4]):
                     weight = self._Scale.check(reading)
                 if(weight):
-                    while(self._lock.acquire(blocking=False)):
-                        # wait for main thread to finish
-                        pass
+                    self._lock.acquire()
                     self._screen.fill(white)
                     self._text_bubble.draw_text_surface(
                         sector_draw.compost_text_processing(weight))
