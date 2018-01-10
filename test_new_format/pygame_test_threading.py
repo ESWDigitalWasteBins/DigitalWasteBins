@@ -177,7 +177,8 @@ if __name__ == '__main__':
 
     # display initial image first
     # bot_header.draw_text_surface(bot_header_text)
-    scale_thread = Scale_Thread(screen, scale_lock, text_box_class, top_header)
+    scale_thread = Scale_Thread(
+        screen, scale_lock, text_box_class, top_header, top_header_text)
     top_header.draw_text_surface(top_header_text)
     # weight = 5  # only for testing
     while (not(exited)):

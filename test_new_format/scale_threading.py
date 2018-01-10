@@ -55,7 +55,7 @@ class Scale_Thread(threading.Thread):
         while(True):
             if self._Scale.ser.in_waiting >= 6:
                 reading = self._Scale.ser.read(6)
-                while((len(reading) != 6 or reading[0] != 0xff) and self._Scale.ser.in_waiting >= 6):
+                while((len(reading) != 6 or reading[0] != 0xff)):
                     self._Scale.ser.close()
                     self._Scale.ser.open()
                     reading = self._Scale.ser.read(6)
@@ -68,7 +68,7 @@ class Scale_Thread(threading.Thread):
                         sector_draw.compost_text_processing(weight))
                     pygame.display.flip()
                     time.sleep(10)
-                    self._header.draw(self._header_text)
+                    self._header.draw_text_surface(self._header_text)
                     self._lock.release()
 
 
