@@ -132,20 +132,26 @@ if __name__ == '__main__':
 
     toprect_offset_im = []
     midrect_offset_im = []
+    botrect_offset_im = []
     # bot_rect_offset_im = []
     for k in im:
         toprect = Rect((screen.get_width() - k.get_width()) //
                        2, y_offset_top + 30, total_square_horizontal_length, total_square_vertical_length)
         midrect = Rect((screen.get_width() - k.get_width()) //
                        2, y_offset_top + total_square_vertical_length, total_square_horizontal_length, total_square_vertical_length)
+        botrect = Rect((screen.get_width() - k.get_width()) //
+                       2, y_offset_top + 2 * total_square_vertical_length, total_square_horizontal_length, total_square_vertical_length)
         toprect_offset_im.append(toprect)
         midrect_offset_im.append(midrect)
+        botrect_offset_im.append(botrect)
 
     # rectange used for deleting before redraw of sections
     section_num = 3
     top_rect = Rect(0, y_offset_top, screen.get_width(),
                     total_square_vertical_length)
     mid_rect = Rect(0, y_offset_bot + total_square_vertical_length, screen.get_width(),
+                    total_square_vertical_length)
+    bot_rect = Rect(0, y_offset_bot + 2 * total_square_vertical_length, screen.get_width(),
                     total_square_vertical_length)
 
     # textbox image
@@ -157,22 +163,11 @@ if __name__ == '__main__':
     top_header = text_surface(
         screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", background_color, True)
 
-    # bot_header = text_surface(
-    #     screen, screen, 1, header_offset + screen.get_width() / 2 + compensation, 400, white, "", black, True)
-
     # begin with a white color
     screen.fill(white)
     pygame.event.pump()  # used for keeping the OS happy
 
-    # testing = True
-    # TODO: Refactor the code below
-    # the code below will cycle through screen sector as well
-    # as loaded images and display them with a defined time interval
-    # the images are displayed gradually in order to create transition effects
-    # as well as alleviate the load on the pi CPU
-
-    # display initial image first
-    # bot_header.draw_text_surface(bot_header_text)
+    # draw header first
     top_header.draw_text_surface(top_header_text)
     # weight = 5  # only for testing
     while (not(exited)):
@@ -213,20 +208,24 @@ if __name__ == '__main__':
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
-            if current_pos == section_num - 1:
-                current_pos = 0
+            if current_pos == 0:
+                current_pos = +1
                 pygame.event.pump()
                 screen.fill((white), top_rect)
                 screen.blit(im[l], toprect_offset_im[l])
                 pygame.display.update(top_rect)
-
-            else:
+            elif current_pos == 1:
                 current_pos += 1
                 pygame.event.pump()
                 screen.fill((white), mid_rect)
                 screen.blit(im[l], midrect_offset_im[l])
                 pygame.display.update(mid_rect)
-
+            elif current_pos == 2:
+                current_pos = 0
+                pygame.event.pump()
+                screen.fill((white), bot_rect)
+                screen.blit(im[l], botrect_offset_im[l])
+                pygame.display.update(bot_rect)
             l = l + 1 if l < total_image - 1 else 0
     pygame.quit()
     my_scale.ser.close()
