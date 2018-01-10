@@ -15,7 +15,7 @@ if __name__ == '__main__':
     my_scale = Scale()
     # full screen
     screen = pygame.display.set_mode(
-        (0, 0), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
+        (0, 0), pygame.FULLSCREEN | pygame.DOUBLEBUF)
     clock1 = pygame.time.Clock()
     font = pygame.font.Font(
         './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 50)
