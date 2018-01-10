@@ -26,14 +26,52 @@ IMPORTANT: Assumptions made on the hardware
 Assuming that the scale runs in STB mode(send when stable)
 Assuming that the units are in lbs
 """
-
+import threading
 import serial
 # import time
 import collections
-
+import sector_draw
+import pygame
+import time
 Reading = collections.namedtuple(
     'Reading', ['mode', 'stable', 'overflow', 'weight', 'units'])
 baud_rate = 9600  # scale supports 1200, 2400, 4800, 9600
+
+white = (255, 255, 255)
+
+
+class Scale_Thread(threading.Thread):
+    def __init__(self, screen, scale_lock: threading.RLock=None, text_box: sector_draw.text_surface=None, header: sector_draw.text_surface=None, header_text=None):
+        self._Scale = Scale()
+        super(Scale_Thread, self).__init__()
+        self.daemon = True
+        self._lock = scale_lock
+        self._text_bubble = text_box
+        self._header = header
+        self._screen = screen
+        self._header_text = header_text
+
+    def run(self):
+        while(True):
+            if self._Scale.ser.in_waiting >= 6:
+                reading = self._Scale.ser.read(6)
+                while((len(reading) != 6 or reading[0] != 0xff) and self._Scale.ser.in_waiting >= 6):
+                    self._Scale.ser.close()
+                    self._Scale.ser.open()
+                    reading = self._Scale.ser.read(6)
+                if not(reading[2] == self._Scale.raw[2] and reading[3] == self._Scale.raw[3] and reading[1] == self._Scale.raw[1] and reading[4] == self._Scale.raw[4]):
+                    weight = self._Scale.check(reading)
+                if(weight):
+                    while(self._lock.acquire(blocking=False)):
+                        # wait for main thread to finish
+                        pass
+                    self._screen.fill(white)
+                    self._text_bubble.draw_text_surface(
+                        sector_draw.compost_text_processing(weight))
+                    pygame.display.flip()
+                    time.sleep(10)
+                    self._header.draw(self._header_text)
+                    self._lock.release()
 
 
 class Scale:
@@ -49,52 +87,39 @@ class Scale:
         self.weight_threshold = 0.0055
 
     def check(self, raw: bytes) -> Reading:
-
-        # Handle first byte
-        # self.ser.close()
-        # self.ser.open()
-        # raw = self.ser.read(6)
-        # if len(raw) != 6 or raw[0] != 0xff:
-        # return -1
-        # raise ValueError('Not a Global 240878 message')
-        # preliminary check if the number are equal to each other to
-        # avoid doing bitshifting and a lot of post processing
-
         self.ser.reset_input_buffer()  # flush all inputs
-        # if not(raw[2] == self.raw[2] and raw[3] == self.raw[3] and raw[1] == self.raw[1] and raw[4] == self.raw[4]):
 
         # Handle second byte
         self.raw = raw
+
         decimal_point = raw[1] & 0b111
         # current_mode = (raw[1] & 0b11000) >> 3
         negative = (raw[1] & 0b100000)
         #>> 5
+
         # self.stable = (raw[1] & 0b1000000) >> 6
         # overflow = (raw[1] & 0b10000000) >> 7
+
         # TODO: Handle third byte
         digit1 = raw[2] & 0b1111
         digit2 = (raw[2] & 0b11110000) >> 4
+
         # TODO: Handle fourth byte
         digit3 = raw[3] & 0b1111
         digit4 = (raw[3] & 0b11110000) >> 4
+
         # TODO: Handle fifth byte
         digit5 = raw[4] & 0b1111
         digit6 = (raw[4] & 0b11110000) >> 4
+
         # Put it all together
         result = float(digit1) + digit2 * 10 + digit3 * 100 + \
             digit4 * 1000 + digit5 * 10000 + digit6 * 100000
         result /= float(10 ** (decimal_point - 1))  # more precision
+
         # Convert from lbs to ounce
         result = result * 16
-        # Handle sixth byte
-        # unit = raw[5] & 0b1  # 1 for lbs and 0 for kg
-
-        # result = result * 16 if unit else result * 35.274
         result = result * (-1.0) if negative else result
-        # if negative:
-        #    result *= (-1.0)
-
-        # reading = self.ser.read(6)
 
         if (self.last_value + self.weight_threshold) < result:
 
@@ -106,8 +131,6 @@ class Scale:
             return difference  # return weight change between this and the last stable read in lbs
         else:
             return 0  # weight decreased or stayed the same
-
-    # def check(self):
 
     def open(self) -> None:
         self.ser.open()
