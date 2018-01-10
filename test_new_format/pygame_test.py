@@ -51,6 +51,8 @@ if __name__ == '__main__':
     # color to be used
     white = (255, 255, 255)
     black = (0, 0, 0)
+    blue = (42, 106, 255)
+    green = (23, 219, 36)
     screen_update_interval = 3.0  # float of how many seconds before drawing new image
 
     #----------------------------------------------------
@@ -84,6 +86,7 @@ if __name__ == '__main__':
         total_image = 9
         additional_left_offset = 300
         additiona_top_offset = 30
+        background_color = black
         # surface_left_offset -= 30
     elif m == 'c':
         text_box_im = pygame.image.load((os.path.join(
@@ -97,6 +100,7 @@ if __name__ == '__main__':
         header_offset = -200
         additional_left_offset = 450
         additiona_top_offset = 90
+        background_color = green
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
@@ -112,6 +116,7 @@ if __name__ == '__main__':
         bot_header_text.append("                                Recycle")
         additional_left_offset = 500
         additiona_top_offset = 120
+        background_color = blue
         # surface_left_offset = 20
         # surface_top_offset = 20
 
@@ -166,7 +171,7 @@ if __name__ == '__main__':
     # offset the text off the center for symmetry
 
     top_header = text_surface(
-        screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", black, True)
+        screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", background_color, True)
 
     # bot_header = text_surface(
     #     screen, screen, 1, header_offset + screen.get_width() / 2 + compensation, 400, white, "", black, True)
@@ -196,26 +201,35 @@ if __name__ == '__main__':
         #     text_box_class.draw_text_surface(compost_text_processing(5))
         #     pygame.display.flip()
 
-        if my_scale.ser.in_waiting > 0:
+        if my_scale.ser.in_waiting >= 6:
+
+            # check if the scale is responding correctly
             reading = my_scale.ser.read(6)
-            # unit are in ounces
-            weight = my_scale.check(reading)
-            if (weight):
-                # unit is ounces of carbon emission
-                screen.fill(white)
-                text_box_class.draw_text_surface(
-                    recycle_text_processing(weight))
-                # text_box_class.draw_text_surface(
-                #     compost_text_processing(weight))
-                # text_box_class.draw_text_surface(
-                #     landfill_text_processing(weight))
-                pygame.display.flip()
-                time.sleep(8)
-                screen.fill(white)
-        #         # bot_header.draw_text_surface(bot_header_text)
-                top_header.draw_text_surface(top_header_text)
-                pygame.display.flip()
-        #         l = 3  # set so that images don't repeat immediately
+            while (len(reading) != 6 or reading[0] != 0xff):
+                my_scale.ser.close()
+                my_scale.ser.open()
+                reading = my_scale.ser.read(6)
+
+                # wait for it to get real data
+                # unit are in ounces
+            if not(reading[2] == my_scale.raw[2] and reading[3] == my_scale.raw[3] and reading[1] == my_scale.raw[1] and reading[4] == my_scale.raw[4]):
+                weight = my_scale.check(reading)
+                if (weight):
+                    # unit is ounces of carbon emission
+                    screen.fill(white)
+                    text_box_class.draw_text_surface(
+                        recycle_text_processing(weight))
+                    # text_box_class.draw_text_surface(
+                    #     compost_text_processing(weight))
+                    # text_box_class.draw_text_surface(
+                    #     landfill_text_processing(weight))
+                    pygame.display.flip()
+                    time.sleep(8)
+                    screen.fill(white)
+            #         # bot_header.draw_text_surface(bot_header_text)
+                    top_header.draw_text_surface(top_header_text)
+                    pygame.display.flip()
+            #         l = 3  # set so that images don't repeat immediately
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()

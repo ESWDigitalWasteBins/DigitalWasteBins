@@ -51,17 +51,16 @@ class Scale:
     def check(self, raw: bytes) -> Reading:
 
         # Handle first byte
-        if len(raw) != 6 or raw[0] != 0xff:
-            self.ser.close()
-            self.ser.open()
-            raw = self.ser.read(6)
-            if len(raw) != 6 or raw[0] != 0xff:
-                return -1
-            # raise ValueError('Not a Global 240878 message')
+        # self.ser.close()
+        # self.ser.open()
+        # raw = self.ser.read(6)
+        # if len(raw) != 6 or raw[0] != 0xff:
+        return -1
+        # raise ValueError('Not a Global 240878 message')
         # preliminary check if the number are equal to each other to
         # avoid doing bitshifting and a lot of post processing
 
-        self.ser.reset_input_buffer()  # flush all inputs in buffer to avoid cluttering
+        self.ser.reset_input_buffer()  # flush all inputs
         if not(raw[2] == self.raw[2] and raw[3] == self.raw[3] and raw[1] == self.raw[1] and raw[4] == self.raw[4]):
             # Handle second byte
             self.raw = raw

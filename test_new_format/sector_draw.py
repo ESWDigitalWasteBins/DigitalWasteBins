@@ -11,25 +11,36 @@ black = (0, 0, 0)
 class text_surface:
     def __init__(self, screen, surface_image: pygame.surface, line_number: int=4, left_offset: int=0, top_offset: int=0, surface_left_offset: int=0, surface_top_offset: int=0, tx_color: (int, int, int)=(0, 0, 0), type_font: str="",  bg_color=None, isheader=False):
 
+        # background color to draw text on
         self._bg_color = bg_color
         self._font = pygame.font.Font(
             './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 50)
-        self._height = self._font.get_height()
+
+        #self._height = self._font.get_height()
+
         self._size_per_line = (self._font).get_linesize()
         self._surface_width = surface_image.get_width()
         self._screen = screen
         self._surface = surface_image
         self._txcolor = tx_color
         self._line_number = line_number
+
+        # used to offset characters
         self._top_offset = top_offset
         self._left_offset = left_offset
+
+        # rectange to draw on
         self.line_list_rect_stored = []
+
         self._isheader = isheader
+
+        # used for text bubble adjustment
         self._surface_top_offset = surface_top_offset
         self._surface_left_offset = surface_left_offset
+
         for counter in range(0, line_number):
             (self.line_list_rect_stored).append(pygame.Rect(
-                left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._height))
+                left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._size_per_line))
 
     def draw_text_surface(self, line_list: []) ->None:
         """draw text on a saved surface"""
@@ -39,8 +50,8 @@ class text_surface:
             self._screen.blit(
                 self._surface, (self._surface_left_offset, self._surface_top_offset))
         else:
-            self._screen.fill((self._bg_color), (0, self._top_offset,
-                                                 self._surface_width, self._size_per_line * self._line_number))
+            self._screen.fill(self._bg_color, (0, self._top_offset,
+                                               self._surface_width, self._size_per_line * self._line_number))
         counter = 0
         tx_font = self._font
         tx_color = self._txcolor
