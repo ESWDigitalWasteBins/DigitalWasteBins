@@ -14,7 +14,8 @@ if __name__ == '__main__':
     pygame.init()
     my_scale = Scale()
     # full screen
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(
+        (0, 0), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
     clock1 = pygame.time.Clock()
     font = pygame.font.Font(
         './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 50)
@@ -32,7 +33,8 @@ if __name__ == '__main__':
     list_length_horizontal = 60
 
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
-    total_square_length = square_length * list_length_vertical
+    total_square_vertical_length = square_length * list_length_vertical
+    total_square_horizontal_length = square_length * list_length_horizontal
     x_offset = 0  # x offset of the sector of the screen
     y_offset_top = size_per_line  # y offset of the sector of the screen
     y_offset_bot = 200
@@ -78,7 +80,7 @@ if __name__ == '__main__':
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
         total_line = 7
-        top_header_text.append("                            LANDFILL")
+        top_header_text.append("                            LANDFILL/TRASH")
         bot_header_text.append("                                DL")
         header_offset = -400
         # surface_left_offset = 20
@@ -128,47 +130,29 @@ if __name__ == '__main__':
     # Divide each section of the screen into many small squares to
     # draw gradually instead at once
 
-    top_rect_offset_im = []
-    mid_rect_offset_im = []
+    toprect_offset_im = []
+    midrect_offset_im = []
     # bot_rect_offset_im = []
     for k in im:
-        for i in range(0, list_length_horizontal):
-            for j in range(0, list_length_vertical):
-                list_toprect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, j *
-                                         square_length + y_offset_top + 30, square_length, square_length))
-        top_rect_offset_im.append(list_toprect)
-
-        for i in range(0, list_length_horizontal):
-            for j in range(0, list_length_vertical):
-                list_midrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, total_square_length + j *
-                                         square_length + y_offset_bot - 20, square_length, square_length))
-        mid_rect_offset_im.append(list_midrect)
-
-        # for i in range(0, list_length_horizontal):
-        #     for j in range(0, list_length_vertical):
-        #         list_botrect.append(Rect(i * square_length + (screen.get_width() - k.get_width()) // 2, j *
-        #                                  square_length + 2 * total_square_length + y_offset, square_length, square_length))
-        # bot_rect_offset_im.append(list_botrect)
-        list_toprect = []
-        list_midrect = []
-        # list_botrect = []
+        toprect = Rect((screen.get_width() - k.get_width()) //
+                       2, y_offset_top + 30, total_square_horizontal_length, total_square_vertical_length)
+        midrect = Rect((screen.get_width() - k.get_width()) //
+                       2, y_offset_top + total_square_vertical_length, total_square_horizontal_length, total_square_vertical_length)
+        toprect_offset_im.append(toprect)
+        midrect_offset_im.append(midrect)
 
     # rectange used for deleting before redraw of sections
-    top_rect = Rect(0, y_offset_top + 30, screen.get_width(),
-                    total_square_length)
-    mid_rect = Rect(0, y_offset_bot + total_square_length, screen.get_width(),
-                    total_square_length)
+    section_num = 3
+    top_rect = Rect(0, y_offset_top, screen.get_width(),
+                    total_square_vertical_length)
+    mid_rect = Rect(0, y_offset_bot + total_square_vertical_length, screen.get_width(),
+                    total_square_vertical_length)
 
     # textbox image
     text_box_class = text_surface(
         screen, text_box_im, total_line, surface_left_offset + additional_left_offset, surface_top_offset + additiona_top_offset, surface_left_offset, surface_top_offset, black, "")
 
     # Initializing Top and Bottom header
-    char_size = 15
-    # offset the texts relative to each other for symmetry
-    compensation = (len(top_header_text[0]) -
-                    len(bot_header_text[0])) * char_size / 4
-    # offset the text off the center for symmetry
 
     top_header = text_surface(
         screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", background_color, True)
@@ -192,6 +176,7 @@ if __name__ == '__main__':
     top_header.draw_text_surface(top_header_text)
     # weight = 5  # only for testing
     while (not(exited)):
+        # pygame.event.pump()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if (event.key == pygame.K_ESCAPE):
@@ -215,32 +200,32 @@ if __name__ == '__main__':
             if not(reading[2] == my_scale.raw[2] and reading[3] == my_scale.raw[3] and reading[1] == my_scale.raw[1] and reading[4] == my_scale.raw[4]):
                 weight = my_scale.check(reading)
                 if (weight):
-                    # unit is ounces of carbon emission
                     screen.fill(white)
                     text_box_class.draw_text_surface(
                         recycle_text_processing(weight))
-                    # text_box_class.draw_text_surface(
-                    #     compost_text_processing(weight))
-                    # text_box_class.draw_text_surface(
-                    #     landfill_text_processing(weight))
                     pygame.display.flip()
+                    pygame.event.pump()
                     time.sleep(8)
                     screen.fill(white)
-            #         # bot_header.draw_text_surface(bot_header_text)
                     top_header.draw_text_surface(top_header_text)
+                    pygame.event.pump()
                     pygame.display.flip()
-            #         l = 3  # set so that images don't repeat immediately
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
-            if current_pos == 0:
-                current_pos += 1
-                draw_one_sector(screen, top_rect, list_length_vertical, list_length_horizontal,
-                                l, top_rect_offset_im[l], square_length, FPS, im)
-            elif current_pos == 1:
+            if current_pos == section_num - 1:
                 current_pos = 0
-                draw_one_sector(screen, mid_rect, list_length_vertical, list_length_horizontal,
-                                l, mid_rect_offset_im[l], square_length, FPS, im)
+                pygame.event.pump()
+                screen.fill((white), top_rect)
+                screen.blit(im[l], toprect_offset_im[l])
+                pygame.display.update(top_rect)
+
+            else:
+                current_pos += 1
+                pygame.event.pump()
+                screen.fill((white), mid_rect)
+                screen.blit(im[l], midrect_offset_im[l])
+                pygame.display.update(mid_rect)
 
             l = l + 1 if l < total_image - 1 else 0
     pygame.quit()
