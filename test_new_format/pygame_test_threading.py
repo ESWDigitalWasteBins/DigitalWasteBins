@@ -181,7 +181,7 @@ if __name__ == '__main__':
         screen, scale_lock, text_box_class, top_header, top_header_text)
     top_header.draw_text_surface(top_header_text)
     pygame.display.flip()
-    #scale_thread.start()
+    scale_thread.start()
 
     # weight = 5  # only for testing
     while (not(exited)):
