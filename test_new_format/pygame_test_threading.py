@@ -180,7 +180,7 @@ if __name__ == '__main__':
     screen.blit(im[2], botrect_offset_im[2])
     l = 3
     pygame.display.flip()
-
+    failed_acquire_count = 0
     scale_thread.start()
     # weight = 5  # only for testing
     while (not(exited)):
@@ -193,7 +193,11 @@ if __name__ == '__main__':
         if (time.time() - start) > screen_update_interval:
             pygame.event.pump()
             while(not(scale_lock.acquire(blocking=False))):
+                failed_acquire_count += 1
                 pygame.event.pump()
+            if failed_acquire_count != 0:
+                l = l + 3 if l < total_image - 3 else 0
+            failed_acquire_count = 0
             start = time.time()
             if current_pos == 0:
                 current_pos = +1
