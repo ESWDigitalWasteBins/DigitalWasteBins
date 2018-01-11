@@ -80,7 +80,7 @@ class Scale_Thread(threading.Thread):
                         pygame.event.pump()
                         pygame.display.flip()
                         pygame.event.pump()
-                        time.sleep(5)
+                        time.sleep(2)
                         pygame.event.pump()
                         self._screen.fill(white)
                         pygame.display.flip()
