@@ -135,7 +135,6 @@ if __name__ == '__main__':
     toprect_offset_im = []
     midrect_offset_im = []
     botrect_offset_im = []
-    # bot_rect_offset_im = []
     for k in im:
         toprect = Rect((screen.get_width() - k.get_width()) //
                        2, y_offset_top, total_square_horizontal_length, total_square_vertical_length)
@@ -152,9 +151,9 @@ if __name__ == '__main__':
     section_num = 3
     top_rect = Rect(0, y_offset_top, screen.get_width(),
                     total_square_vertical_length)
-    mid_rect = Rect(0, y_offset_bot + total_square_vertical_length, screen.get_width(),
+    mid_rect = Rect(0, y_offset_top + total_square_vertical_length, screen.get_width(),
                     total_square_vertical_length)
-    bot_rect = Rect(0, y_offset_bot + 2 * total_square_vertical_length, screen.get_width(),
+    bot_rect = Rect(0, y_offset_top + 2 * total_square_vertical_length, screen.get_width(),
                     total_square_vertical_length)
 
     # textbox image
