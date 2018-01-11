@@ -26,11 +26,11 @@ if __name__ == '__main__':
     #----------------------------------------------------
     # dictate the width, length and number of squares
     # all units are in pixel for this section
-    square_length = 30  # the length of each small square in the sector
+    square_length = 20  # the length of each small square in the sector
 
     # number of squares in each sector=list_length_vertical *list_length_horizontal
     list_length_vertical = 13
-    list_length_horizontal = 60
+    list_length_horizontal = 75
 
     # total length of each sector square, used for allocating blank surface to draw on, usually allocate with a little headroom
     total_square_vertical_length = square_length * list_length_vertical
