@@ -191,7 +191,9 @@ if __name__ == '__main__':
                     exited = True
 
         if (time.time() - start) > screen_update_interval:
-            scale_lock.acquire()
+            pygame.event.pump()
+            while(not(scale_lock.acquire(blocking=False))):
+                pygame.event.pump()
             start = time.time()
             if current_pos == 0:
                 current_pos = +1
