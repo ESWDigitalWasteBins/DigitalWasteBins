@@ -17,7 +17,7 @@ class text_surface:
         self._font = pygame.font.Font(
             './test_new_format/Font_Folder/Chivo/Chivo-Black.ttf', font_size)
         if isheader:
-            self._size_per_line = (self._font).get_height()
+            self._size_per_line = (self._font).get_ascent()
         else:
             self._size_per_line = (self._font).get_linesize()
         # 60 seems good for text box, 80 for headers
