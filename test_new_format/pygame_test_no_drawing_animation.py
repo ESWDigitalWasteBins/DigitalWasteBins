@@ -99,7 +99,7 @@ if __name__ == '__main__':
             "               COMPOST")
         bot_header_text.append(
             "Compost")
-        header_offset = -500
+        header_offset = -200
         additional_left_offset = 450
         additiona_top_offset = 90
         background_color = green
@@ -107,7 +107,7 @@ if __name__ == '__main__':
         # surface_top_offset = 20
         total_image = 9
     elif m == 'r':
-        header_offset = -350
+        header_offset = -500
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
