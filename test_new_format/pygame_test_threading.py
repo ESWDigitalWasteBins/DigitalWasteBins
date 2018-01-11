@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     # full screen
     screen = pygame.display.set_mode(
-        (0, 0), pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE)
+        (0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
     font = pygame.font.Font(
         './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 50)
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     #----------------------------------------------------
     # dictate the width, length and number of squares
     # all units are in pixel for this section
-    square_length = 30  # the length of each small square in the sector
+    square_length = 20  # the length of each small square in the sector
 
     # number of squares in each sector=list_length_vertical *list_length_horizontal
     list_length_vertical = 13
@@ -187,35 +187,6 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
-
-        # if l%3==0:
-        #     text_box_class.draw_text_surface(compost_text_processing(5))
-        #     pygame.display.flip()
-
-        # if my_scale.ser.in_waiting >= 6:
-
-        #     # check if the scale is responding correctly
-        #     reading = my_scale.ser.read(6)
-        #     while (len(reading) != 6 or reading[0] != 0xff):
-        #         my_scale.ser.close()
-        #         my_scale.ser.open()
-        #         reading = my_scale.ser.read(6)
-
-        #         # wait for it to get real data
-        #         # unit are in ounces
-        #     if not(reading[2] == my_scale.raw[2] and reading[3] == my_scale.raw[3] and reading[1] == my_scale.raw[1] and reading[4] == my_scale.raw[4]):
-        #         weight = my_scale.check(reading)
-        #         if (weight):
-        #             screen.fill(white)
-        #             text_box_class.draw_text_surface(
-        #                 recycle_text_processing(weight))
-        #             pygame.display.flip()
-        #             pygame.event.pump()
-        #             time.sleep(8)
-        #             screen.fill(white)
-        #             top_header.draw_text_surface(top_header_text)
-        #             pygame.event.pump()
-        #             pygame.display.flip()
 
         if (time.time() - start) > screen_update_interval:
             # wait if the other thread is using the screen
