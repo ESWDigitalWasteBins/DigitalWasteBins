@@ -53,26 +53,26 @@ class Scale_Thread(threading.Thread):
 
     def run(self):
         weight = 0
-        while(True):
-            if self._Scale.ser.in_waiting >= 6:
+        # while(True):
+        if self._Scale.ser.in_waiting >= 6:
+            reading = self._Scale.ser.read(6)
+            while((len(reading) != 6 or reading[0] != 0xff)):
+                self._Scale.ser.close()
+                self._Scale.ser.open()
                 reading = self._Scale.ser.read(6)
-                while((len(reading) != 6 or reading[0] != 0xff)):
-                    self._Scale.ser.close()
-                    self._Scale.ser.open()
-                    reading = self._Scale.ser.read(6)
-                if not(reading[2] == self._Scale.raw[2] and reading[3] == self._Scale.raw[3] and reading[1] == self._Scale.raw[1] and reading[4] == self._Scale.raw[4]):
-                    weight = self._Scale.check(reading)
-                    if(weight):
-                        self._lock.acquire()
-                        self._screen.fill(white)
-                        self._text_bubble.draw_text_surface(
-                            sector_draw.compost_text_processing(weight))
-                        pygame.display.flip()
-                        time.sleep(6)
-                        self._screen.fill(white)
-                        self._header.draw_text_surface(self._header_text)
-                        pygame.display.flip()
-                        self._lock.release()
+            if not(reading[2] == self._Scale.raw[2] and reading[3] == self._Scale.raw[3] and reading[1] == self._Scale.raw[1] and reading[4] == self._Scale.raw[4]):
+                weight = self._Scale.check(reading)
+                if(weight):
+                    self._lock.acquire()
+                    self._screen.fill(white)
+                    self._text_bubble.draw_text_surface(
+                        sector_draw.compost_text_processing(weight))
+                    pygame.display.flip()
+                    time.sleep(6)
+                    self._screen.fill(white)
+                    self._header.draw_text_surface(self._header_text)
+                    pygame.display.flip()
+                    self._lock.release()
 
 
 class Scale:
