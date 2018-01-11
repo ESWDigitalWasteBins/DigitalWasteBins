@@ -99,7 +99,7 @@ if __name__ == '__main__':
             "               COMPOST")
         bot_header_text.append(
             "Compost")
-        header_offset = -200
+        header_offset = -300
         additional_left_offset = 450
         additiona_top_offset = 90
         background_color = green

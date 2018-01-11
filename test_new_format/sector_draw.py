@@ -50,8 +50,8 @@ class text_surface:
             self._screen.blit(
                 self._surface, (self._surface_left_offset, self._surface_top_offset))
         else:
-            self._screen.fill(self._bg_color, (0, self._top_offset,
-                                               self._surface_width, self._size_per_line * self._line_number))
+            self._screen.fill(self._bg_color, (0, self._surface_top_offset,
+                                               self._surface_width, self._size_per_line * self._line_number * 2))
         counter = 0
         tx_font = self._font
         tx_color = self._txcolor
