@@ -18,7 +18,7 @@ if __name__ == '__main__':
         (0, 0), pygame.FULLSCREEN)
     clock1 = pygame.time.Clock()
     font = pygame.font.Font(
-        './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 60)
+        './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 40)
     dist_btw_line = font.get_linesize()
     size_per_line = font.get_linesize()
     start = time.time()  # start of timer for when to draw
@@ -82,7 +82,7 @@ if __name__ == '__main__':
         total_line = 7
         top_header_text.append("                            LANDFILL")
         bot_header_text.append("                                DL")
-        header_offset = -350
+        header_offset = -380
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
