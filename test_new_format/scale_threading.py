@@ -84,15 +84,9 @@ class Scale_Thread(threading.Thread):
                         pygame.event.pump()
                         self._screen.fill(white)
                         self._header.draw_text_surface(self._header_text)
-                        # self._screen.blit(white, self._top_rect)
-                        # self._screen.blit(white, self._mid_rect)
-                        # self._screen.blit(white, self._bot_rect)
-
-                        pygame.event.pump()
-                        pygame.event.pump()
-                        self._screen.blit(white, self._bot_rect)
-                        pygame.event.pump()
-                        self._screen.blit(white, self._mid_rect)
+                        self._screen.fill(white, self._top_rect)
+                        self._screen.fill(white, self._mid_rect)
+                        self._screen.fill(white, self._bot_rect)
                         pygame.event.pump()
                         self._screen.blit(
                             self._im_list[0], self._top_rect_list[0])
