@@ -175,7 +175,7 @@ if __name__ == '__main__':
         screen, scale_lock, text_box_class, top_header, top_header_text)
     top_header.draw_text_surface(top_header_text)
     pygame.display.flip()
-    scale_thread.start()
+    # scale_thread.start()
     # weight = 5  # only for testing
     while (not(exited)):
         # pygame.event.pump()
@@ -183,10 +183,6 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if (event.key == pygame.K_ESCAPE):
                     exited = True
-
-        # if l%3==0:
-        #     text_box_class.draw_text_surface(compost_text_processing(5))
-        #     pygame.display.flip()
 
         if (time.time() - start) > screen_update_interval:
             scale_lock.acquire()
