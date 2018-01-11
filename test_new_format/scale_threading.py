@@ -69,8 +69,11 @@ class Scale_Thread(threading.Thread):
                         pygame.display.flip()
                         self._text_bubble.draw_text_surface(
                             sector_draw.compost_text_processing(weight))
+                        self._screen.fill(white)
                         pygame.display.flip()
                         time.sleep(6)
+                        self._screen.fill(black)
+                        time.sleep(3)
                         self._screen.fill(white)
                         self._header.draw_text_surface(self._header_text)
                         pygame.display.flip()
