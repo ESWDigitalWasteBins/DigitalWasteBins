@@ -167,7 +167,7 @@ if __name__ == '__main__':
     # begin with a white color
     screen.fill(white)
     pygame.event.pump()  # used for keeping the OS happy
-
+    pygame.display.flip()
     # testing = True
     # TODO: Refactor the code below
     # the code below will cycle through screen sector as well
@@ -179,6 +179,7 @@ if __name__ == '__main__':
     # bot_header.draw_text_surface(bot_header_text)
     scale_thread = Scale_Thread(
         screen, scale_lock, text_box_class, top_header, top_header_text)
+    scale_thread.start()
     top_header.draw_text_surface(top_header_text)
     # weight = 5  # only for testing
     while (not(exited)):
@@ -208,4 +209,3 @@ if __name__ == '__main__':
             scale_lock.release()
             l = l + 1 if l < total_image - 1 else 0
     pygame.quit()
-    my_scale.ser.close()
