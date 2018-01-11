@@ -77,18 +77,25 @@ class Scale_Thread(threading.Thread):
                         self._text_bubble.draw_text_surface(
                             sector_draw.compost_text_processing(weight))
                         pygame.display.flip()
-                        start = time.time()
                         self._screen.fill(white)
                         self._header.draw_text_surface(self._header_text)
+                        pygame.event.pump()
                         self._screen.blit(white, self._top_rect)
+                        pygame.event.pump()
                         self._screen.blit(white, self._bot_rect)
+                        pygame.event.pump()
                         self._screen.blit(white, self._mid_rect)
+                        pygame.event.pump()
                         self._screen.blit(
                             self._im_list[0], self._top_rect_list[0])
+                        pygame.event.pump()
                         self._screen.blit(
                             self._im_list[1], self._mid_rect_list[1])
+                        pygame.event.pump()
                         self._screen.blit(
                             self._im_list[2], self._bot_rect_list[2])
+                        pygame.event.pump()
+                        pygame.event.pump()
                         time.sleep(5)
                         pygame.display.flip()
                         self._lock.release()
