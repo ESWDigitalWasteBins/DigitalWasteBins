@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     # load images given by Tyson
     # TODO: Refactor the loading sections
-    #pygame.event.pump()
+    # pygame.event.pump()
     #----------------------------------------------------
     # used for selecting which mode to be in
     m = 'r'  # l for landfill, r for recycle and c for compost
@@ -121,7 +121,7 @@ if __name__ == '__main__':
         background_color = blue
         # surface_left_offset = 20
         # surface_top_offset = 20
-    #pygame.event.pump()
+    # pygame.event.pump()
     for i in range(0, total_image):
         im.append(pygame.image.load(os.path.join(
             'test_new_format', m + str(i) + '.png')))
@@ -142,7 +142,7 @@ if __name__ == '__main__':
         toprect_offset_im.append(toprect)
         midrect_offset_im.append(midrect)
         botrect_offset_im.append(botrect)
-        #pygame.event.pump()
+        # pygame.event.pump()
 
     # rectange used for deleting before redraw of sections
     section_num = 3
@@ -172,6 +172,8 @@ if __name__ == '__main__':
     top_header.draw_text_surface(top_header_text)
     pygame.display.flip()
     scale_thread.start()
+    screen.fill(black)
+    time.sleep(5)
     # weight = 5  # only for testing
     while (not(exited)):
 
