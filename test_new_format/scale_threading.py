@@ -38,6 +38,7 @@ Reading = collections.namedtuple(
 baud_rate = 9600  # scale supports 1200, 2400, 4800, 9600
 
 white = (255, 255, 255)
+black = (0, 0, 0)
 
 
 class Scale_Thread(threading.Thread):
@@ -64,7 +65,8 @@ class Scale_Thread(threading.Thread):
                     weight = self._Scale.check(reading)
                     if(weight):
                         self._lock.acquire()
-                        self._screen.fill(white)
+                        self._screen.fill(black)
+                        pygame.display.flip()
                         self._text_bubble.draw_text_surface(
                             sector_draw.compost_text_processing(weight))
                         pygame.display.flip()
