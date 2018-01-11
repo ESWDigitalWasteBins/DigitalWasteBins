@@ -66,6 +66,7 @@ class text_surface:
                               self.line_list_rect_stored[counter])
             pygame.event.pump()
             counter += 1
+        pygame.event.pump()
         if not(self._isheader):
             pygame.display.flip()
         else:
