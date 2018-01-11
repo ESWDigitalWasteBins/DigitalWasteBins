@@ -82,12 +82,12 @@ if __name__ == '__main__':
         total_line = 7
         top_header_text.append("                            LANDFILL")
         bot_header_text.append("                                DL")
-        header_offset = -575
+        header_offset = -575  # tested
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
         additional_left_offset = 300
-        additiona_top_offset = 30
+        additiona_top_offset = 10
         background_color = black
         # surface_left_offset -= 30
     elif m == 'c':
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     # Initializing Top and Bottom header
 
     top_header = text_surface(
-        screen, screen, 1, screen.get_width() / 2 + header_offset, 0.25 * dist_btw_line, 0, 0, white, "", background_color, True)
+        screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", background_color, True)
 
     # begin with a white color
 
