@@ -195,12 +195,12 @@ if __name__ == '__main__':
                 screen.fill((white), mid_rect)
                 screen.blit(im[l], midrect_offset_im[l])
                 pygame.display.update(mid_rect)
-            elif current_pos == 2:
-                current_pos = 0
-                pygame.event.pump()
-                screen.fill((white), bot_rect)
-                screen.blit(im[l], botrect_offset_im[l])
-                pygame.display.update(bot_rect)
+            # elif current_pos == 2:
+            #     current_pos = 0
+            #     pygame.event.pump()
+            #     screen.fill((white), bot_rect)
+            #     screen.blit(im[l], botrect_offset_im[l])
+            #     pygame.display.update(bot_rect)
             scale_lock.release()
             l = l + 1 if l < total_image - 1 else 0
     pygame.quit()
