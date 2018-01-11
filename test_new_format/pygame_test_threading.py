@@ -82,7 +82,7 @@ if __name__ == '__main__':
         total_line = 7
         top_header_text.append("                            LANDFILL")
         bot_header_text.append("                                DL")
-        header_offset = -600
+        header_offset = -575
         # surface_left_offset = 20
         # surface_top_offset = 20
         total_image = 9
