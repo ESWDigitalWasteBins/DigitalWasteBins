@@ -41,6 +41,7 @@ class text_surface:
         for counter in range(0, line_number):
             (self.line_list_rect_stored).append(pygame.Rect(
                 left_offset, top_offset + counter * (self._size_per_line), self._surface_width, self._size_per_line))
+            pygame.event.pump()
 
     def draw_text_surface(self, line_list: []) ->None:
         """draw text on a saved surface"""
@@ -100,6 +101,7 @@ def compost_text_processing(ounces_recycled: int=0):
         " of CO2e emissions!")
     processed_text.append("Food is the single largest part of waste!")
     processed_text.append("Keeping it out of landfills is important!")
+    pygame.event.pump()
     return processed_text
 
 
@@ -113,6 +115,7 @@ def recycle_text_processing(ounces_recycled: int = 0):
                           str(round(ounces_recycled *
                                     energy_conversion, 3)) + " ounces")
     processed_text.append(" of CO2e emissions!")
+    pygame.event.pump()
     return processed_text
 
 
@@ -128,4 +131,5 @@ def landfill_text_processing(ounces_recycled: int = 0):
     processed_text.append(
         "Keeping landfill items out of compost and")
     processed_text.append("recycling is important. Thank you!")
+    pygame.event.pump()
     return processed_text

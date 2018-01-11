@@ -65,15 +65,12 @@ class Scale_Thread(threading.Thread):
                     weight = self._Scale.check(reading)
                     if(weight):
                         self._lock.acquire()
-                        self._screen.fill(black)
-                        pygame.display.flip()
+                        self._screen.fill(white)
                         pygame.event.pump()
                         self._text_bubble.draw_text_surface(
                             sector_draw.compost_text_processing(weight))
                         pygame.display.flip()
                         time.sleep(6)
-                        self._screen.fill(black)
-                        time.sleep(3)
                         self._screen.fill(white)
                         self._header.draw_text_surface(self._header_text)
                         pygame.display.flip()
