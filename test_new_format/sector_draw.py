@@ -13,12 +13,16 @@ class text_surface:
 
         # background color to draw text on
         self._bg_color = bg_color
+        font_size = 80 if isheader else 60
         self._font = pygame.font.Font(
-            './test_new_format/Font_Folder/Chivo/Chivo-Black.ttf', 80)
+            './test_new_format/Font_Folder/Chivo/Chivo-Black.ttf', font_size)
+        if isheader:
+            self._size_per_line = (self._font).get_height()
+        else:
+            self._size_per_line = (self._font).get_linesize()
         # 60 seems good for text box, 80 for headers
         #self._height = self._font.get_height()
 
-        self._size_per_line = (self._font).get_linesize()
         self._surface_width = surface_image.get_width()
         self._screen = screen
         self._surface = surface_image
@@ -53,7 +57,7 @@ class text_surface:
             pygame.event.pump()
         else:
             self._screen.fill(self._bg_color, (0, self._surface_top_offset,
-                                               self._surface_width, self._size_per_line * self._line_number * 1))
+                                               self._surface_width, self._size_per_line * self._line_number * 1 + self._top_offset))
             pygame.event.pump()
 
         counter = 0
