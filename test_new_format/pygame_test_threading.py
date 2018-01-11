@@ -69,7 +69,7 @@ if __name__ == '__main__':
     # pygame.event.pump()
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'c'  # l for landfill, r for recycle and c for compost
+    m = 'l'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 70
     surface_top_offset = 0
