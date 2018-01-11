@@ -9,6 +9,8 @@ from collections import namedtuple
 import threading
 from scale_threading import Scale_Thread
 
+l = 0  # index of the current image to be displayed, shared between threads
+
 if __name__ == '__main__':
     #----------------------------------------------------
     # intialize important things here
@@ -48,7 +50,7 @@ if __name__ == '__main__':
     FPS = 0  # FPS when drawing
     current_pos = 0  # current section of the screen to be changed
     things_happened = True  # event for scale
-    l = 0  # index of the current image to be displayed
+
     exited = False  # indicate if user wants to exit
     # color to be used
     white = (255, 255, 255)
