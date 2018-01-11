@@ -173,6 +173,7 @@ if __name__ == '__main__':
     pygame.display.flip()
     scale_thread.start()
     screen.fill(black)
+    pygame.display.flip()
     time.sleep(5)
     # weight = 5  # only for testing
     while (not(exited)):
