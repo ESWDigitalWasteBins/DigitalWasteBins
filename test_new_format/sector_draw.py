@@ -14,7 +14,7 @@ class text_surface:
         # background color to draw text on
         self._bg_color = bg_color
         self._font = pygame.font.Font(
-            './test_new_format/Font_Folder/SourceSansPro-Black.ttf', 50)
+            './test_new_format/Font_Folder/Lora/Lora-Regular.ttf', 60)
 
         #self._height = self._font.get_height()
 
