@@ -42,7 +42,7 @@ black = (0, 0, 0)
 
 
 class Scale_Thread(threading.Thread):
-    def __init__(self, screen, scale_lock: threading.RLock=None, text_box: sector_draw.text_surface=None, header: sector_draw.text_surface=None, header_text=None):
+    def __init__(self, screen, scale_lock: threading.RLock=None, text_box: sector_draw.text_surface=None, header: sector_draw.text_surface=None, header_text=None, im_list=None, top_rect_list=None, mid_rect_list, bot_rect_list, top_rect=None, mid_rect=None, bot_rect=None):
         self._Scale = Scale()
         super(Scale_Thread, self).__init__()
         self.daemon = True
@@ -51,6 +51,13 @@ class Scale_Thread(threading.Thread):
         self._header = header
         self._screen = screen
         self._header_text = header_text
+        self._im_list = im_list
+        self._top_rect_list = top_rect_list
+        self._mid_rect_list = mid_rect_list
+        self._bot_rect_list = bot_rect_list
+        self._top_rect = top_rect
+        self._mid_rect = mid_rect
+        self._bot_rect = bot_rect
 
     def run(self):
         weight = 0
@@ -70,9 +77,19 @@ class Scale_Thread(threading.Thread):
                         self._text_bubble.draw_text_surface(
                             sector_draw.compost_text_processing(weight))
                         pygame.display.flip()
-                        time.sleep(6)
+                        start = time.time()
                         self._screen.fill(white)
                         self._header.draw_text_surface(self._header_text)
+                        self._screen.blit(white, self._top_rect)
+                        self._screen.blit(white, self._bot_rect)
+                        self._screen.blit(white, self._mid_rect)
+                        self._screen.blit(
+                            self._im_list[0], self._top_rect_list[0])
+                        self._screen.blit(
+                            self._im_list[1], self._mid_rect_list[1])
+                        self._screen.blit(
+                            self._im_list[2], self._bot_rect_list[2])
+                        time.sleep(5)
                         pygame.display.flip()
                         self._lock.release()
 

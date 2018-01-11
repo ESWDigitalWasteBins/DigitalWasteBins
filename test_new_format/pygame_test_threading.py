@@ -167,7 +167,7 @@ if __name__ == '__main__':
     # draw header first
     scale_lock = threading.RLock()
     scale_thread = Scale_Thread(
-        screen, scale_lock, text_box_class, top_header, top_header_text)
+        screen, scale_lock, text_box_class, top_header, top_header_text, im,  toprect_offset_im,  midrect_offset_im, botrect_offset_im, top_rect, mid_rect, bot_rect)
     screen.fill(white)
     top_header.draw_text_surface(top_header_text)
     screen.fill((white), top_rect)
