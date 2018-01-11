@@ -170,6 +170,9 @@ if __name__ == '__main__':
         screen, scale_lock, text_box_class, top_header, top_header_text)
     screen.fill(white)
     top_header.draw_text_surface(top_header_text)
+    screen.blit(im[0], toprect_offset_im[0])
+    screen.blit(im[1], midrect_offset_im[1])
+    screen.blit(im[2], botrect_offset_im[2])
     pygame.display.flip()
     scale_thread.start()
     # weight = 5  # only for testing
