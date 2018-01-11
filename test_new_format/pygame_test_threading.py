@@ -129,9 +129,6 @@ if __name__ == '__main__':
 
     # Divide each section of the screen into many small squares to
     # draw gradually instead at once
-    pygame.event.pump()
-    screen.fill(white)
-    pygame.display.flip()
     toprect_offset_im = []
     midrect_offset_im = []
     botrect_offset_im = []
@@ -166,13 +163,12 @@ if __name__ == '__main__':
         screen, screen, 1, screen.get_width() / 2 + header_offset, 0.25 * dist_btw_line, 0, 0, white, "", background_color, True)
 
     # begin with a white color
-    screen.fill(white)
-    pygame.event.pump()  # used for keeping the OS happy
 
     # draw header first
     scale_lock = threading.RLock()
     scale_thread = Scale_Thread(
         screen, scale_lock, text_box_class, top_header, top_header_text)
+    screen.fill(white)
     top_header.draw_text_surface(top_header_text)
     pygame.display.flip()
     scale_thread.start()
