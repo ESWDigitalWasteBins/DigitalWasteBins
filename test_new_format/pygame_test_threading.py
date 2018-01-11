@@ -30,7 +30,7 @@ if __name__ == '__main__':
     #----------------------------------------------------
     # dictate the width, length and number of squares
     # all units are in pixel for this section
-    square_length = 20  # the length of each small square in the sector
+    square_length = 30  # the length of each small square in the sector
 
     # number of squares in each sector=list_length_vertical *list_length_horizontal
     list_length_vertical = 13
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------
     # used for selecting which mode to be in
-    m = 'r'  # l for landfill, r for recycle and c for compost
+    m = 'c'  # l for landfill, r for recycle and c for compost
     # set mode of running
     surface_left_offset = 70
     surface_top_offset = 0
@@ -84,7 +84,7 @@ if __name__ == '__main__':
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
         total_line = 7
-        top_header_text.append("                            LANDFILL/TRASH")
+        top_header_text.append("                            LANDFILL")
         bot_header_text.append("                                DL")
         header_offset = -400
         # surface_left_offset = 20
@@ -181,6 +181,7 @@ if __name__ == '__main__':
         screen, scale_lock, text_box_class, top_header, top_header_text)
     scale_thread.start()
     top_header.draw_text_surface(top_header_text)
+    pygame.display.flip()
     # weight = 5  # only for testing
     while (not(exited)):
         # pygame.event.pump()
