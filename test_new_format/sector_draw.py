@@ -44,7 +44,7 @@ class text_surface:
 
     def draw_text_surface(self, line_list: []) ->None:
         """draw text on a saved surface"""
-
+        pygame.event.pump()
         if not(self._isheader):
             # load the image of the textbox
             self._screen.blit(
@@ -59,12 +59,14 @@ class text_surface:
 
             self._screen.blit(tx_font.render(i, True, tx_color, self._bg_color),
                               self.line_list_rect_stored[counter])
+            pygame.event.pump()
             counter += 1
         if not(self._isheader):
             pygame.display.flip()
         else:
             pygame.display.update((0, self._top_offset,
                                    self._surface_width, self._size_per_line * self._line_number))
+        pygame.event.pump()
 
 
 def draw_one_sector(screen, sec_rectange, list_length_vertical, list_length_horizontal, l, list_rect, square_length, FPS, im, headroom: int=0)->None:

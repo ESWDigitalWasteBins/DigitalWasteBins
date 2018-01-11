@@ -165,6 +165,8 @@ if __name__ == '__main__':
     # begin with a white color
 
     # draw header first
+    text_box_class.draw_text_surface(compost_text_processing(5))
+    time.sleep(10)
     scale_lock = threading.RLock()
     scale_thread = Scale_Thread(
         screen, scale_lock, text_box_class, top_header, top_header_text)
