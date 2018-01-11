@@ -138,7 +138,7 @@ if __name__ == '__main__':
     # bot_rect_offset_im = []
     for k in im:
         toprect = Rect((screen.get_width() - k.get_width()) //
-                       2, y_offset_top + 30, total_square_horizontal_length, total_square_vertical_length)
+                       2, y_offset_top, total_square_horizontal_length, total_square_vertical_length)
         midrect = Rect((screen.get_width() - k.get_width()) //
                        2, y_offset_top + total_square_vertical_length, total_square_horizontal_length, total_square_vertical_length)
         botrect = Rect((screen.get_width() - k.get_width()) //
