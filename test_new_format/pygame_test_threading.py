@@ -80,7 +80,7 @@ if __name__ == '__main__':
             'test_new_format', 'bl' + '.png')))
         text_box_im.convert()
         total_line = 7
-        top_header_text.append("                            LANDFILL")
+        top_header_text.append("                            LAND FILL")
         bot_header_text.append("                                DL")
         header_offset = -400
         # surface_left_offset = 20
