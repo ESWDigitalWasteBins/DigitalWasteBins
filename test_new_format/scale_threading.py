@@ -42,7 +42,7 @@ black = (0, 0, 0)
 
 
 class Scale_Thread(threading.Thread):
-    def __init__(self, screen, scale_lock: threading.RLock=None, text_box: sector_draw.text_surface=None, header: sector_draw.text_surface=None, header_text=None, im_list=None, top_rect_list=None, mid_rect_list, bot_rect_list, top_rect=None, mid_rect=None, bot_rect=None):
+    def __init__(self, screen, scale_lock: threading.RLock=None, text_box: sector_draw.text_surface=None, header: sector_draw.text_surface=None, header_text=None, im_list=None, top_rect_list=None, mid_rect_list=None, bot_rect_list=None, top_rect=None, mid_rect=None, bot_rect=None):
         self._Scale = Scale()
         super(Scale_Thread, self).__init__()
         self.daemon = True
