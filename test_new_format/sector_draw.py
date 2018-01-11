@@ -50,12 +50,16 @@ class text_surface:
             # load the image of the textbox
             self._screen.blit(
                 self._surface, (self._surface_left_offset, self._surface_top_offset))
+            pygame.event.pump()
         else:
             self._screen.fill(self._bg_color, (0, self._surface_top_offset,
                                                self._surface_width, self._size_per_line * self._line_number * 2))
+            pygame.event.pump()
+
         counter = 0
         tx_font = self._font
         tx_color = self._txcolor
+        pygame.event.pump()
         for i in line_list:
 
             self._screen.blit(tx_font.render(i, True, tx_color, self._bg_color),
