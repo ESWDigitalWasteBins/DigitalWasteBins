@@ -36,7 +36,7 @@ if __name__ == '__main__':
     total_square_vertical_length = square_length * list_length_vertical
     total_square_horizontal_length = square_length * list_length_horizontal
     x_offset = 0  # x offset of the sector of the screen
-    y_offset_top = size_per_line  # y offset of the sector of the screen
+    y_offset_top = 2 * size_per_line  # y offset of the sector of the screen
     y_offset_bot = 200
     top_header_width = screen.get_width()
     top_header_height = 200
@@ -163,7 +163,7 @@ if __name__ == '__main__':
     # Initializing Top and Bottom header
 
     top_header = text_surface(
-        screen, screen, 1, screen.get_width() / 2 + header_offset, 0, 0, 0, white, "", background_color, True)
+        screen, screen, 1, screen.get_width() / 2 + header_offset, 0.25 * dist_btw_line, 0, 0, white, "", background_color, True)
 
     # begin with a white color
     screen.fill(white)
