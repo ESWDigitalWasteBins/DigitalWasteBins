@@ -55,7 +55,7 @@ if __name__ == '__main__':
     black = (0, 0, 0)
     blue = (42, 106, 255)
     green = (23, 219, 36)
-    screen_update_interval = 3.0  # float of how many seconds before drawing new image
+    screen_update_interval = 5.0  # float of how many seconds before drawing new image
 
     #----------------------------------------------------
     # Used for loading images to be used into multiple squares
@@ -189,8 +189,8 @@ if __name__ == '__main__':
         #     pygame.display.flip()
 
         if (time.time() - start) > screen_update_interval:
-            start = time.time()
             scale_lock.acquire()
+            start = time.time()
             if current_pos == 0:
                 current_pos = +1
                 pygame.event.pump()
