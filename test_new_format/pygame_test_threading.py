@@ -5,7 +5,6 @@ import random
 import pygame
 from pygame.locals import *
 from sector_draw import *
-#from scale import Scale
 from collections import namedtuple
 import threading
 from scale_threading import Scale_Thread
@@ -191,6 +190,7 @@ if __name__ == '__main__':
 
         if (time.time() - start) > screen_update_interval:
             start = time.time()
+            scale_lock.acquire()
             if current_pos == 0:
                 current_pos = +1
                 pygame.event.pump()
@@ -209,5 +209,6 @@ if __name__ == '__main__':
                 screen.fill((white), bot_rect)
                 screen.blit(im[l], botrect_offset_im[l])
                 pygame.display.update(bot_rect)
+            scale_lock.release()
             l = l + 1 if l < total_image - 1 else 0
     pygame.quit()
