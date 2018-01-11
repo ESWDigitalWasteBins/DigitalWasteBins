@@ -56,8 +56,9 @@ class text_surface:
                 self._surface, (self._surface_left_offset, self._surface_top_offset))
             pygame.event.pump()
         else:
-            self._screen.fill(self._bg_color, (0, self._surface_top_offset,
-                                               self._surface_width, self._size_per_line * self._line_number * 1 + self._top_offset))
+            # self._bg_color
+            self._screen.fill(white, (0, self._surface_top_offset,
+                                      self._surface_width, self._size_per_line * self._line_number * 1 + self._top_offset))
             pygame.event.pump()
 
         counter = 0
