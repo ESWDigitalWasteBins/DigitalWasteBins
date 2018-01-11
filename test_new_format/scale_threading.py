@@ -84,7 +84,7 @@ class Scale_Thread(threading.Thread):
                         self._screen.fill(white)
                         pygame.display.flip()
                         pygame.event.pump()
-                        self._header.draw_text_surface(self._header_text)
+                        # self._header.draw_text_surface(self._header_text)
                         pygame.event.pump()
                         self._screen.blit(white, self._top_rect)
                         pygame.event.pump()
