@@ -107,7 +107,7 @@ if __name__ == '__main__':
         # surface_top_offset = 20
         total_image = 9
     elif m == 'r':
-        header_offset = -500
+        header_offset = -530
         text_box_im = pygame.image.load((os.path.join(
             'test_new_format', 'bt' + '.png')))
         text_box_im.convert()
